@@ -1544,6 +1544,183 @@ body.chaos .cursor-star { filter: invert(1); }
   margin-bottom: 8px;
   display: block;
 }
+
+/* ── STICKY NOTE WIDGET ── */
+#sticky-widget {
+  position: fixed;
+  bottom: 160px;
+  right: 32px;
+  z-index: 4996;
+  pointer-events: auto;
+}
+@media (max-width: 768px) {
+  #sticky-widget { right: 12px; bottom: 160px; }
+}
+.sticky-btn {
+  width: 54px;
+  height: 54px;
+  background: #FFD600;
+  border: 3px solid var(--black);
+  box-shadow: 4px 4px 0 var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: none;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-size: 1.4rem;
+  position: relative;
+}
+.sticky-btn:hover { transform: scale(1.1) rotate(5deg); }
+.sticky-count-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--red);
+  color: var(--white);
+  font-family: 'Anton', sans-serif;
+  font-size: 0.55rem;
+  padding: 2px 6px;
+  letter-spacing: 0.05em;
+  min-width: 20px;
+  text-align: center;
+}
+.sticky-panel {
+  position: fixed;
+  bottom: 230px;
+  right: 32px;
+  width: 300px;
+  background: #FFF9C4;
+  border: 2px solid #e6d800;
+  box-shadow: 6px 6px 0 rgba(0,0,0,0.15);
+  z-index: 4995;
+  display: none;
+  flex-direction: column;
+  animation: stickyPop 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transform: rotate(-1deg);
+}
+@media (max-width: 768px) {
+  .sticky-panel { right: 12px; width: calc(100vw - 24px); }
+}
+.sticky-panel.open { display: flex; }
+@keyframes stickyPop {
+  from { opacity: 0; transform: rotate(-1deg) scale(0.9) translateY(10px); }
+  to { opacity: 1; transform: rotate(-1deg) scale(1) translateY(0); }
+}
+.sticky-top {
+  background: #FFD600;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.sticky-top-title {
+  font-family: 'Anton', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--black);
+}
+.sticky-close {
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  cursor: none;
+  color: rgba(0,0,0,0.4);
+  font-family: 'Space Mono', monospace;
+}
+.sticky-counter {
+  padding: 14px;
+  border-bottom: 1px dashed rgba(0,0,0,0.15);
+  text-align: center;
+}
+.sticky-num {
+  font-family: 'Anton', sans-serif;
+  font-size: 2.8rem;
+  color: var(--black);
+  line-height: 1;
+  display: block;
+}
+.sticky-num-label {
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.4);
+  margin-top: 4px;
+  display: block;
+  font-family: 'Space Mono', monospace;
+}
+.sticky-notes-list {
+  max-height: 160px;
+  overflow-y: auto;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-bottom: 1px dashed rgba(0,0,0,0.15);
+}
+.sticky-note-item {
+  background: white;
+  border: 1px solid rgba(0,0,0,0.08);
+  padding: 8px 10px;
+  font-size: 0.62rem;
+  line-height: 1.5;
+  color: #333;
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  position: relative;
+  transform: rotate(var(--r, 0deg));
+}
+.sticky-note-name {
+  font-size: 0.48rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #aaa;
+  font-family: 'Space Mono', monospace;
+  font-style: normal;
+  margin-top: 4px;
+  display: block;
+}
+.sticky-form {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sticky-input {
+  padding: 8px 10px;
+  background: white;
+  border: 1px solid rgba(0,0,0,0.15);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  outline: none;
+  width: 100%;
+  color: var(--black);
+}
+.sticky-input:focus { border-color: var(--black); }
+.sticky-submit {
+  padding: 9px;
+  background: var(--black);
+  color: var(--yellow);
+  border: none;
+  font-family: 'Anton', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: none;
+  width: 100%;
+  transition: all 0.15s;
+}
+.sticky-submit:hover { background: var(--red); }
+.sticky-empty {
+  font-size: 0.58rem;
+  color: rgba(0,0,0,0.3);
+  text-align: center;
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  padding: 8px 0;
+}
 </style>
 </head>
 <body>
@@ -1745,13 +1922,118 @@ body.chaos .cursor-star { filter: invert(1); }
       </div>
     </div>
     <div class="blog-side">
-      <div class="blog-main" onclick="togglePost('post-advice')" style="border:none;border-top:2px solid var(--black);padding:32px 36px;cursor:pointer;" onmouseover="this.style.background='var(--off)'" onmouseout="this.style.background=''">
-        <span class="blog-cat" style="border-color:var(--blue);color:var(--blue);">Advice</span>
-        <h3 class="blog-headline" style="font-size:1.4rem;">The 8-Ball Archives: Vol 1</h3>
-        <p class="blog-excerpt" style="font-size:0.85rem;">You asked, I answered. Relationship red flags, retro tech, and whatever else came through the ball.</p>
-        <div class="blog-byline">
-          <span>March 28, 2026</span>
-          <span class="read-btn" style="color:var(--blue);border-bottom-color:var(--blue);">Read the advice →</span>
+      <div style="border-top:2px solid var(--black);padding:0;overflow:hidden;">
+        <!-- INLINE BOOKSHELF -->
+        <div style="background:var(--black);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;">
+          <div>
+            <p style="font-family:'Anton',sans-serif;font-size:0.95rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--white);">Good Reads</p>
+            <p style="font-size:0.45rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:2px;">Books · Albums · Links</p>
+          </div>
+          <div style="display:flex;gap:3px;align-items:flex-end;">
+            <div style="width:6px;height:22px;background:#E8192C;border-radius:1px 1px 0 0;"></div>
+            <div style="width:6px;height:28px;background:#0033CC;border-radius:1px 1px 0 0;"></div>
+            <div style="width:6px;height:18px;background:#FFD600;border-radius:1px 1px 0 0;"></div>
+            <div style="width:6px;height:24px;background:#FAFAF5;border-radius:1px 1px 0 0;"></div>
+            <div style="width:6px;height:20px;background:#E8192C;border-radius:1px 1px 0 0;"></div>
+          </div>
+        </div>
+        <!-- Tabs -->
+        <div style="display:flex;border-bottom:1px solid rgba(0,0,0,0.1);">
+          <button class="inline-shelf-tab active" onclick="switchInlineTab('albums',this)" style="flex:1;padding:9px 4px;font-size:0.48rem;letter-spacing:0.15em;text-transform:uppercase;text-align:center;cursor:none;border:none;background:var(--yellow);font-family:'Space Mono',monospace;border-right:1px solid rgba(0,0,0,0.1);">Albums</button>
+          <button class="inline-shelf-tab" onclick="switchInlineTab('reads',this)" style="flex:1;padding:9px 4px;font-size:0.48rem;letter-spacing:0.15em;text-transform:uppercase;text-align:center;cursor:none;border:none;background:none;font-family:'Space Mono',monospace;border-right:1px solid rgba(0,0,0,0.1);">Reads</button>
+          <button class="inline-shelf-tab" onclick="switchInlineTab('links',this)" style="flex:1;padding:9px 4px;font-size:0.48rem;letter-spacing:0.15em;text-transform:uppercase;text-align:center;cursor:none;border:none;background:none;font-family:'Space Mono',monospace;">Links</button>
+        </div>
+
+        <!-- Albums -->
+        <div id="inline-albums" class="inline-shelf-panel">
+          <div style="display:flex;gap:10px;padding:14px 16px;border-bottom:1px solid rgba(0,0,0,0.07);align-items:flex-start;">
+            <div style="width:6px;flex-shrink:0;align-self:stretch;background:#0033CC;border-radius:1px;min-height:40px;"></div>
+            <div>
+              <p style="font-size:0.45rem;letter-spacing:0.2em;text-transform:uppercase;color:#aaa;">Frank Ocean</p>
+              <p style="font-family:'DM Serif Display',serif;font-size:0.85rem;margin:3px 0;">Blonde</p>
+              <p style="font-size:0.55rem;color:#888;">2016 · The standard.</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;padding:14px 16px;border-bottom:1px solid rgba(0,0,0,0.07);align-items:flex-start;">
+            <div style="width:6px;flex-shrink:0;align-self:stretch;background:#E8192C;border-radius:1px;min-height:40px;"></div>
+            <div>
+              <p style="font-size:0.45rem;letter-spacing:0.2em;text-transform:uppercase;color:#aaa;">SZA</p>
+              <p style="font-family:'DM Serif Display',serif;font-size:0.85rem;margin:3px 0;">SOS</p>
+              <p style="font-size:0.55rem;color:#888;">2022 · 928 mins of Broken Clocks.</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;padding:14px 16px;border-bottom:1px solid rgba(0,0,0,0.07);align-items:flex-start;">
+            <div style="width:6px;flex-shrink:0;align-self:stretch;background:#FFD600;border-radius:1px;min-height:40px;"></div>
+            <div>
+              <p style="font-size:0.45rem;letter-spacing:0.2em;text-transform:uppercase;color:#aaa;">Don Toliver</p>
+              <p style="font-family:'DM Serif Display',serif;font-size:0.85rem;margin:3px 0;">Heaven or Hell</p>
+              <p style="font-size:0.55rem;color:#888;">2020 · Underrated project.</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;padding:14px 16px;align-items:flex-start;">
+            <div style="width:6px;flex-shrink:0;align-self:stretch;background:#0A0A0A;border-radius:1px;min-height:40px;"></div>
+            <div>
+              <p style="font-size:0.45rem;letter-spacing:0.2em;text-transform:uppercase;color:#aaa;">Mac Miller</p>
+              <p style="font-family:'DM Serif Display',serif;font-size:0.85rem;margin:3px 0;">Swimming</p>
+              <p style="font-size:0.55rem;color:#888;">2018 · Self Care is the one.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reads -->
+        <div id="inline-reads" class="inline-shelf-panel" style="display:none;">
+          <div style="display:flex;gap:10px;padding:14px 16px;border-bottom:1px solid rgba(0,0,0,0.07);align-items:flex-start;">
+            <div style="width:6px;flex-shrink:0;align-self:stretch;background:#FFD600;border-radius:1px;min-height:40px;"></div>
+            <div>
+              <p style="font-size:0.45rem;letter-spacing:0.2em;text-transform:uppercase;color:#aaa;">★ This Week · Substack</p>
+              <p style="font-family:'DM Serif Display',serif;font-size:0.85rem;margin:3px 0;">Tell the Bees</p>
+              <a href="https://tellthebees.substack.com" target="_blank" style="font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);text-decoration:none;border-bottom:1px solid var(--blue);cursor:none;">Read →</a>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;padding:14px 16px;border-bottom:1px solid rgba(0,0,0,0.07);align-items:flex-start;">
+            <div style="width:6px;flex-shrink:0;align-self:stretch;background:#E8192C;border-radius:1px;min-height:40px;"></div>
+            <div>
+              <p style="font-size:0.45rem;letter-spacing:0.2em;text-transform:uppercase;color:#aaa;">Kai Patrick · Opinion</p>
+              <p style="font-family:'DM Serif Display',serif;font-size:0.85rem;margin:3px 0;">Scorpios and the Color Yellow</p>
+              <a href="#blog" onclick="togglePost('post-scorpio')" style="font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);text-decoration:none;border-bottom:1px solid var(--red);cursor:none;">Read →</a>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;padding:14px 16px;align-items:flex-start;">
+            <div style="width:6px;flex-shrink:0;align-self:stretch;background:#0033CC;border-radius:1px;min-height:40px;"></div>
+            <div>
+              <p style="font-size:0.45rem;letter-spacing:0.2em;text-transform:uppercase;color:#aaa;">Coming Soon · Kai Patrick</p>
+              <p style="font-family:'DM Serif Display',serif;font-size:0.85rem;margin:3px 0;">Why Don Toliver Is Underrated</p>
+              <p style="font-size:0.5rem;color:#aaa;">Dropping soon.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Links -->
+        <div id="inline-links" class="inline-shelf-panel" style="display:none;">
+          <div style="display:flex;gap:10px;padding:14px 16px;border-bottom:1px solid rgba(0,0,0,0.07);align-items:flex-start;">
+            <div style="width:6px;flex-shrink:0;align-self:stretch;background:#0033CC;border-radius:1px;min-height:40px;"></div>
+            <div>
+              <p style="font-size:0.45rem;letter-spacing:0.2em;text-transform:uppercase;color:#aaa;">Music · Pitchfork</p>
+              <p style="font-family:'DM Serif Display',serif;font-size:0.85rem;margin:3px 0;">Frank Ocean's Endless Influence</p>
+              <a href="https://pitchfork.com" target="_blank" style="font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);text-decoration:none;border-bottom:1px solid var(--blue);cursor:none;">Read →</a>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;padding:14px 16px;border-bottom:1px solid rgba(0,0,0,0.07);align-items:flex-start;">
+            <div style="width:6px;flex-shrink:0;align-self:stretch;background:#E8192C;border-radius:1px;min-height:40px;"></div>
+            <div>
+              <p style="font-size:0.45rem;letter-spacing:0.2em;text-transform:uppercase;color:#aaa;">Culture · The Atlantic</p>
+              <p style="font-family:'DM Serif Display',serif;font-size:0.85rem;margin:3px 0;">What Reality TV Gets Right</p>
+              <a href="https://theatlantic.com" target="_blank" style="font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);text-decoration:none;border-bottom:1px solid var(--blue);cursor:none;">Read →</a>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;padding:14px 16px;align-items:flex-start;">
+            <div style="width:6px;flex-shrink:0;align-self:stretch;background:#FFD600;border-radius:1px;min-height:40px;"></div>
+            <div>
+              <p style="font-size:0.45rem;letter-spacing:0.2em;text-transform:uppercase;color:#aaa;">Business · HBR</p>
+              <p style="font-family:'DM Serif Display',serif;font-size:0.85rem;margin:3px 0;">The Art of the Pivot</p>
+              <a href="https://hbr.org" target="_blank" style="font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);text-decoration:none;border-bottom:1px solid var(--blue);cursor:none;">Read →</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -3335,6 +3617,14 @@ window.submitPlayContact = function() {
   document.getElementById('play-contact-success').style.display = 'block';
 };
 
+
+window.switchInlineTab = function(tab, btn) {
+  document.querySelectorAll('.inline-shelf-panel').forEach(p => p.style.display = 'none');
+  document.querySelectorAll('.inline-shelf-tab').forEach(t => t.style.background = 'none');
+  document.getElementById('inline-' + tab).style.display = 'block';
+  btn.style.background = 'var(--yellow)';
+};
+
 // ── LOGO CHAOS MODE ── tap 5x
 let logoTaps = 0, logoTimer = null;
 document.querySelector('.nav-logo').addEventListener('click', () => {
@@ -3813,6 +4103,110 @@ window.switchShelfTab = function(tab) {
 
   loop();
 })();
+</script>
+
+<!-- STICKY NOTE WIDGET -->
+<div id="sticky-widget">
+  <div class="sticky-btn" onclick="toggleSticky()" title="Leave a note">
+    📝
+    <div class="sticky-count-badge" id="sticky-badge">...</div>
+  </div>
+</div>
+
+<div class="sticky-panel" id="sticky-panel">
+  <div class="sticky-top">
+    <span class="sticky-top-title">📝 You Were Here</span>
+    <button class="sticky-close" onclick="toggleSticky()">✕</button>
+  </div>
+  <div class="sticky-counter">
+    <span class="sticky-num" id="sticky-count">...</span>
+    <span class="sticky-num-label">visitors stopped by</span>
+  </div>
+  <div class="sticky-notes-list" id="sticky-notes-list">
+    <div class="sticky-empty">No notes yet — be the first</div>
+  </div>
+  <div class="sticky-form" id="sticky-form">
+    <input class="sticky-input" id="sticky-name" placeholder="Your name (optional)" maxlength="30" />
+    <input class="sticky-input" id="sticky-msg" placeholder="Leave a note..." maxlength="100" />
+    <button class="sticky-submit" onclick="submitStickyNote()">Pin It ★</button>
+  </div>
+  <div id="sticky-success" style="display:none;padding:14px;text-align:center;">
+    <p style="font-family:'Anton',sans-serif;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--black);">Pinned. ★</p>
+    <p style="font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(0,0,0,0.4);margin-top:4px;">Thanks for stopping by.</p>
+  </div>
+</div>
+<script>
+// ── STICKY NOTE WIDGET ──
+const STICKY_BIN = 'https://api.jsonbin.io/v3/b/' + (typeof JSONBIN_ID !== 'undefined' ? JSONBIN_ID : '69c8076d5fdde574550b0edd');
+const STICKY_KEY = '$2a$10$s5euoo2tsq9SdRl4j/OyJu2cLdoLCVH7O90DsJf.QusBuqJxUvZCW';
+let stickyOpen = false;
+let hasVisited = localStorage.getItem('digest-visited');
+
+async function loadStickyData() {
+  try {
+    const res = await fetch('/.netlify/functions/leaderboard?sticky=1');
+    // Use a separate approach - store in localStorage + JSONbin via our function
+    const stored = JSON.parse(localStorage.getItem('sticky-data') || '{"count":0,"notes":[]}');
+    
+    // Bump visitor count once per session
+    if (!hasVisited) {
+      stored.count = (stored.count || 0) + 1;
+      localStorage.setItem('digest-visited', '1');
+      localStorage.setItem('sticky-data', JSON.stringify(stored));
+    }
+
+    updateStickyUI(stored);
+  } catch(e) {
+    updateStickyUI({ count: 1, notes: [] });
+  }
+}
+
+function updateStickyUI(data) {
+  const count = data.count || 0;
+  document.getElementById('sticky-count').textContent = count.toLocaleString();
+  document.getElementById('sticky-badge').textContent = count > 999 ? '1k+' : count;
+
+  const list = document.getElementById('sticky-notes-list');
+  const notes = data.notes || [];
+  if (notes.length === 0) {
+    list.innerHTML = '<div class="sticky-empty">No notes yet — be the first</div>';
+  } else {
+    const rotations = [-2, 1, -1, 2, 0, -1.5, 1.5];
+    list.innerHTML = notes.slice(-10).reverse().map((n, i) => `
+      <div class="sticky-note-item" style="--r:${rotations[i % rotations.length]}deg">
+        ${n.msg}
+        <span class="sticky-note-name">${n.name || 'Anonymous'} · ${n.date || ''}</span>
+      </div>
+    `).join('');
+  }
+}
+
+window.toggleSticky = function() {
+  stickyOpen = !stickyOpen;
+  document.getElementById('sticky-panel').classList.toggle('open', stickyOpen);
+  if (stickyOpen) loadStickyData();
+};
+
+window.submitStickyNote = function() {
+  const name = document.getElementById('sticky-name').value.trim() || 'Anonymous';
+  const msg = document.getElementById('sticky-msg').value.trim();
+  if (!msg) return;
+
+  const stored = JSON.parse(localStorage.getItem('sticky-data') || '{"count":0,"notes":[]}');
+  stored.notes = stored.notes || [];
+  stored.notes.push({
+    name: name.substring(0, 30),
+    msg: msg.substring(0, 100),
+    date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+  });
+  localStorage.setItem('sticky-data', JSON.stringify(stored));
+
+  document.getElementById('sticky-form').style.display = 'none';
+  document.getElementById('sticky-success').style.display = 'block';
+  updateStickyUI(stored);
+};
+
+loadStickyData();
 </script>
 </body>
 </html>
