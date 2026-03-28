@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>malakaipatrick.today</title>
+<title>kaispace.blog</title>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Unbounded:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -1174,6 +1174,40 @@ body.chaos .cursor-star { filter: invert(1); }
   white-space: nowrap;
 }
 .clown-text.show { display: block; animation: clownDance 0.6s ease-in-out infinite alternate; }
+
+/* ── MOBILE TOUCH STARS ── */
+.touch-star {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99999;
+  width: 20px;
+  height: 20px;
+  transform: translate(-50%, -50%);
+  animation: touchStarBurst 0.6s ease-out forwards;
+}
+.touch-star svg { width: 100%; height: 100%; }
+@keyframes touchStarBurst {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(0.5) rotate(0deg); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.8) rotate(180deg); }
+}
+
+/* ── MOBILE PLANE PULSE ── */
+@media (max-width: 768px) {
+  #paper-plane {
+    display: block !important;
+    position: fixed;
+    bottom: 90px;
+    right: 16px;
+    z-index: 5000;
+    animation: planePulse 2s ease-in-out infinite;
+    pointer-events: auto;
+  }
+  #paper-plane svg { width: 36px; height: 36px; }
+}
+@keyframes planePulse {
+  0%, 100% { transform: rotate(-15deg) scale(1); filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2)); }
+  50% { transform: rotate(-15deg) scale(1.15); filter: drop-shadow(0 0 10px var(--yellow)); }
+}
 </style>
 </head>
 <body>
@@ -1258,12 +1292,27 @@ body.chaos .cursor-star { filter: invert(1); }
       <p class="card-title">WYWD</p>
       <p class="card-meta">Girl Unit ft. Kelela &middot; On repeat</p>
     </div>
-    <div class="hero-card wish" id="news-card">
-      <span class="card-bg-num">📰</span>
-      <span class="card-label" style="color:rgba(0,0,0,0.5);">📰 Pop culture right now</span>
-      <p class="card-title" id="news-headline" style="font-size:1.1rem;line-height:1.3;margin-bottom:8px;">Loading latest...</p>
-      <p class="card-meta" id="news-source" style="color:rgba(0,0,0,0.45);">Fetching headlines</p>
-      <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;" id="news-dots"></div>
+    <div class="hero-card wish" id="news-card" style="padding:0;overflow:hidden;position:relative;">
+      <div id="news-photo" style="position:absolute;inset:0;background-size:cover;background-position:center;transition:opacity 0.4s;opacity:0;"></div>
+      <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(255,214,0,0.97) 40%, rgba(255,214,0,0.5) 70%, transparent 100%);"></div>
+      <div style="position:relative;z-index:2;padding:32px 28px 20px;display:flex;flex-direction:column;justify-content:flex-end;height:100%;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <span style="font-size:0.48rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(0,0,0,0.45);" id="news-source">Pop Culture Right Now</span>
+          <div style="display:flex;gap:4px;">
+            <button onclick="newsCarouselPrev()" style="width:22px;height:22px;background:var(--black);color:var(--yellow);border:none;cursor:pointer;font-size:0.65rem;line-height:1;">←</button>
+            <button onclick="newsCarouselNext()" style="width:22px;height:22px;background:var(--black);color:var(--yellow);border:none;cursor:pointer;font-size:0.65rem;line-height:1;">→</button>
+          </div>
+        </div>
+        <p id="news-headline" style="font-family:'Anton',sans-serif;font-size:1.05rem;line-height:1.15;text-transform:uppercase;margin-bottom:12px;color:var(--black);">Loading latest...</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <a id="news-link" href="#" target="_blank" style="display:inline-block;background:var(--black);color:var(--yellow);padding:7px 14px;font-family:'Anton',sans-serif;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;cursor:none;">Sounds Juicy &rarr;</a>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <button onclick="prevNews()" style="width:28px;height:28px;background:rgba(0,0,0,0.15);border:none;font-size:0.9rem;cursor:none;color:var(--black);">&#8592;</button>
+            <span id="news-count" style="font-size:0.5rem;letter-spacing:0.1em;color:rgba(0,0,0,0.4);font-family:'Space Mono',monospace;">1/8</span>
+            <button onclick="nextNews()" style="width:28px;height:28px;background:rgba(0,0,0,0.15);border:none;font-size:0.9rem;cursor:none;color:var(--black);">&#8594;</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1322,15 +1371,8 @@ body.chaos .cursor-star { filter: invert(1); }
         <span class="mood r">Emotional</span>
         <span class="mood">Gym</span>
       </div>
-      <span class="mood-label">Current Singles</span>
-      <ul class="track-list">
-        <li><span class="t-name">Bomb</span><span class="t-time">2:47</span></li>
-        <li><span class="t-name">Mast</span><span class="t-time">3:12</span></li>
-        <li><span class="t-name">Futura Free</span><span class="t-time">10:27</span></li>
-        <li><span class="t-name">Good Days</span><span class="t-time">4:39</span></li>
-        <li><span class="t-name">Noid</span><span class="t-time">2:56</span></li>
-        <li><span class="t-name">30 For 30</span><span class="t-time">3:22</span></li>
-      </ul>
+      <span class="mood-label">All Time Rotation</span>
+      <ul class="track-list" id="top-tracks-list"></ul>
     </div>
   </div>
 </section>
@@ -1812,7 +1854,12 @@ async function fetchNews() {
       if (data.items && data.items.length) {
         data.items.forEach(item => {
           if (item.title && item.title.length > 10) {
-            newsItems.push({ title: item.title, source: data.feed?.title || 'Entertainment', link: item.link || '#' });
+            newsItems.push({
+              title: item.title,
+              source: data.feed?.title || 'Entertainment',
+              link: item.link || '#',
+              image: item.thumbnail || item.enclosure?.link || null
+            });
           }
         });
         if (newsItems.length > 0) break;
@@ -1832,22 +1879,44 @@ function renderNews() {
   if (!item) return;
   const el = document.getElementById('news-headline');
   const src = document.getElementById('news-source');
-  if (el) { el.style.opacity = '0'; setTimeout(() => { el.textContent = item.title; el.style.opacity = '1'; }, 200); }
-  if (src) src.textContent = item.source + ' · Live';
-  document.querySelectorAll('.news-dot').forEach((d,i) => d.classList.toggle('active-dot', i === newsIdx % Math.min(newsItems.length,8)));
+  const photo = document.getElementById('news-photo');
+  const link = document.getElementById('news-link');
+  const count = document.getElementById('news-count');
+
+  el.style.opacity = '0';
+  if (photo) photo.style.opacity = '0';
+
+  setTimeout(() => {
+    if (el) el.textContent = item.title;
+    if (src) src.textContent = (item.source || 'Entertainment') + ' · Live';
+    if (link) link.href = item.link || '#';
+    if (count) count.textContent = (newsIdx + 1) + '/' + Math.min(newsItems.length, 8);
+    if (photo && item.image) {
+      photo.style.backgroundImage = 'url(' + item.image + ')';
+      photo.style.opacity = '1';
+    } else if (photo) {
+      photo.style.opacity = '0';
+    }
+    if (el) el.style.opacity = '1';
+  }, 200);
 }
 
-function buildNewsDots() {
-  const wrap = document.getElementById('news-dots');
-  if (!wrap) return;
-  for (let i = 0; i < Math.min(newsItems.length, 8); i++) {
-    const d = document.createElement('span');
-    d.className = 'news-dot';
-    d.style.cssText = 'width:6px;height:6px;border-radius:50%;background:rgba(0,0,0,0.2);display:inline-block;transition:all 0.2s;cursor:none;';
-    d.addEventListener('click', () => { newsIdx = i; renderNews(); });
-    wrap.appendChild(d);
-  }
-}
+function buildNewsDots() {} // no dots anymore
+
+window.nextNews = function() { newsIdx = (newsIdx + 1) % Math.min(newsItems.length, 8); renderNews(); };
+window.prevNews = function() { newsIdx = (newsIdx - 1 + Math.min(newsItems.length, 8)) % Math.min(newsItems.length, 8); renderNews(); };
+
+
+window.newsCarouselNext = function() { 
+  if (!newsItems.length) return;
+  newsIdx = (newsIdx + 1) % Math.min(newsItems.length, 8); 
+  renderNews(); 
+};
+window.newsCarouselPrev = function() { 
+  if (!newsItems.length) return;
+  newsIdx = (newsIdx - 1 + Math.min(newsItems.length,8)) % Math.min(newsItems.length,8); 
+  renderNews(); 
+};
 
 document.getElementById('news-headline').style.transition = 'opacity 0.2s';
 fetchNews();
@@ -2271,6 +2340,123 @@ if (navigator.geolocation) {
     }
   }
 
+  // ── PIXEL COWBOYS ──
+  let cowboy1X = 20, cowboy2X = W - 40;
+  let bullet1 = null, bullet2 = null;
+  let shootTimer1 = 0, shootTimer2 = 60;
+  let muzzle1 = 0, muzzle2 = 0;
+
+  function drawCowboy(x, facing, muzzleFlash) {
+    const p = ctx.save.bind(ctx);
+    ctx.save();
+    ctx.translate(x, GROUND - 2);
+    if (facing === -1) ctx.scale(-1, 1);
+
+    // shadow
+    ctx.fillStyle = 'rgba(0,0,0,0.2)';
+    ctx.beginPath(); ctx.ellipse(0, 0, 12, 3, 0, 0, Math.PI*2); ctx.fill();
+
+    // boots
+    ctx.fillStyle = '#3d1f00';
+    ctx.fillRect(-8, -6, 6, 6);
+    ctx.fillRect(2, -6, 6, 6);
+
+    // legs
+    ctx.fillStyle = '#1a3d6b';
+    ctx.fillRect(-7, -18, 5, 12);
+    ctx.fillRect(2, -18, 5, 12);
+
+    // body
+    ctx.fillStyle = '#8b4513';
+    ctx.fillRect(-7, -30, 14, 14);
+
+    // belt
+    ctx.fillStyle = '#FFD600';
+    ctx.fillRect(-7, -20, 14, 2);
+    ctx.fillStyle = '#E8192C';
+    ctx.fillRect(-1, -21, 2, 4);
+
+    // arms
+    ctx.fillStyle = '#8b4513';
+    ctx.fillRect(-11, -29, 4, 10);
+    ctx.fillRect(7, -29, 4, 10);
+
+    // gun arm extended
+    ctx.fillStyle = '#6b3410';
+    ctx.fillRect(7, -26, 8, 3);
+    // gun barrel
+    ctx.fillStyle = '#333';
+    ctx.fillRect(14, -27, 8, 2);
+
+    // muzzle flash
+    if (muzzleFlash > 0) {
+      ctx.fillStyle = '#FFD600';
+      ctx.beginPath(); ctx.arc(23, -26, 5, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#E8192C';
+      ctx.beginPath(); ctx.arc(23, -26, 3, 0, Math.PI*2); ctx.fill();
+    }
+
+    // head
+    ctx.fillStyle = '#d4956a';
+    ctx.fillRect(-5, -42, 10, 12);
+
+    // hat brim
+    ctx.fillStyle = '#2a1500';
+    ctx.fillRect(-9, -42, 18, 3);
+    // hat top
+    ctx.fillRect(-6, -52, 12, 10);
+
+    // eyes
+    ctx.fillStyle = '#000';
+    ctx.fillRect(2, -38, 2, 2);
+
+    // star badge
+    ctx.fillStyle = '#FFD600';
+    ctx.fillRect(-4, -26, 3, 3);
+
+    ctx.restore();
+  }
+
+  function updateCowboys() {
+    if (!running) return;
+
+    // Cowboy 1 shoots right
+    shootTimer1++;
+    if (muzzle1 > 0) muzzle1--;
+    if (shootTimer1 > 80 + Math.random()*40) {
+      shootTimer1 = 0;
+      muzzle1 = 4;
+      if (!bullet1) bullet1 = { x: cowboy1X + 35, y: GROUND - 26, vx: 6 };
+    }
+
+    // Cowboy 2 shoots left
+    shootTimer2++;
+    if (muzzle2 > 0) muzzle2--;
+    if (shootTimer2 > 80 + Math.random()*40) {
+      shootTimer2 = 0;
+      muzzle2 = 4;
+      if (!bullet2) bullet2 = { x: cowboy2X - 15, y: GROUND - 26, vx: -6 };
+    }
+
+    // Move bullets
+    if (bullet1) {
+      bullet1.x += bullet1.vx;
+      ctx.fillStyle = '#FFD600';
+      ctx.fillRect(bullet1.x, bullet1.y, 6, 2);
+      if (bullet1.x > W) bullet1 = null;
+    }
+    if (bullet2) {
+      bullet2.x += bullet2.vx;
+      ctx.fillStyle = '#FFD600';
+      ctx.fillRect(bullet2.x, bullet2.y, 6, 2);
+      if (bullet2.x < 0) bullet2 = null;
+    }
+
+    // Draw cowboys
+    drawCowboy(cowboy1X, 1, muzzle1);
+    drawCowboy(cowboy2X, -1, muzzle2);
+  }
+
   function spawnCan() {
     const x = 120 + Math.random()*(W-240);
     const speed = 0.4 + level*0.15 + Math.random()*0.3;
@@ -2327,6 +2513,7 @@ if (navigator.geolocation) {
     });
     cans=cans.filter(c=>c.alive);
     updateParticles();
+    updateCowboys();
     const newLevel=Math.floor(score/10)+1;
     if(newLevel!==level){level=newLevel;levelEl.textContent=level;}
     raf=requestAnimationFrame(gameLoop);
@@ -2511,7 +2698,7 @@ if (navigator.geolocation) {
     <hr>
     <p>Into music, food, reality TV, and Legos. Left arm sleeve 65% done. Right arm just getting started.</p>
     <hr>
-    <p class="scroll-meta">★ malakaipatrick.today — Vol. 01 Spring 2026</p>
+    <p class="scroll-meta">★ kaispace.blog — Vol. 01 Spring 2026</p>
   </div>
 </div>
 
@@ -2740,6 +2927,42 @@ window.submitAdvice = function(btn) {
   }
 })();
 
+
+// ── TOP TRACKS FROM REAL STREAMING DATA ──
+const ALL_TOP_TRACKS = [
+  { name: "In My Room", artist: "Frank Ocean" },
+  { name: "Broken Clocks", artist: "SZA" },
+  { name: "Drama", artist: "Roy Woods ft. Drake" },
+  { name: "No Idea", artist: "Don Toliver" },
+  { name: "Can't Feel My Legs", artist: "Don Toliver" },
+  { name: "Sky", artist: "Playboi Carti" },
+  { name: "Lost", artist: "Frank Ocean" },
+  { name: "Self Care", artist: "Mac Miller" },
+  { name: "ILoveUIHateU", artist: "Playboi Carti" },
+  { name: "Situation", artist: "Don Toliver" },
+  { name: "Feel No Ways", artist: "Drake" },
+  { name: "Nights", artist: "Frank Ocean" },
+  { name: "Swangin' On Westheimer", artist: "Don Toliver" },
+  { name: "Pink + White", artist: "Frank Ocean" },
+  { name: "WAIT FOR U", artist: "Future ft. Drake" },
+];
+
+function renderTopTracks() {
+  const list = document.getElementById('top-tracks-list');
+  if (!list) return;
+  const shuffled = [...ALL_TOP_TRACKS].sort(() => Math.random() - 0.5).slice(0, 6);
+  list.innerHTML = shuffled.map(t => `
+    <li>
+      <span class="t-name">${t.name}</span>
+      <span class="t-time" style="font-size:0.52rem;color:#aaa;letter-spacing:0.04em;">${t.artist}</span>
+    </li>
+  `).join('');
+}
+
+renderTopTracks();
+// Reshuffle every 30 seconds
+setInterval(renderTopTracks, 30000);
+
 // ── LOGO CHAOS MODE ── tap 5x
 let logoTaps = 0, logoTimer = null;
 document.querySelector('.nav-logo').addEventListener('click', () => {
@@ -2788,7 +3011,7 @@ function copyLink() {
 
 function shareTweet(e) {
   e.preventDefault();
-  const text = encodeURIComponent('Reading malakaipatrick.today — music, film, food, and whatever else is on my mind this week.');
+  const text = encodeURIComponent('Reading kaispace.blog — music, film, food, and whatever else is on my mind this week.');
   const url = encodeURIComponent(window.location.href);
   window.open('https://twitter.com/intent/tweet?text=' + text + '&url=' + url, '_blank');
 }
@@ -2805,7 +3028,17 @@ document.addEventListener('click', e => {
 (function() {
   const plane = document.getElementById('paper-plane');
   if (!plane) return;
-  if ('ontouchstart' in window) { plane.style.display = 'none'; return; }
+  // On mobile - show as fixed pulsing button instead of flying
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+    plane.style.display = 'block';
+    plane.style.position = 'fixed';
+    plane.style.bottom = '90px';
+    plane.style.right = '16px';
+    plane.style.top = 'auto';
+    plane.style.left = 'auto';
+    plane.addEventListener('click', () => { plane.style.display = 'none'; openPlaneModal(); });
+    return;
+  }
   const W = () => window.innerWidth, H = () => window.innerHeight;
   let x = W()*0.15, y = H()*0.3, vx = 1.8, vy = 0.7, angle = 0, caught = false, visible = true;
 
@@ -2857,5 +3090,32 @@ if (backTop) {
 
 
 
+<script>
+// ── MOBILE TOUCH STAR BURST ──
+if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+  document.addEventListener('touchstart', e => {
+    Array.from(e.touches).forEach(touch => spawnTouchStar(touch.clientX, touch.clientY));
+  }, { passive: true });
+
+  document.addEventListener('touchmove', e => {
+    if (Math.random() < 0.3) {
+      const touch = e.touches[0];
+      spawnTouchStar(touch.clientX, touch.clientY);
+    }
+  }, { passive: true });
+
+  function spawnTouchStar(x, y) {
+    const colors = ['#E8192C', '#FFD600', '#0033CC', '#FAFAF5'];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const star = document.createElement('div');
+    star.className = 'touch-star';
+    star.style.left = x + 'px';
+    star.style.top = y + 'px';
+    star.innerHTML = `<svg viewBox="0 0 51 48"><path d="M25.5 2 L31.5 18 L49 18 L35 29 L40 46 L25.5 36 L11 46 L16 29 L2 18 L19.5 18 Z" fill="${color}" stroke="#0A0A0A" stroke-width="2"/></svg>`;
+    document.body.appendChild(star);
+    setTimeout(() => star.remove(), 600);
+  }
+}
+</script>
 </body>
 </html>
