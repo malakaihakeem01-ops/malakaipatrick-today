@@ -988,7 +988,7 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
   <div class="recipe-grid">
     <div class="recipe-hero">
       <span class="recipe-label">This week I made</span>
-      <h3 class="recipe-name">Tub In A Sub</h3>
+      <h3 class="recipe-name">Sub In A Tub</h3>
       <p class="recipe-desc">All the flavor of an Italian sub, none of the bread. Meat, cheese, peppers, olives — tossed in dressing and eaten straight from the container. Lazy genius.</p>
       <div class="recipe-stats">
         <div><span class="r-stat-n">10</span><span class="r-stat-l">Mins</span></div>
@@ -1559,12 +1559,23 @@ document.querySelectorAll('.tl').forEach((el, i) => {
 // ── LETTERBOXD RSS ──
 async function loadLetterboxd() {
   const log = document.getElementById('letterboxd-log');
-  const RSS = 'https://corsproxy.io/?' + encodeURIComponent('https://letterboxd.com/kaiscinema/rss/');
+  const PROXIES = [
+    'https://corsproxy.io/?' + encodeURIComponent('https://letterboxd.com/kaiscinema/rss/'),
+    'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://letterboxd.com/kaiscinema/rss/'),
+    'https://thingproxy.freeboard.io/fetch/https://letterboxd.com/kaiscinema/rss/',
+  ];
+  let txt = null;
+  for (const proxy of PROXIES) {
+    try {
+      const r = await fetch(proxy, { signal: AbortSignal.timeout(5000) });
+      if (r.ok) { txt = await r.text(); break; }
+    } catch(e) { continue; }
+  }
+  if (!txt) throw new Error('all proxies failed');
   const TMDB_KEY = ''; // optional — leave blank to use poster from RSS
 
   try {
-    const res = await fetch(RSS);
-    const txt = await res.text();
+    // proxies tried above
     const parser = new DOMParser();
     const doc = parser.parseFromString(txt, 'text/xml');
     const items = Array.from(doc.querySelectorAll('item')).slice(0, 5);
@@ -1688,8 +1699,8 @@ async function loadSpotify() {
 loadSpotify();
 
 // ── CAROUSEL ──
-const track = document.getElementById('wish-track');
-const cards = track.querySelectorAll('.wish-card');
+const wishTrack = document.getElementById('wish-track');
+const cards = wishTrack.querySelectorAll('.wish-card');
 const total = cards.length;
 const dotsWrap = document.getElementById('wish-dots');
 const countEl = document.getElementById('wish-count');
@@ -1707,7 +1718,7 @@ for (let i = 0; i < total - visible + 1; i++) {
 function goTo(idx) {
   cur = Math.max(0, Math.min(idx, total - visible));
   const pct = (cur / total) * 100;
-  track.style.transform = `translateX(-${pct}%)`;
+  wishTrack.style.transform = `translateX(-${pct}%)`;
   document.querySelectorAll('.wish-dot-btn').forEach((d, i) => d.classList.toggle('active', i === cur));
   countEl.textContent = String(cur + 1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
 }
@@ -1717,8 +1728,8 @@ document.getElementById('wish-next').addEventListener('click', () => goTo(cur + 
 
 // swipe support
 let startX = 0;
-track.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
-track.addEventListener('touchend', e => {
+wishTrack.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
+wishTrack.addEventListener('touchend', e => {
   const diff = startX - e.changedTouches[0].clientX;
   if (Math.abs(diff) > 50) goTo(diff > 0 ? cur + 1 : cur - 1);
 });
