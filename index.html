@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -820,7 +821,7 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
   top: 50%;
   transform: translateY(-50%);
   z-index: 300;
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 10px;
 }
@@ -1199,12 +1200,12 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
 <!-- WISHLIST -->
 <section class="wish-section" id="wishlist">
   <div class="sec-head">
-    <h2 class="sec-title">What I Want This Week</h2>
-    <span class="sec-num">05 / Wishlist</span>
+    <h2 class="sec-title">On My Radar</h2>
+    <span class="sec-num">05 / Radar</span>
     <div class="sec-line"></div>
   </div>
   <div class="wish-bar">
-    <h3>Spring 2026 Rotation</h3>
+    <h3>Spring 2026</h3>
     <p>● High &nbsp;&nbsp; ◐ Medium &nbsp;&nbsp; ○ Eventually</p>
   </div>
   <div class="wish-track-wrap">
@@ -1490,7 +1491,8 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
 <script>
 // ── NEWS FEED ──
 const NEWS_FEEDS = [
-  'https://corsproxy.io/?' + encodeURIComponent('https://www.tmz.com/rss.xml'),
+  'https://corsproxy.io/?' + encodeURIComponent('https://www.billboard.com/feed/'),
+  'https://corsproxy.io/?' + encodeURIComponent('https://variety.com/feed/'),
   'https://corsproxy.io/?' + encodeURIComponent('https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml'),
 ];
 let newsItems = [];
@@ -1793,10 +1795,8 @@ async function loadSpotify() {
         document.getElementById('preview-player').style.display = 'none';
       }
 
-      // hero card is manually curated, not overwritten by Spotify
-      // Show album not track in hero title
-      const heroTitleEl = document.querySelector('.hero-card.music .card-title');
-      if (heroTitleEl) heroTitleEl.textContent = track.album + ' — ' + track.artist;
+
+
     }
 
     if (recentTracks && recentTracks.length > 0) {
