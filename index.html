@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +6,6 @@
 <title>malakaipatrick.today</title>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Unbounded:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
-/* ── YOUR ORIGINAL STYLES ── */
 :root { --red: #E8192C; --blue: #0033CC; --yellow: #FFD600; --black: #0A0A0A; --white: #FAFAF5; --off: #F0EFE8; }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: var(--white); color: var(--black); font-family: 'Space Mono', monospace; overflow-x: hidden; cursor: none; }
@@ -27,21 +25,22 @@ a, button, .blog-main, .wish-card, .log-card, .mood { cursor: none; }
 nav { display: grid; grid-template-columns: auto 1fr auto; align-items: center; padding: 0 36px; height: 52px; border-bottom: 3px solid var(--black); position: sticky; top: 0; background: var(--white); z-index: 200; }
 .nav-logo { font-family: 'Anton', sans-serif; font-size: 1.6rem; letter-spacing: 0.1em; color: var(--black); text-decoration: none; }
 .nav-logo span { color: var(--red); }
+.nav-issue { font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase; color: #999; text-align: right; }
 .ticker { background: var(--black); color: var(--white); padding: 9px 0; overflow: hidden; border-bottom: 3px solid var(--black); }
 .ticker-inner { display: flex; animation: ticker 22s linear infinite; white-space: nowrap; width: max-content; }
 .ticker-inner span { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0 40px; }
 @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-/* ── HERO LAYOUT ── */
+/* ── HERO ── */
 .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 86vh; border-bottom: 3px solid var(--black); }
 .hero-left { padding: 56px 52px; display: flex; flex-direction: column; justify-content: space-between; border-right: 3px solid var(--black); }
 .hero-title { font-family: 'Anton', sans-serif; font-size: clamp(5rem, 10vw, 9rem); line-height: 0.88; text-transform: uppercase; }
 .hero-right { display: grid; grid-template-rows: 1fr 1fr; }
-.hero-card { padding: 44px; display: flex; flex-direction: column; justify-content: flex-end; position: relative; overflow: hidden; border-bottom: 3px solid var(--black); cursor: pointer; }
+.hero-card { padding: 44px; display: flex; flex-direction: column; justify-content: flex-end; border-bottom: 3px solid var(--black); cursor: pointer; }
 .hero-card.music { background: var(--blue); color: var(--white); }
 .hero-card.wish { background: var(--yellow); color: var(--black); }
 
-/* ── ORIGINAL ANIMATIONS ── */
+/* ── ANIMATIONS ── */
 .word-wrap { display: inline-block; }
 .tl { display: inline-block; opacity: 0; animation: tumbleIn 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards; }
 @keyframes tumbleIn { 0% { opacity: 0; transform: translateY(-120px) rotate(var(--r, -25deg)) scale(1.3); } 100% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); } }
@@ -49,13 +48,184 @@ nav { display: grid; grid-template-columns: auto 1fr auto; align-items: center; 
 .dl.bounce { animation: letterBounce 0.4s forwards; }
 @keyframes letterBounce { 50% { transform: translateY(-15px) rotate(5deg); color: var(--red); } }
 
-/* ── PAPER PLANE & MODAL ── */
+/* ── MUSIC GRID ── */
+.music-grid { display: grid; grid-template-columns: 1.4fr 1fr; border-bottom: 3px solid var(--black); }
+.music-left { padding: 40px 48px; border-right: 2px solid var(--black); }
+.music-right { padding: 40px 36px; }
+#now-playing-block { border: 3px solid var(--black); padding: 24px; display: flex; gap: 24px; align-items: center; transition: 0.5s; }
+
+/* ── GAME ── */
+.game-section { background: var(--black); padding: 48px; border-bottom: 3px solid var(--black); text-align: center; }
+#game-canvas { border: 3px solid var(--yellow); background: #111; max-width: 100%; display: block; margin: 0 auto; cursor: crosshair; }
+
+/* ── PLANE & MODAL ── */
 #paper-plane { position: fixed; z-index: 5000; pointer-events: auto; cursor: pointer; transition: transform 0.8s ease; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2)); }
 .plane-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 8000; display: none; align-items: center; justify-content: center; }
 .plane-modal-overlay.open { display: flex; }
 .plane-modal { background: var(--white); border: 3px solid var(--black); width: 90%; max-width: 480px; padding: 30px; animation: pop 0.3s ease; }
-@keyframes pop { from { transform: scale(0.9); opacity: 0; } }
+</style>
+</head>
+<body>
 
-/* ── GAME SECTION ── */
-.game-section { background: var(--black); padding: 48px; border-bottom: 3px solid var(--black); text-align: center; }
-#game-canvas { border: 3px
+<nav>
+  <a class="nav-logo" href="#">KAI<span>.</span>TODAY</a>
+  <div style="flex:1;"></div>
+  <span class="nav-issue">Vol. 01 — Spring 2026</span>
+</nav>
+
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>Music ✦ Blog ✦ Recipes ✦ Wishlist ✦ Kai Patrick ✦ malakaipatrick.today ✦ Updated Weekly ✦ Music ✦ Blog ✦ Recipes ✦ Wishlist ✦ Kai Patrick ✦ Updated Weekly</span>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-left">
+    <h1 class="hero-title" id="hero-title">
+      <span class="word-wrap"><span class="tl">W</span><span class="tl">H</span><span class="tl">A</span><span class="tl">T</span></span><br>
+      <span class="word-wrap"><span class="tl">I</span><span class="tl">'</span><span class="tl">M</span></span> <span class="word-wrap"><span class="tl" style="color:var(--red)">I</span><span class="tl" style="color:var(--red)">N</span></span><br>
+      <span class="word-wrap"><span class="tl" style="color:var(--blue)">T</span><span class="tl" style="color:var(--blue)">O</span></span><br>
+      <span class="word-wrap"><span class="tl">R</span><span class="tl">I</span><span class="tl">G</span><span class="tl">H</span><span class="tl">T</span></span><br>
+      <span class="word-wrap"><span class="tl">N</span><span class="tl">O</span><span class="tl">W</span><span class="tl">.</span></span>
+    </h1>
+    <p style="font-size:0.55rem; color:#bbb; text-transform:uppercase; letter-spacing:0.2em;">Lincoln, NE — Update: March 28</p>
+  </div>
+  <div class="hero-right">
+    <div class="hero-card music">
+      <p style="font-size:0.6rem; opacity:0.7;">🎵 LIVE FROM KAI'S SPOTIFY</p>
+      <p id="hero-music-title" style="font-family:'Anton'; font-size:1.8rem; text-transform:uppercase;">Syncing vibe...</p>
+    </div>
+    <div class="hero-card wish">
+      <p style="font-size:0.6rem; opacity:0.7;">📰 OPINION</p>
+      <p style="font-family:'Anton'; font-size:1.4rem; text-transform:uppercase;">Scorpios & Yellow: A Theory</p>
+    </div>
+  </div>
+</section>
+<section class="music-grid" id="music">
+  <div class="music-left">
+    <h2 style="font-family:'Anton'; font-size:2.4rem; text-transform:uppercase; margin-bottom:20px;" id="listening-title">
+      <span class="dl">W</span><span class="dl">h</span><span class="dl">a</span><span class="dl">t</span><span class="dl">&nbsp;</span><span class="dl">I</span><span class="dl">'</span><span class="dl">m</span><span class="dl">&nbsp;</span><span class="dl">L</span><span class="dl">i</span><span class="dl">s</span><span class="dl">t</span><span class="dl">e</span><span class="dl">n</span><span class="dl">i</span><span class="dl">n</span><span class="dl">g</span>
+    </h2>
+    <div id="now-playing-block">
+      <div id="np-art" style="width:100px; height:100px; border:2px solid var(--black); background:var(--yellow); flex-shrink:0; overflow:hidden;"></div>
+      <div>
+        <p id="np-status" style="font-size:0.6rem; font-weight:bold; color:var(--red); letter-spacing:0.1em;">ACTIVE</p>
+        <h3 id="np-title" style="font-family:'Anton'; font-size:1.6rem; text-transform:uppercase;">Waiting...</h3>
+        <p id="np-artist" style="color:#666; font-size:0.8rem;">Connecting...</p>
+      </div>
+    </div>
+  </div>
+  <div class="music-right">
+    <p style="font-size:0.55rem; text-transform:uppercase; color:#999; margin-bottom:16px;">Mood Tags</p>
+    <div style="display:flex; flex-wrap:wrap; gap:8px;">
+      <span style="padding:6px 14px; border:1.5px solid var(--black); font-size:0.5rem;">LATE NIGHT</span>
+      <span style="padding:6px 14px; border:1.5px solid var(--black); font-size:0.5rem;">FOCUS</span>
+    </div>
+  </div>
+</section>
+
+<section class="game-section">
+  <div style="color:var(--yellow); font-family:'Anton'; margin-bottom:20px;">SCORE: <span id="game-score">000</span> | LIVES: <span id="game-lives">🤠 🤠 🤠</span></div>
+  <canvas id="game-canvas" width="700" height="300"></canvas><br>
+  <button onclick="startGame()" id="game-start-btn" style="margin-top:20px; padding:12px 30px; background:var(--yellow); font-family:'Anton'; border:none; cursor:pointer;">DRAW, PARTNER</button>
+</section>
+
+<div id="paper-plane" onclick="openPlaneModal()">
+  <svg width="48" height="48" viewBox="0 0 48 48"><polygon points="2,24 46,4 38,44" fill="#FAFAF5" stroke="#0A0A0A" stroke-width="2"/><line x1="38" y1="44" x2="20" y2="26" stroke="#0A0A0A" stroke-width="1.5"/></svg>
+</div>
+
+<div class="plane-modal-overlay" id="plane-modal-overlay">
+  <div class="plane-modal">
+    <h2 style="font-family:'Anton'; text-transform:uppercase; margin-bottom:10px;">You caught it.</h2>
+    <p style="font-size:0.7rem; color:#666; margin-bottom:20px;">Get a nudge every Friday when the new issue drops.</p>
+    <form action="https://today.us20.list-manage.com/subscribe/post?u=3fa559dce00817962c6d8886d&amp;id=063cb32742" method="post" target="_blank" style="display:flex; flex-direction:column; gap:10px;">
+      <input type="email" name="EMAIL" placeholder="your@email.com" required style="padding:12px; border:2px solid var(--black); font-family:'Space Mono';">
+      <button type="submit" style="background:var(--black); color:white; padding:12px; border:none; font-family:'Anton'; text-transform:uppercase; cursor:pointer;">Subscribe</button>
+    </form>
+    <button onclick="closePlaneModal()" style="margin-top:15px; background:none; border:none; color:#aaa; font-size:0.6rem; text-transform:uppercase; cursor:pointer;">✕ Close</button>
+  </div>
+</div>
+
+<div class="cursor-star" id="cursor-star">
+  <svg viewBox="0 0 51 48"><path id="star-path" d="M25.5 2 L31.5 18 L49 18 L35 29 L40 46 L25.5 36 L11 46 L16 29 L2 18 L19.5 18 Z" fill="#E8192C" stroke="#0A0A0A" stroke-width="2"/></svg>
+</div>
+
+<script>
+document.querySelectorAll('.tl').forEach((el, i) => {
+  const rot = (Math.random() * 60 - 30).toFixed(1);
+  el.style.setProperty('--r', rot + 'deg');
+  el.style.animationDelay = (i * 0.05) + 's';
+});
+const dTitle = document.getElementById('listening-title');
+if (dTitle) {
+  dTitle.addEventListener('mouseenter', () => {
+    dTitle.querySelectorAll('.dl').forEach((l, i) => {
+      setTimeout(() => l.classList.add('bounce'), i * 50);
+      l.addEventListener('animationend', () => l.classList.remove('bounce'), { once: true });
+    });
+  });
+}
+async function loadSpotify() {
+  try {
+    const res = await fetch('/.netlify/functions/spotify');
+    const data = await res.json();
+    if (data.isPlaying || data.title) {
+      document.getElementById('np-status').textContent = data.isPlaying ? '● NOW PLAYING' : '◎ RECENTLY PLAYED';
+      document.getElementById('np-title').textContent = data.title;
+      document.getElementById('np-artist').textContent = data.artist;
+      document.getElementById('hero-music-title').textContent = data.title;
+      if (data.albumArt) {
+        document.getElementById('np-art').innerHTML = `<img src="${data.albumArt}" style="width:100%;height:100%;object-fit:cover;">`;
+      }
+    }
+  } catch(e) {}
+}
+setInterval(loadSpotify, 5000); loadSpotify();
+const plane = document.getElementById('paper-plane');
+let px = 100, py = 100;
+function fly() {
+  px = Math.random() * (window.innerWidth - 100);
+  py = Math.random() * (window.innerHeight - 100);
+  plane.style.transform = `translate(${px}px, ${py}px)`;
+}
+setInterval(fly, 2000); fly();
+function openPlaneModal() { document.getElementById('plane-modal-overlay').classList.add('open'); }
+function closePlaneModal() { document.getElementById('plane-modal-overlay').classList.remove('open'); }
+let score = 0, lives = 3, gameActive = false, cans = [];
+const canvas = document.getElementById('game-canvas'), ctx = canvas.getContext('2d');
+function startGame() {
+  if (gameActive) return; score = 0; lives = 3; cans = []; gameActive = true;
+  document.getElementById('game-start-btn').style.visibility = 'hidden';
+  spawnCan(); requestAnimationFrame(gameLoop);
+}
+function spawnCan() {
+  if (!gameActive) return;
+  cans.push({ x: Math.random() * (canvas.width - 40), y: -50, speed: 2 + Math.random() * 2 });
+  setTimeout(spawnCan, 1200);
+}
+function gameLoop() {
+  if (!gameActive) return; ctx.clearRect(0, 0, canvas.width, canvas.height);
+  cans.forEach((can, i) => {
+    can.y += can.speed; ctx.fillStyle = "#FFD600"; ctx.fillRect(can.x, can.y, 30, 45); 
+    if (can.y > canvas.height) { cans.splice(i, 1); lives--; document.getElementById('game-lives').textContent = "🤠 ".repeat(Math.max(0, lives)); }
+  });
+  if (lives <= 0) { gameActive = false; alert("Game Over! Score: " + score); document.getElementById('game-start-btn').style.visibility = 'visible'; }
+  else { requestAnimationFrame(gameLoop); }
+}
+canvas.addEventListener('mousedown', (e) => {
+  const rect = canvas.getBoundingClientRect();
+  const x = e.clientX - rect.left, y = e.clientY - rect.top;
+  cans.forEach((can, i) => {
+    if (x > can.x && x < can.x + 30 && y > can.y && y < can.y + 45) {
+      cans.splice(i, 1); score += 10; document.getElementById('game-score').textContent = score.toString().padStart(3, '0');
+    }
+  });
+});
+const star = document.getElementById('cursor-star');
+document.addEventListener('mousemove', e => {
+  star.style.top = e.clientY + 'px';
+  star.style.left = e.clientX + 'px';
+});
+</script>
+</body>
+</html>
