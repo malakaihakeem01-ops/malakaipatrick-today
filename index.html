@@ -1387,6 +1387,39 @@ body.chaos .cursor-star { filter: invert(1); }
   0%, 100% { transform: scaleY(1); }
   50% { transform: scaleY(1.08); }
 }
+
+/* ── STANDALONE COWBOYS ── */
+.cowboy-arena {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+.cowboy-side {
+  width: 80px;
+  flex-shrink: 0;
+  background: var(--black);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 8px;
+  border-left: 3px solid var(--yellow);
+  border-right: 3px solid var(--yellow);
+  position: relative;
+}
+.cowboy-side.left { border-left: none; }
+.cowboy-side.right { border-right: none; }
+.cowboy-canvas-wrap { flex: 1; position: relative; }
+#cowboy-left-canvas, #cowboy-right-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+}
+@media (max-width: 768px) {
+  .cowboy-side { width: 44px; }
+}
 </style>
 </head>
 <body>
@@ -1928,8 +1961,16 @@ body.chaos .cursor-star { filter: invert(1); }
         <span class="game-score" id="game-level" style="font-size:1rem;">1</span>
       </div>
     </div>
-    <div class="game-canvas-wrap">
-      <canvas id="game-canvas" width="700" height="300"></canvas>
+    <div class="cowboy-arena">
+      <div class="cowboy-side left">
+        <canvas id="cowboy-left" width="80" height="300"></canvas>
+      </div>
+      <div class="game-canvas-wrap" style="flex:1;">
+        <canvas id="game-canvas" width="700" height="300"></canvas>
+      </div>
+      <div class="cowboy-side right">
+        <canvas id="cowboy-right" width="80" height="300"></canvas>
+      </div>
     </div>
     <button class="game-btn" id="game-start-btn" onclick="startGame()">Draw Partner</button>
     <p class="game-hint" id="game-hint">Click or tap the cans before they fall. Miss three and you're done.</p>
@@ -2519,122 +2560,7 @@ if (navigator.geolocation) {
     }
   }
 
-  // ── PIXEL COWBOYS ──
-  let cowboy1X = 20, cowboy2X = W - 40;
-  let bullet1 = null, bullet2 = null;
-  let shootTimer1 = 0, shootTimer2 = 60;
-  let muzzle1 = 0, muzzle2 = 0;
 
-  function drawCowboy(x, facing, muzzleFlash) {
-    const p = ctx.save.bind(ctx);
-    ctx.save();
-    ctx.translate(x, GROUND - 2);
-    if (facing === -1) ctx.scale(-1, 1);
-
-    // shadow
-    ctx.fillStyle = 'rgba(0,0,0,0.2)';
-    ctx.beginPath(); ctx.ellipse(0, 0, 12, 3, 0, 0, Math.PI*2); ctx.fill();
-
-    // boots
-    ctx.fillStyle = '#3d1f00';
-    ctx.fillRect(-8, -6, 6, 6);
-    ctx.fillRect(2, -6, 6, 6);
-
-    // legs
-    ctx.fillStyle = '#1a3d6b';
-    ctx.fillRect(-7, -18, 5, 12);
-    ctx.fillRect(2, -18, 5, 12);
-
-    // body
-    ctx.fillStyle = '#8b4513';
-    ctx.fillRect(-7, -30, 14, 14);
-
-    // belt
-    ctx.fillStyle = '#FFD600';
-    ctx.fillRect(-7, -20, 14, 2);
-    ctx.fillStyle = '#E8192C';
-    ctx.fillRect(-1, -21, 2, 4);
-
-    // arms
-    ctx.fillStyle = '#8b4513';
-    ctx.fillRect(-11, -29, 4, 10);
-    ctx.fillRect(7, -29, 4, 10);
-
-    // gun arm extended
-    ctx.fillStyle = '#6b3410';
-    ctx.fillRect(7, -26, 8, 3);
-    // gun barrel
-    ctx.fillStyle = '#333';
-    ctx.fillRect(14, -27, 8, 2);
-
-    // muzzle flash
-    if (muzzleFlash > 0) {
-      ctx.fillStyle = '#FFD600';
-      ctx.beginPath(); ctx.arc(23, -26, 5, 0, Math.PI*2); ctx.fill();
-      ctx.fillStyle = '#E8192C';
-      ctx.beginPath(); ctx.arc(23, -26, 3, 0, Math.PI*2); ctx.fill();
-    }
-
-    // head
-    ctx.fillStyle = '#d4956a';
-    ctx.fillRect(-5, -42, 10, 12);
-
-    // hat brim
-    ctx.fillStyle = '#2a1500';
-    ctx.fillRect(-9, -42, 18, 3);
-    // hat top
-    ctx.fillRect(-6, -52, 12, 10);
-
-    // eyes
-    ctx.fillStyle = '#000';
-    ctx.fillRect(2, -38, 2, 2);
-
-    // star badge
-    ctx.fillStyle = '#FFD600';
-    ctx.fillRect(-4, -26, 3, 3);
-
-    ctx.restore();
-  }
-
-  function updateCowboys() {
-    if (!running) return;
-
-    // Cowboy 1 shoots right
-    shootTimer1++;
-    if (muzzle1 > 0) muzzle1--;
-    if (shootTimer1 > 80 + Math.random()*40) {
-      shootTimer1 = 0;
-      muzzle1 = 4;
-      if (!bullet1) bullet1 = { x: cowboy1X + 35, y: GROUND - 26, vx: 6 };
-    }
-
-    // Cowboy 2 shoots left
-    shootTimer2++;
-    if (muzzle2 > 0) muzzle2--;
-    if (shootTimer2 > 80 + Math.random()*40) {
-      shootTimer2 = 0;
-      muzzle2 = 4;
-      if (!bullet2) bullet2 = { x: cowboy2X - 15, y: GROUND - 26, vx: -6 };
-    }
-
-    // Move bullets
-    if (bullet1) {
-      bullet1.x += bullet1.vx;
-      ctx.fillStyle = '#FFD600';
-      ctx.fillRect(bullet1.x, bullet1.y, 6, 2);
-      if (bullet1.x > W) bullet1 = null;
-    }
-    if (bullet2) {
-      bullet2.x += bullet2.vx;
-      ctx.fillStyle = '#FFD600';
-      ctx.fillRect(bullet2.x, bullet2.y, 6, 2);
-      if (bullet2.x < 0) bullet2 = null;
-    }
-
-    // Draw cowboys
-    drawCowboy(cowboy1X, 1, muzzle1);
-    drawCowboy(cowboy2X, -1, muzzle2);
-  }
 
   function spawnCan() {
     const x = 120 + Math.random()*(W-240);
@@ -2692,7 +2618,6 @@ if (navigator.geolocation) {
     });
     cans=cans.filter(c=>c.alive);
     updateParticles();
-    updateCowboys();
     const newLevel=Math.floor(score/10)+1;
     if(newLevel!==level){level=newLevel;levelEl.textContent=level;}
     raf=requestAnimationFrame(gameLoop);
@@ -3448,6 +3373,168 @@ window.switchShelfTab = function(tab) {
   document.querySelectorAll('.shelf-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('shelf-' + tab).classList.add('active');
 };
+</script>
+<script>
+// ── STANDALONE PIXEL COWBOYS ──
+(function() {
+  const leftCanvas = document.getElementById('cowboy-left');
+  const rightCanvas = document.getElementById('cowboy-right');
+  if (!leftCanvas || !rightCanvas) return;
+
+  const lctx = leftCanvas.getContext('2d');
+  const rctx = rightCanvas.getContext('2d');
+  const H = 300, GND = 260;
+
+  let lMuzzle = 0, rMuzzle = 0;
+  let lShootTimer = 0, rShootTimer = 50;
+  let lBullets = [], rBullets = [];
+
+  function drawPixelCowboy(ctx, W, facing) {
+    ctx.clearRect(0, 0, W, H);
+
+    // ground strip
+    ctx.fillStyle = '#1a0a00';
+    ctx.fillRect(0, GND, W, H - GND);
+    ctx.fillStyle = '#FFD600';
+    ctx.fillRect(0, GND, W, 2);
+
+    const cx = facing === 1 ? W * 0.4 : W * 0.6;
+    const cy = GND;
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    if (facing === -1) ctx.scale(-1, 1);
+
+    // shadow
+    ctx.fillStyle = 'rgba(0,0,0,0.3)';
+    ctx.beginPath(); ctx.ellipse(0, 0, 10, 3, 0, 0, Math.PI*2); ctx.fill();
+
+    // boots
+    ctx.fillStyle = '#1a1a1a';
+    ctx.fillRect(-7, -6, 5, 6);
+    ctx.fillRect(2, -6, 5, 6);
+
+    // legs
+    ctx.fillStyle = '#1a1a1a';
+    ctx.fillRect(-6, -18, 4, 12);
+    ctx.fillRect(2, -18, 4, 12);
+
+    // body
+    ctx.fillStyle = '#111';
+    ctx.fillRect(-6, -30, 12, 14);
+
+    // white shirt detail
+    ctx.fillStyle = '#333';
+    ctx.fillRect(-3, -28, 6, 8);
+
+    // belt
+    ctx.fillStyle = '#FFD600';
+    ctx.fillRect(-6, -18, 12, 2);
+    ctx.fillStyle = '#E8192C';
+    ctx.fillRect(-1, -19, 2, 4);
+
+    // arms
+    ctx.fillStyle = '#1a1a1a';
+    ctx.fillRect(-10, -29, 4, 9);
+    ctx.fillRect(6, -29, 4, 9);
+
+    // gun arm
+    ctx.fillStyle = '#111';
+    ctx.fillRect(6, -25, 7, 3);
+    ctx.fillStyle = '#222';
+    ctx.fillRect(12, -26, 7, 2);
+
+    // muzzle flash
+    if (facing === 1 && lMuzzle > 0) {
+      ctx.fillStyle = '#FFD600';
+      ctx.beginPath(); ctx.arc(20, -25, 4, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.arc(20, -25, 2, 0, Math.PI*2); ctx.fill();
+    }
+    if (facing === -1 && rMuzzle > 0) {
+      ctx.fillStyle = '#FFD600';
+      ctx.beginPath(); ctx.arc(20, -25, 4, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.arc(20, -25, 2, 0, Math.PI*2); ctx.fill();
+    }
+
+    // head
+    ctx.fillStyle = '#1a1a1a';
+    ctx.fillRect(-5, -42, 10, 12);
+
+    // face
+    ctx.fillStyle = '#c8956a';
+    ctx.fillRect(-3, -40, 6, 8);
+
+    // eyes
+    ctx.fillStyle = '#FFD600';
+    ctx.fillRect(1, -37, 2, 2);
+
+    // hat brim
+    ctx.fillStyle = '#0a0a0a';
+    ctx.fillRect(-9, -42, 18, 3);
+    // hat top
+    ctx.fillRect(-6, -54, 12, 12);
+    // hat band
+    ctx.fillStyle = '#E8192C';
+    ctx.fillRect(-6, -44, 12, 2);
+
+    // star badge
+    ctx.fillStyle = '#FFD600';
+    ctx.fillRect(-3, -26, 3, 3);
+
+    ctx.restore();
+
+    // bullets going right from left cowboy
+    lBullets.forEach(b => {
+      ctx.fillStyle = '#FFD600';
+      ctx.fillRect(b.x, b.y, 5, 2);
+    });
+  }
+
+  function loop() {
+    const LW = leftCanvas.width;
+    const RW = rightCanvas.width;
+
+    lShootTimer++;
+    rShootTimer++;
+    if (lMuzzle > 0) lMuzzle--;
+    if (rMuzzle > 0) rMuzzle--;
+
+    // Left cowboy shoots
+    if (lShootTimer > 90 + Math.random() * 60) {
+      lShootTimer = 0;
+      lMuzzle = 6;
+      lBullets.push({ x: LW, y: GND - 25 });
+    }
+
+    // Right cowboy shoots
+    if (rShootTimer > 90 + Math.random() * 60) {
+      rShootTimer = 0;
+      rMuzzle = 6;
+      rBullets.push({ x: 0, y: GND - 25 });
+    }
+
+    // Move bullets off canvas (they go into the game area)
+    lBullets = lBullets.filter(b => b.x < LW + 20);
+    lBullets.forEach(b => b.x += 5);
+    rBullets = rBullets.filter(b => b.x > -20);
+    rBullets.forEach(b => b.x -= 5);
+
+    drawPixelCowboy(lctx, LW, 1);
+    drawPixelCowboy(rctx, RW, -1);
+
+    // Draw right cowboy bullets
+    rBullets.forEach(b => {
+      rctx.fillStyle = '#FFD600';
+      rctx.fillRect(b.x, b.y, 5, 2);
+    });
+
+    requestAnimationFrame(loop);
+  }
+
+  loop();
+})();
 </script>
 </body>
 </html>
