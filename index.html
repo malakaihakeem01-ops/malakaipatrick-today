@@ -4,8 +4,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Digest - kaispace.blog</title>
+<title>#kaispace</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 51 48'><path d='M25.5 2 L31.5 18 L49 18 L35 29 L40 46 L25.5 36 L11 46 L16 29 L2 18 L19.5 18 Z' fill='%23E8192C'/></svg>">
+<meta property="og:title" content="#kaispace" />
+<meta property="og:description" content="Music, film, food, opinions and whatever else is living rent free in my head this week." />
+<meta property="og:url" content="https://kaispace.blog" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="#kaispace" />
+<meta name="twitter:description" content="Music, film, food, opinions and whatever else is living rent free in my head this week." />
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Unbounded:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -1798,7 +1805,7 @@ body.chaos .cursor-star { filter: invert(1); }
 
 <!-- NAV -->
 <nav>
-  <a class="nav-logo" href="#">THE<span> DIGEST</span></a>
+  <a class="nav-logo" href="#">KAI<span>SPACE</span></a>
   <div style="overflow:hidden;flex:1;margin:0 32px;">
     <div style="display:flex;gap:0;animation:navmarquee 18s linear infinite;white-space:nowrap;width:max-content;">
       <span style="font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#999;padding:0 40px;">Stay a while -</span>
@@ -1842,14 +1849,14 @@ body.chaos .cursor-star { filter: invert(1); }
     <span><span class="flash-blog">BLOG</span> <span class="ticker-dot">✦</span></span>
     <span>Recipes <span class="ticker-dot">✦</span></span>
     <span>On My Radar <span class="ticker-dot">✦</span></span>
-    <span>The Digest <span class="ticker-dot">✦</span></span>
+    <span>Kaispace <span class="ticker-dot">✦</span></span>
     <span>kaispace.blog <span class="ticker-dot">✦</span></span>
     <span>Updated Weekly <span class="ticker-dot">✦</span></span>
     <span>Music <span class="ticker-dot">✦</span></span>
     <span>Blog <span class="ticker-dot">✦</span></span>
     <span>Recipes <span class="ticker-dot">✦</span></span>
     <span>On My Radar <span class="ticker-dot">✦</span></span>
-    <span>The Digest <span class="ticker-dot">✦</span></span>
+    <span>Kaispace <span class="ticker-dot">✦</span></span>
     <span>kaispace.blog <span class="ticker-dot">✦</span></span>
     <span>Updated Weekly <span class="ticker-dot">✦</span></span>
   </div>
@@ -2546,7 +2553,7 @@ body.chaos .cursor-star { filter: invert(1); }
 <!-- FOOTER -->
 <footer>
   <div class="f-col">
-    <p class="f-logo">THE<span> DIGEST</span></p>
+    <p class="f-logo">KAI<span>SPACE</span></p>
     <p class="f-desc">A personal magazine by Malakai Patrick. Music, film, food, and whatever else is on the radar. Updated every Friday.</p>
     <p class="f-copy" style="margin-top:16px;">&copy; 2026 Malakai Patrick &middot; kaispace.blog</p>
   </div>
@@ -2567,13 +2574,13 @@ body.chaos .cursor-star { filter: invert(1); }
       <li><a href="https://open.spotify.com/" target="_blank">Spotify</a></li>
       <li><a href="https://letterboxd.com/kaiscinema" target="_blank">Letterboxd @kaiscinema</a></li>
       <li><a href="https://www.linkedin.com/in/malakaipatrick" target="_blank">LinkedIn</a></li>
-      <li><a href="mailto:malakaipatrickcreative@gmail.com">Email Kai</a></li>
+      <li><a href="/cdn-cgi/l/email-protection#acc1cdc0cdc7cdc5dccdd8dec5cfc7cfdec9cdd8c5dac9eccbc1cdc5c082cfc3c1">Email Kai</a></li>
     </ul>
     <p class="f-copy" style="margin-top:24px;">Hosted on Netlify &middot; Vanilla HTML/CSS/JS &middot; No frameworks &middot; Built different</p>
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   function togglePost(postId) {
     document.querySelectorAll('.full-post.open').forEach(p => {
       if (p.id !== postId) p.classList.remove('open');
@@ -3019,9 +3026,11 @@ const ICONS = {0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫�
 
 function updateTime() {
   const now = new Date();
-  const h = String(now.getHours()).padStart(2,'0');
+  let h = now.getHours();
   const m = String(now.getMinutes()).padStart(2,'0');
-  document.getElementById('w-time').textContent = h + ':' + m;
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  h = h % 12 || 12;
+  document.getElementById('w-time').textContent = h + ':' + m + ' ' + ampm;
   const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   document.getElementById('w-date').textContent = days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
@@ -3710,7 +3719,7 @@ window.submitPlayContact = function() {
   const name = document.getElementById('play-contact-name').value.trim();
   const msg = document.getElementById('play-contact-msg').value.trim();
   if (!name || !msg) return;
-  const subject = encodeURIComponent('The Digest - Message from ' + name);
+  const subject = encodeURIComponent('Kaispace - Message from ' + name);
   const body = encodeURIComponent(msg);
   window.open('mailto:malakaipatrickcreative@gmail.com?subject=' + subject + '&body=' + body);
   document.getElementById('play-contact-form').style.display = 'none';
@@ -4309,12 +4318,4 @@ window.submitStickyNote = async function() {
   // Keep last 50 notes
   if (stickyData.notes.length > 50) stickyData.notes = stickyData.notes.slice(-50);
   await saveStickyData();
-  document.getElementById('sticky-form').style.display = 'none';
-  document.getElementById('sticky-success').style.display = 'block';
-  updateStickyUI();
-};
-
-loadStickyData();
-</script>
-</body>
-</html>
+  document.getElementById('sticky-form
