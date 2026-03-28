@@ -1,0 +1,2245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>malakaipatrick.today</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Unbounded:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #E8192C;
+  --blue: #0033CC;
+  --yellow: #FFD600;
+  --black: #0A0A0A;
+  --white: #FAFAF5;
+  --off: #F0EFE8;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--white); color: var(--black); font-family: 'Space Mono', monospace; overflow-x: hidden; cursor: none; }
+.cursor-star {
+  position: fixed;
+  top: 0; left: 0;
+  width: 28px; height: 28px;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%) rotate(0deg);
+  transition: transform 0.15s ease, width 0.15s ease, height 0.15s ease;
+  filter: drop-shadow(0 0 3px rgba(0,0,0,0.15));
+}
+.cursor-star svg { width: 100%; height: 100%; }
+.cursor-star.big { width: 40px; height: 40px; }
+a, button, .blog-main, .wish-card, .log-card, .mood { cursor: none; }
+
+/* ── NAV ── */
+nav {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  padding: 0 36px;
+  height: 52px;
+  border-bottom: 3px solid var(--black);
+  position: sticky;
+  top: 0;
+  background: var(--white);
+  z-index: 200;
+}
+.nav-logo { font-family: 'Anton', sans-serif; font-size: 1.6rem; letter-spacing: 0.1em; color: var(--black); text-decoration: none; }
+.nav-logo span { color: var(--red); }
+.nav-links { display: flex; justify-content: center; gap: 32px; list-style: none; }
+.nav-links a { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; color: var(--black); transition: color 0.15s; }
+.nav-links a:hover { color: var(--red); }
+.nav-issue { font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase; color: #999; text-align: right; }
+
+/* ── RED TOP BAR ── */
+.top-bar { height: 5px; background: var(--red); }
+
+/* ── TICKER ── */
+.ticker { background: var(--black); color: var(--white); padding: 9px 0; overflow: hidden; border-bottom: 3px solid var(--black); }
+.ticker-inner { display: flex; gap: 0; animation: ticker 22s linear infinite; white-space: nowrap; width: max-content; }
+.ticker-inner span { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0 40px; }
+.ticker-dot { color: var(--yellow); }
+.ticker-link { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0 40px; color: var(--white); text-decoration: none; transition: color 0.15s; cursor: none; }
+.ticker-link:hover { color: var(--yellow); }
+@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* ── HERO ── */
+.hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 86vh; border-bottom: 3px solid var(--black); }
+.hero-left { padding: 56px 52px; display: flex; flex-direction: column; justify-content: space-between; border-right: 3px solid var(--black); }
+.hero-eyebrow { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--red); margin-bottom: 24px; }
+.hero-title { font-family: 'Anton', sans-serif; font-size: clamp(5rem, 10vw, 9rem); line-height: 0.88; letter-spacing: -0.01em; text-transform: uppercase; }
+.hero-title .r { color: var(--red); }
+.hero-title .b { color: var(--blue); }
+.hero-sub { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 1.05rem; line-height: 1.6; color: #555; margin-top: 32px; max-width: 380px; }
+.hero-date { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: #bbb; }
+.hero-right { display: grid; grid-template-rows: 1fr 1fr; }
+.hero-card { padding: 44px; display: flex; flex-direction: column; justify-content: flex-end; position: relative; overflow: hidden; border-bottom: 3px solid var(--black); transition: filter 0.2s; cursor: pointer; }
+.hero-card:hover { filter: brightness(0.95); }
+.hero-card:last-child { border-bottom: none; }
+.hero-card.music { background: var(--blue); color: var(--white); }
+.hero-card.wish { background: var(--yellow); color: var(--black); }
+.card-bg-num { position: absolute; top: 16px; right: 24px; font-family: 'Anton', sans-serif; font-size: 7rem; opacity: 0.07; line-height: 1; }
+.card-label { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; opacity: 0.65; margin-bottom: 10px; }
+.card-title { font-family: 'Anton', sans-serif; font-size: 1.7rem; line-height: 1; text-transform: uppercase; margin-bottom: 6px; }
+.card-meta { font-size: 0.6rem; letter-spacing: 0.06em; opacity: 0.55; }
+
+/* ── SECTION HEADERS ── */
+.sec-head { display: flex; align-items: baseline; gap: 18px; padding: 32px 48px 20px; border-bottom: 2px solid var(--black); }
+.sec-title { font-family: 'Anton', sans-serif; font-size: 2.4rem; letter-spacing: 0.04em; text-transform: uppercase; }
+.sec-num { font-size: 0.6rem; letter-spacing: 0.2em; color: #aaa; text-transform: uppercase; }
+.sec-line { flex: 1; height: 1px; background: rgba(0,0,0,0.12); }
+
+/* ── MUSIC ── */
+.music-section { border-bottom: 3px solid var(--black); }
+.music-grid { display: grid; grid-template-columns: 1.4fr 1fr; }
+.music-left { padding: 40px 48px; border-right: 2px solid var(--black); }
+.music-left p.label { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: #999; margin-bottom: 14px; }
+.spotify-wrap { border: 2px solid var(--black); margin-bottom: 28px; }
+.album-row { display: flex; gap: 18px; align-items: flex-start; padding: 20px 0; border-bottom: 1px solid rgba(0,0,0,0.08); }
+.album-row:last-child { border-bottom: none; }
+.alb-art { width: 68px; height: 68px; flex-shrink: 0; border: 2px solid var(--black); display: flex; align-items: center; justify-content: center; font-family: 'Anton', sans-serif; font-size: 1.2rem; }
+.alb-art.y { background: var(--yellow); color: var(--black); }
+.alb-rank { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 4px; }
+.alb-name { font-family: 'DM Serif Display', serif; font-size: 1rem; margin-bottom: 3px; }
+.alb-artist { font-size: 0.6rem; letter-spacing: 0.06em; color: #777; text-transform: uppercase; }
+.alb-note { font-size: 0.68rem; font-style: italic; color: #555; margin-top: 6px; font-family: 'DM Serif Display', serif; line-height: 1.5; }
+.music-right { padding: 40px 36px; }
+.mood-label { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: #999; margin-bottom: 16px; display: block; }
+.moods { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+.mood { padding: 6px 14px; border: 1.5px solid var(--black); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.12s; }
+.mood:hover, .mood.on { background: var(--black); color: var(--white); }
+.mood.r { border-color: var(--red); color: var(--red); }
+.mood.r:hover, .mood.r.on { background: var(--red); color: var(--white); }
+.track-list { list-style: none; }
+.track-list li { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.07); font-size: 0.68rem; }
+.track-list li:last-child { border-bottom: none; }
+.t-name { font-family: 'DM Serif Display', serif; font-size: 0.85rem; }
+.t-time { color: #aaa; font-size: 0.58rem; }
+
+/* ── BLOG ── */
+.blog-section { border-bottom: 3px solid var(--black); }
+.blog-grid { display: grid; grid-template-columns: 1.3fr 0.7fr; }
+.blog-main { padding: 44px 52px; border-right: 2px solid var(--black); cursor: pointer; transition: background 0.15s; }
+.blog-main:hover { background: var(--off); }
+.blog-cat { display: inline-block; padding: 4px 10px; border: 1.5px solid var(--red); font-size: 0.52rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 18px; }
+.blog-headline { font-family: 'Anton', sans-serif; font-size: 2.2rem; line-height: 0.95; text-transform: uppercase; margin-bottom: 16px; max-width: 500px; }
+.blog-excerpt { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 0.95rem; line-height: 1.7; color: #555; margin-bottom: 24px; max-width: 480px; }
+.blog-byline { display: flex; justify-content: space-between; align-items: center; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: #999; }
+.read-btn { color: var(--red); border-bottom: 1px solid var(--red); padding-bottom: 2px; cursor: pointer; }
+.blog-side { padding: 44px 36px; display: flex; flex-direction: column; gap: 24px; }
+.coming-card { border: 2px dashed rgba(0,0,0,0.15); padding: 32px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; flex: 1; }
+.coming-plus { font-family: 'Anton', sans-serif; font-size: 3rem; color: rgba(0,0,0,0.1); }
+.coming-txt { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: #bbb; }
+.full-post { display: none; grid-column: 1 / -1; padding: 52px; background: var(--off); border-top: 2px solid var(--black); animation: fadeUp 0.3s ease; }
+.full-post.open { display: block; }
+.fp-cat { font-size: 0.52rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 16px; }
+.fp-title { font-family: 'Anton', sans-serif; font-size: 2.8rem; line-height: 0.95; text-transform: uppercase; margin-bottom: 28px; max-width: 680px; }
+.fp-body { font-family: 'DM Serif Display', serif; font-size: 1.05rem; line-height: 1.9; color: #333; max-width: 660px; }
+.fp-body p { margin-bottom: 22px; }
+.close-btn { margin-top: 32px; padding: 12px 24px; background: none; border: 2px solid var(--black); font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: all 0.15s; }
+.close-btn:hover { background: var(--black); color: var(--white); }
+
+/* ── RECIPE ── */
+.recipe-section { border-bottom: 3px solid var(--black); }
+.recipe-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+.recipe-hero { padding: 44px 48px; background: var(--yellow); border-right: 2px solid var(--black); }
+.recipe-label { font-size: 0.52rem; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(0,0,0,0.45); margin-bottom: 10px; display: block; }
+.recipe-name { font-family: 'Anton', sans-serif; font-size: 2.8rem; line-height: 0.95; text-transform: uppercase; margin-bottom: 16px; }
+.recipe-desc { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 0.9rem; line-height: 1.6; color: #333; margin-bottom: 24px; }
+.recipe-stats { display: flex; gap: 28px; margin-bottom: 24px; }
+.r-stat-n { font-family: 'Anton', sans-serif; font-size: 1.8rem; display: block; line-height: 1; }
+.r-stat-l { font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; color: #666; }
+.recipe-tag { display: inline-block; background: var(--black); color: var(--yellow); padding: 4px 12px; font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; margin-right: 6px; }
+.recipe-col { padding: 36px 32px; border-right: 2px solid var(--black); }
+.recipe-col:last-child { border-right: none; }
+.r-col-label { font-size: 0.52rem; letter-spacing: 0.25em; text-transform: uppercase; color: #999; margin-bottom: 18px; display: block; }
+.ing-list { list-style: none; }
+.ing-list li { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid rgba(0,0,0,0.07); font-size: 0.7rem; }
+.ing-list li:last-child { border-bottom: none; }
+.ing-amt { color: var(--red); font-weight: 700; font-size: 0.65rem; }
+.step-list { list-style: none; counter-reset: steps; }
+.step-list li { counter-increment: steps; padding: 12px 0 12px 38px; border-bottom: 1px solid rgba(0,0,0,0.07); font-size: 0.7rem; line-height: 1.6; position: relative; }
+.step-list li::before { content: counter(steps); position: absolute; left: 0; top: 12px; font-family: 'Anton', sans-serif; font-size: 1rem; color: var(--red); }
+.step-list li:last-child { border-bottom: none; }
+
+/* ── SCREEN ── */
+.screen-section { border-bottom: 3px solid var(--black); }
+.screen-top { display: grid; grid-template-columns: 400px 1fr; border-bottom: 2px solid var(--black); }
+.screen-trailer { position: relative; overflow: hidden; border-right: 3px solid var(--black); min-height: 340px; }
+.screen-trailer iframe { width: 100%; height: 100%; min-height: 340px; border: none; display: block; }
+.screen-review-col { padding: 44px 48px; display: flex; flex-direction: column; justify-content: space-between; }
+.screen-badge { display: inline-block; background: var(--red); color: var(--white); padding: 5px 12px; font-size: 0.52rem; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 14px; width: fit-content; }
+.screen-film-title { font-family: 'Anton', sans-serif; font-size: 2.6rem; line-height: 0.95; text-transform: uppercase; margin-bottom: 6px; }
+.screen-film-year { font-size: 0.6rem; letter-spacing: 0.15em; color: #999; text-transform: uppercase; margin-bottom: 20px; }
+.stars { display: flex; gap: 4px; margin-bottom: 16px; }
+.star { font-size: 1.2rem; color: var(--yellow); cursor: pointer; transition: transform 0.1s; user-select: none; }
+.star.empty { color: #ddd; }
+.star:hover { transform: scale(1.2); }
+.screen-score { font-family: 'Anton', sans-serif; font-size: 0.95rem; color: var(--yellow); margin-left: 8px; }
+.screen-quote { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 1rem; line-height: 1.7; color: #333; border-left: 3px solid var(--red); padding-left: 20px; margin-bottom: 24px; max-width: 480px; }
+.screen-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.s-tag { padding: 5px 12px; border: 1.5px solid var(--black); font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.screen-meta { display: flex; gap: 28px; font-size: 0.6rem; letter-spacing: 0.06em; color: #999; text-transform: uppercase; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 18px; }
+.screen-meta strong { color: var(--black); display: block; margin-bottom: 2px; }
+.screen-log { display: grid; grid-template-columns: repeat(5, 1fr); }
+.log-card { padding: 28px 24px; border-right: 2px solid var(--black); position: relative; transition: background 0.15s; cursor: pointer; }
+.log-card:last-child { border-right: none; }
+.log-card:hover { background: var(--off); }
+.log-poster { width: 100%; aspect-ratio: 2/3; border: 2px solid var(--black); display: flex; align-items: center; justify-content: center; font-family: 'Anton', sans-serif; font-size: 2rem; margin-bottom: 14px; position: relative; overflow: hidden; }
+.log-poster.c1 { background: var(--blue); color: var(--white); }
+.log-poster.c2 { background: var(--black); color: var(--white); }
+.log-poster.c3 { background: var(--red); color: var(--white); }
+.log-poster.c4 { background: #2d6a2d; color: var(--white); }
+.log-poster.c5 { background: #5a1a5a; color: var(--white); }
+.log-poster-type { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.6); color: var(--white); font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 8px; text-align: center; font-family: 'Space Mono', monospace; }
+.log-status { position: absolute; top: 18px; right: 16px; font-size: 0.48rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 3px 7px; border: 1px solid; }
+.log-status.w { border-color: var(--blue); color: var(--blue); }
+.log-status.s { border-color: #999; color: #999; }
+.log-status.wt { border-color: var(--red); color: var(--red); }
+.log-title { font-family: 'DM Serif Display', serif; font-size: 0.9rem; line-height: 1.2; margin-bottom: 4px; }
+.log-year { font-size: 0.55rem; letter-spacing: 0.1em; color: #999; text-transform: uppercase; margin-bottom: 8px; }
+.log-stars { display: flex; gap: 2px; }
+.ls { font-size: 0.7rem; color: var(--yellow); }
+.ls.e { color: #ddd; }
+
+/* ── WISHLIST ── */
+.wish-section { border-bottom: 3px solid var(--black); }
+.wish-bar { display: flex; align-items: center; gap: 20px; padding: 14px 48px; background: var(--blue); color: var(--white); border-bottom: 2px solid var(--black); }
+.wish-bar h3 { font-family: 'Anton', sans-serif; font-size: 0.95rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.wish-bar p { font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.6; }
+.wish-track-wrap { overflow: hidden; position: relative; border-top: 2px solid var(--black); }
+.wish-track { display: flex; transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+.wish-card { min-width: 25%; flex-shrink: 0; padding: 32px 28px; border-right: 2px solid var(--black); position: relative; transition: background 0.15s; cursor: none; }
+.wish-card:hover { background: var(--off); }
+.wish-carousel-controls { display: flex; align-items: center; justify-content: space-between; padding: 16px 28px; border-top: 2px solid var(--black); background: var(--white); }
+.wish-arrows { display: flex; gap: 12px; }
+.wish-arrow { width: 44px; height: 44px; border: 2px solid var(--black); background: none; font-size: 1.1rem; cursor: none; display: flex; align-items: center; justify-content: center; transition: all 0.15s; font-family: 'Space Mono', monospace; }
+.wish-arrow:hover { background: var(--black); color: var(--white); }
+.wish-dots { display: flex; gap: 8px; align-items: center; }
+.wish-dot-btn { width: 8px; height: 8px; border-radius: 50%; background: #ddd; border: none; cursor: none; transition: all 0.15s; padding: 0; }
+.wish-dot-btn.active { background: var(--red); transform: scale(1.3); }
+.wish-count { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: #aaa; }
+.wish-card { padding: 32px 28px; border-right: 2px solid var(--black); position: relative; transition: background 0.15s; cursor: pointer; }
+.wish-card:last-child { border-right: none; }
+.wish-card:hover { background: var(--off); }
+.wish-n { font-family: 'Anton', sans-serif; font-size: 4rem; opacity: 0.06; position: absolute; top: 12px; right: 16px; line-height: 1; }
+.wish-cat { font-size: 0.52rem; letter-spacing: 0.2em; text-transform: uppercase; color: #aaa; margin-bottom: 10px; }
+.wish-name { font-family: 'DM Serif Display', serif; font-size: 1.1rem; line-height: 1.2; margin-bottom: 8px; }
+.wish-brand { font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: #888; margin-bottom: 14px; }
+.wish-price { font-family: 'Anton', sans-serif; font-size: 1.5rem; color: var(--red); }
+.wish-dot { position: absolute; bottom: 20px; right: 20px; width: 9px; height: 9px; border-radius: 50%; }
+.wish-dot.h { background: var(--red); }
+.wish-dot.m { background: var(--yellow); border: 1px solid #ccc; }
+.wish-dot.l { background: #ddd; }
+
+/* ── WORK & PLAY ── */
+.wp-section { border-bottom: 3px solid var(--black); }
+.wp-grid { display: grid; grid-template-columns: 1fr 1fr; }
+.work-col { padding: 52px; background: var(--black); color: var(--white); border-right: 3px solid var(--black); }
+.play-col { padding: 52px; background: var(--white); }
+.wp-sub { font-size: 0.52rem; letter-spacing: 0.28em; text-transform: uppercase; opacity: 0.4; margin-bottom: 10px; display: block; }
+.wp-big { font-family: 'Anton', sans-serif; font-size: 3.2rem; line-height: 0.9; text-transform: uppercase; margin-bottom: 36px; }
+.wp-big .r { color: var(--red); }
+.wp-big .b { color: var(--blue); }
+.play-bio { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 0.9rem; line-height: 1.7; color: #666; margin-bottom: 32px; max-width: 420px; }
+
+/* cowboy action buttons */
+.cowboy-btns { display: flex; flex-direction: column; gap: 0; border: 2px solid rgba(255,255,255,0.15); max-width: 380px; }
+.cowboy-btn {
+  display: flex; align-items: center; gap: 18px;
+  padding: 20px 24px;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: none;
+  width: 100%;
+  cursor: none;
+  transition: all 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+.cowboy-btn:last-child { border-bottom: none; }
+.cowboy-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--yellow);
+  transform: translateX(-101%);
+  transition: transform 0.2s ease;
+}
+.cowboy-btn:hover::before { transform: translateX(0); }
+.cowboy-btn:hover { color: var(--black); }
+.cowboy-btn:hover .cb-icon { filter: invert(0); }
+.cb-icon { font-size: 1.3rem; flex-shrink: 0; position: relative; z-index: 1; }
+.cb-text { position: relative; z-index: 1; flex: 1; }
+.cb-title { display: block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 2px; }
+.cb-sub { display: block; font-size: 0.52rem; letter-spacing: 0.08em; opacity: 0.5; }
+.cb-arrow { position: relative; z-index: 1; font-size: 0.9rem; opacity: 0.4; transition: opacity 0.15s, transform 0.15s; }
+.cowboy-btn:hover .cb-arrow { opacity: 1; transform: translateX(4px); }
+
+.work-stamp {
+  margin-top: 36px;
+  display: inline-block;
+  border: 3px solid rgba(255,255,255,0.12);
+  padding: 16px 24px;
+  position: relative;
+}
+.work-stamp::before {
+  content: '★ VERIFIED ★';
+  position: absolute;
+  top: -9px; left: 50%; transform: translateX(-50%);
+  background: var(--black);
+  padding: 0 8px;
+  font-size: 0.45rem;
+  letter-spacing: 0.25em;
+  color: var(--yellow);
+}
+.stamp-row { display: flex; gap: 32px; }
+.ws-n { font-family: 'Anton', sans-serif; font-size: 1.8rem; color: var(--yellow); display: block; line-height: 1; }
+.ws-l { font-size: 0.48rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-top: 3px; display: block; }
+.play-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.play-card { border: 2px solid var(--black); padding: 20px; position: relative; transition: background 0.15s; }
+.play-card:hover { background: var(--off); }
+.play-icon { font-size: 1.4rem; margin-bottom: 8px; display: block; }
+.play-title { font-family: 'Unbounded', sans-serif; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
+.play-desc { font-size: 0.62rem; line-height: 1.6; color: #777; }
+.play-badge { position: absolute; top: 12px; right: 12px; font-size: 0.45rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue); border: 1px solid var(--blue); padding: 2px 6px; }
+
+/* ── CURRENTLY BAR ── */
+.currently { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--yellow); border-top: 3px solid var(--black); border-bottom: 3px solid var(--black); }
+.cur-item { padding: 20px 28px; border-right: 2px solid var(--black); }
+.cur-item:last-child { border-right: none; }
+.cur-label { font-size: 0.48rem; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(0,0,0,0.4); margin-bottom: 5px; display: block; }
+.cur-val { font-family: 'DM Serif Display', serif; font-size: 0.88rem; line-height: 1.3; }
+
+/* ── FOOTER ── */
+footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px solid var(--black); }
+.f-col { padding: 40px; border-right: 2px solid var(--black); }
+.f-col:last-child { border-right: none; }
+.f-logo { font-family: 'Anton', sans-serif; font-size: 2.8rem; line-height: 1; margin-bottom: 10px; }
+.f-logo span { color: var(--red); }
+.f-desc { font-size: 0.65rem; line-height: 1.7; color: #777; max-width: 220px; }
+.f-copy { font-size: 0.55rem; color: #bbb; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 18px; }
+.f-label { font-size: 0.52rem; letter-spacing: 0.25em; text-transform: uppercase; color: #aaa; margin-bottom: 14px; display: block; }
+.f-links { list-style: none; }
+.f-links li { padding: 7px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
+.f-links a { font-size: 0.68rem; text-decoration: none; color: var(--black); letter-spacing: 0.04em; transition: color 0.15s; }
+.f-links a:hover { color: var(--red); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes navmarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.hero-left, .hero-card { animation: fadeUp 0.5s ease both; }
+.hero-card:nth-child(2) { animation-delay: 0.1s; }
+
+/* ── WEATHER / TIME ── */
+.weather-bar { display: flex; align-items: center; justify-content: space-between; padding: 12px 36px; background: var(--black); color: var(--white); border-bottom: 3px solid var(--black); }
+.weather-left { display: flex; align-items: center; gap: 28px; }
+.weather-icon { font-size: 1.4rem; }
+.weather-temp { font-family: 'Anton', sans-serif; font-size: 1.6rem; color: var(--yellow); line-height: 1; }
+.weather-desc { font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 2px; }
+.weather-location { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+.weather-right { text-align: right; }
+.weather-time { font-family: 'Anton', sans-serif; font-size: 1.8rem; color: var(--white); line-height: 1; letter-spacing: 0.05em; }
+.weather-date { font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 3px; }
+.weather-extras { display: flex; gap: 24px; }
+.w-extra { text-align: center; }
+.w-extra-val { font-family: 'Anton', sans-serif; font-size: 0.95rem; color: var(--white); display: block; }
+.w-extra-label { font-size: 0.48rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+
+/* ── HERO TITLE TUMBLE ── */
+.word-wrap { display: inline-block; }
+.tl {
+  display: inline-block;
+  opacity: 0;
+  animation: tumbleIn 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+@keyframes tumbleIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-120px) rotate(var(--r, -25deg)) scale(1.3);
+    filter: blur(2px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(12px) rotate(calc(var(--r, -25deg) * -0.3)) scale(0.97);
+    filter: blur(0px);
+  }
+  80% {
+    transform: translateY(-5px) rotate(2deg) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg) scale(1);
+    filter: blur(0px);
+  }
+}
+
+/* ── DANCING LETTERS ── */
+.dance-title { cursor: none; }
+.dl {
+  display: inline-block;
+  transition: transform 0.1s ease, color 0.1s ease;
+}
+.dl.bounce {
+  animation: letterBounce 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+}
+@keyframes letterBounce {
+  0%   { transform: translateY(0) rotate(0deg) scale(1); color: inherit; }
+  15%  { transform: translateY(-18px) rotate(-8deg) scale(1.15); color: var(--red); }
+  30%  { transform: translateY(-28px) rotate(5deg) scale(1.2); color: var(--blue); }
+  50%  { transform: translateY(-14px) rotate(-3deg) scale(1.1); color: var(--yellow); }
+  70%  { transform: translateY(-6px) rotate(2deg) scale(1.05); color: var(--red); }
+  85%  { transform: translateY(-2px) rotate(-1deg) scale(1.02); }
+  100% { transform: translateY(0) rotate(0deg) scale(1); color: inherit; }
+}
+
+/* ── SHARE BUTTON ── */
+.share-wrap {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.share-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--black);
+  color: var(--white);
+  border: 3px solid var(--yellow);
+  padding: 12px 22px;
+  font-family: 'Anton', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: none;
+  transition: all 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+
+.share-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--yellow);
+  transform: translateX(-101%);
+  transition: transform 0.2s ease;
+  z-index: 0;
+}
+
+.share-btn:hover::before { transform: translateX(0); }
+.share-btn:hover { color: var(--black); }
+.share-btn:hover .share-icon { filter: invert(1); }
+
+.share-btn span, .share-btn svg { position: relative; z-index: 1; }
+
+.share-icon { width: 18px; height: 18px; flex-shrink: 0; transition: filter 0.15s; }
+
+.share-options {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+}
+
+.share-options.open { display: flex; }
+
+.share-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--white);
+  color: var(--black);
+  border: 2px solid var(--black);
+  padding: 9px 18px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: none;
+  text-decoration: none;
+  transition: all 0.15s;
+  animation: popIn 0.2s ease both;
+  white-space: nowrap;
+}
+
+.share-opt:hover { background: var(--black); color: var(--white); }
+.share-opt.copied { background: var(--red); color: var(--white); border-color: var(--red); }
+
+@keyframes popIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.share-opt:nth-child(1) { animation-delay: 0.05s; }
+.share-opt:nth-child(2) { animation-delay: 0.1s; }
+.share-opt:nth-child(3) { animation-delay: 0.15s; }
+
+.share-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--red);
+  color: var(--white);
+  font-family: 'Anton', sans-serif;
+  font-size: 0.5rem;
+  letter-spacing: 0.1em;
+  padding: 2px 6px;
+  text-transform: uppercase;
+}
+
+/* ── MYSPACE PLAY CARDS ── */
+.myspace-card { position: relative; overflow: hidden; }
+.myspace-num { font-family: 'Anton', sans-serif; font-size: 5rem; position: absolute; bottom: -10px; right: 10px; line-height: 1; pointer-events: none; }
+.myspace-icon-block { width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+.myspace-title { font-family: 'Anton', sans-serif; font-size: 1.2rem; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px; }
+.myspace-sub { font-size: 0.65rem; line-height: 1.6; margin-bottom: 16px; }
+.myspace-badge { font-size: 0.48rem; letter-spacing: 0.2em; text-transform: uppercase; border: 1px solid; padding: 3px 8px; }
+
+/* ── MYSPACE PLAY CARDS ── */
+.myspace-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.ms-card {
+  border: 2px solid var(--black);
+  padding: 20px;
+  position: relative;
+  background: var(--white);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.ms-card:hover { transform: translateY(-3px); box-shadow: 4px 4px 0 var(--black); }
+.ms-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.ms-icon-box { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ms-title { font-family: 'Unbounded', sans-serif; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 3px; }
+.ms-status { font-size: 0.48rem; letter-spacing: 0.15em; text-transform: uppercase; color: #999; }
+.ms-desc { font-size: 0.62rem; line-height: 1.6; color: #777; margin-top: 10px; }
+.ms-visualizer { display: flex; gap: 3px; align-items: flex-end; height: 36px; margin-bottom: 4px; }
+.ms-bar {
+  flex: 1;
+  background: var(--accent, var(--red));
+  border-radius: 1px;
+  height: var(--h, 50%);
+  animation: barDance 0.8s ease-in-out infinite alternate;
+  animation-delay: var(--delay, 0s);
+  opacity: 0.7;
+}
+@keyframes barDance {
+  from { height: calc(var(--h) * 0.4); opacity: 0.5; }
+  to   { height: var(--h); opacity: 1; }
+}
+.ms-snake { margin: 8px 0; }
+.ms-progress-wrap { margin: 8px 0; }
+
+/* ════════════════════════════════
+   COWBOY MINI GAME
+════════════════════════════════ */
+.game-section { border-bottom: 3px solid var(--black); background: var(--black); }
+.game-inner { padding: 48px; display: flex; flex-direction: column; align-items: center; }
+.game-title-wrap { text-align: center; margin-bottom: 8px; }
+.game-eyebrow { font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--yellow); margin-bottom: 12px; display: block; }
+.game-heading { font-family: 'Anton', sans-serif; font-size: 3rem; color: var(--white); text-transform: uppercase; letter-spacing: 0.08em; }
+.game-heading span { color: var(--red); }
+.game-canvas-wrap { position: relative; width: 100%; max-width: 700px; margin: 28px 0; }
+#game-canvas { width: 100%; border: 3px solid var(--yellow); display: block; background: #111; cursor: none; }
+.game-ui { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 700px; margin-bottom: 16px; }
+.game-score { font-family: 'Anton', sans-serif; font-size: 1.4rem; color: var(--yellow); letter-spacing: 0.1em; }
+.game-lives { font-size: 1rem; letter-spacing: 0.1em; }
+.game-btn {
+  font-family: 'Anton', sans-serif; font-size: 0.9rem; letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 14px 36px; background: var(--yellow); color: var(--black); border: 3px solid var(--yellow);
+  cursor: none; transition: all 0.15s; margin-top: 8px;
+}
+.game-btn:hover { background: var(--black); color: var(--yellow); }
+.game-hint { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-top: 12px; }
+
+/* ════════════════════════════════
+   MOBILE RESPONSIVE
+════════════════════════════════ */
+@media (max-width: 768px) {
+  nav { padding: 0 16px; height: 48px; }
+  .nav-logo { font-size: 1.2rem; }
+  .nav-issue { display: none; }
+
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left { padding: 36px 24px; border-right: none; border-bottom: 3px solid var(--black); }
+  .hero-title { font-size: clamp(3.5rem, 16vw, 6rem); }
+  .hero-right { grid-template-rows: auto auto; }
+  .hero-card { padding: 28px 24px; min-height: 140px; }
+
+  .weather-bar { padding: 12px 16px; flex-wrap: wrap; gap: 12px; }
+  .weather-extras { gap: 14px; }
+
+  .sec-head { padding: 24px 20px 16px; }
+  .sec-title { font-size: 1.6rem; }
+
+  .music-grid { grid-template-columns: 1fr; }
+  .music-left { padding: 24px 20px; border-right: none; border-bottom: 2px solid var(--black); }
+  .music-right { padding: 24px 20px; }
+
+  .blog-grid { grid-template-columns: 1fr; }
+  .blog-main { padding: 28px 20px; border-right: none; border-bottom: 2px solid var(--black); }
+  .blog-side { padding: 20px; flex-direction: row; }
+  .coming-card { min-height: 100px; }
+  .full-post { padding: 28px 20px; }
+  .fp-title { font-size: 1.8rem; }
+
+  .recipe-grid { grid-template-columns: 1fr; }
+  .recipe-hero { border-right: none; border-bottom: 2px solid var(--black); }
+  .recipe-col { border-right: none; border-bottom: 2px solid var(--black); }
+  .recipe-col:last-child { border-bottom: none; }
+
+  .screen-top { grid-template-columns: 1fr; }
+  .screen-trailer { min-height: 220px; border-right: none; border-bottom: 3px solid var(--black); }
+  .screen-trailer iframe { min-height: 220px; }
+  .screen-review-col { padding: 28px 20px; }
+  .screen-log { grid-template-columns: repeat(2, 1fr); }
+  .log-card:nth-child(even) { border-right: none; }
+  .log-card { padding: 20px 16px; }
+
+  .wish-card { min-width: 80%; }
+
+  .wp-grid { grid-template-columns: 1fr; }
+  .work-col { border-right: none; border-bottom: 3px solid var(--black); padding: 32px 20px; }
+  .play-col { padding: 32px 20px; }
+  .myspace-grid { grid-template-columns: 1fr; }
+
+  .currently { grid-template-columns: 1fr 1fr; }
+  .cur-item:nth-child(odd) { border-right: 2px solid var(--black); }
+  .cur-item:nth-child(even) { border-right: none; }
+  .cur-item { border-bottom: 1px solid rgba(0,0,0,0.1); }
+
+  footer { grid-template-columns: 1fr; }
+  .f-col { border-right: none; border-bottom: 2px solid var(--black); padding: 28px 20px; }
+  .f-col:last-child { border-bottom: none; }
+
+  .game-inner { padding: 28px 16px; }
+  .game-heading { font-size: 2rem; }
+
+  .share-wrap { bottom: 16px; right: 16px; }
+  .share-btn { padding: 10px 16px; font-size: 0.7rem; }
+
+  .ticker-inner span, .ticker-link { padding: 0 24px; }
+}
+
+@media (max-width: 480px) {
+  .hero-title { font-size: clamp(3rem, 18vw, 4.5rem); }
+  .screen-log { grid-template-columns: repeat(2, 1fr); }
+  .currently { grid-template-columns: 1fr; }
+  .cur-item { border-right: none !important; }
+  .wish-card { min-width: 90%; }
+}
+
+/* ── PAPER PLANE ── */
+#paper-plane {
+  position: fixed;
+  z-index: 500;
+  pointer-events: auto;
+  cursor: none;
+  transition: none;
+  filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+}
+#paper-plane svg { display: block; }
+#paper-plane:hover { filter: drop-shadow(0 0 8px var(--yellow)); }
+
+.plane-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 8000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.plane-modal-overlay.open { display: flex; }
+.plane-modal {
+  background: var(--white);
+  border: 3px solid var(--black);
+  max-width: 480px;
+  width: 90%;
+  position: relative;
+  animation: popIn 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.plane-modal-header {
+  background: var(--black);
+  color: var(--white);
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.plane-modal-icon {
+  font-size: 1.6rem;
+}
+.plane-modal-title {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.plane-modal-sub {
+  font-size: 0.52rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-top: 4px;
+}
+.plane-modal-body { padding: 28px; }
+.plane-modal-desc {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: #555;
+  margin-bottom: 20px;
+}
+.plane-form { display: flex; flex-direction: column; gap: 10px; }
+.plane-input {
+  padding: 14px 16px;
+  border: 2px solid var(--black);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  background: var(--white);
+  outline: none;
+  width: 100%;
+  transition: border-color 0.15s;
+}
+.plane-input:focus { border-color: var(--red); }
+.plane-submit {
+  padding: 14px;
+  background: var(--black);
+  color: var(--white);
+  border: 2px solid var(--black);
+  font-family: 'Anton', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: none;
+  transition: all 0.15s;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.plane-submit::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--red);
+  transform: translateX(-101%);
+  transition: transform 0.2s ease;
+}
+.plane-submit:hover::before { transform: translateX(0); }
+.plane-submit span { position: relative; z-index: 1; }
+.plane-close {
+  position: absolute;
+  top: 14px; right: 14px;
+  background: none; border: none;
+  color: var(--white);
+  font-size: 1.2rem;
+  cursor: none;
+  opacity: 0.6;
+  transition: opacity 0.15s;
+  font-family: 'Space Mono', monospace;
+}
+.plane-close:hover { opacity: 1; }
+.plane-success {
+  text-align: center;
+  padding: 16px 0 8px;
+  display: none;
+}
+.plane-success-icon { font-size: 2rem; margin-bottom: 8px; }
+.plane-success-msg {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--black);
+  margin-bottom: 6px;
+}
+.plane-success-sub {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #999;
+}
+/* hidden mailchimp bot field */
+.mc-bot { position: absolute; left: -5000px; }
+</style>
+</head>
+<body>
+
+<div class="top-bar"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">KAI<span>.</span>TODAY</a>
+  <div style="overflow:hidden;flex:1;margin:0 32px;">
+    <div style="display:flex;gap:0;animation:navmarquee 18s linear infinite;white-space:nowrap;width:max-content;">
+      <span style="font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#999;padding:0 40px;">You are now reading &mdash; Malakai Patrick Today</span>
+      <span style="font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#999;padding:0 40px;">You are now reading &mdash; Malakai Patrick Today</span>
+      <span style="font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#999;padding:0 40px;">You are now reading &mdash; Malakai Patrick Today</span>
+      <span style="font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#999;padding:0 40px;">You are now reading &mdash; Malakai Patrick Today</span>
+    </div>
+  </div>
+  <span class="nav-issue">Vol. 01 &mdash; Spring 2026</span>
+</nav>
+
+<!-- WEATHER BAR -->
+<div class="weather-bar" id="weather-bar">
+  <div class="weather-left">
+    <span class="weather-icon" id="w-icon">⏳</span>
+    <div>
+      <div class="weather-temp" id="w-temp">--°</div>
+      <div class="weather-desc" id="w-desc">Fetching weather...</div>
+      <div class="weather-location" id="w-loc">Locating...</div>
+    </div>
+    <div class="weather-extras">
+      <div class="w-extra"><span class="w-extra-val" id="w-feels">--°</span><span class="w-extra-label">Feels Like</span></div>
+      <div class="w-extra"><span class="w-extra-val" id="w-humid">--%</span><span class="w-extra-label">Humidity</span></div>
+      <div class="w-extra"><span class="w-extra-val" id="w-wind">-- mph</span><span class="w-extra-label">Wind</span></div>
+    </div>
+  </div>
+  <div class="weather-right">
+    <div class="weather-time" id="w-time">--:--</div>
+    <div class="weather-date" id="w-date">Loading...</div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>Music <span class="ticker-dot">✦</span></span>
+    <span>Blog <span class="ticker-dot">✦</span></span>
+    <span>Recipes <span class="ticker-dot">✦</span></span>
+    <span>Wishlist <span class="ticker-dot">✦</span></span>
+    <span>Kai Patrick <span class="ticker-dot">✦</span></span>
+    <span>malakaipatrick.today <span class="ticker-dot">✦</span></span>
+    <span>Updated Weekly <span class="ticker-dot">✦</span></span>
+    <span>Music <span class="ticker-dot">✦</span></span>
+    <span>Blog <span class="ticker-dot">✦</span></span>
+    <span>Recipes <span class="ticker-dot">✦</span></span>
+    <span>Wishlist <span class="ticker-dot">✦</span></span>
+    <span>Kai Patrick <span class="ticker-dot">✦</span></span>
+    <span>malakaipatrick.today <span class="ticker-dot">✦</span></span>
+    <span>Updated Weekly <span class="ticker-dot">✦</span></span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div>
+      <p class="hero-eyebrow">★ Personal magazine &mdash; updated every friday</p>
+      <h1 class="hero-title" id="hero-title">
+        <span class="word-wrap"><span class="tl">W</span><span class="tl">H</span><span class="tl">A</span><span class="tl">T</span></span><br>
+        <span class="word-wrap"><span class="tl">I</span><span class="tl">'</span><span class="tl">M</span></span> <span class="word-wrap"><span class="tl r">I</span><span class="tl r">N</span></span><br>
+        <span class="word-wrap"><span class="tl b">T</span><span class="tl b">O</span></span><br>
+        <span class="word-wrap"><span class="tl">R</span><span class="tl">I</span><span class="tl">G</span><span class="tl">H</span><span class="tl">T</span></span><br>
+        <span class="word-wrap"><span class="tl">N</span><span class="tl">O</span><span class="tl">W</span><span class="tl">.</span></span>
+      </h1>
+
+    </div>
+    <p class="hero-date">Week of March 28, 2026 &mdash; Lincoln, NE</p>
+  </div>
+  <div class="hero-right">
+    <div class="hero-card music">
+      <span class="card-bg-num">♫</span>
+      <span class="card-label">🎵 Album of the week</span>
+      <p class="card-title">Bully &mdash; Ye</p>
+      <p class="card-meta">Album &middot; On repeat since it dropped</p>
+    </div>
+    <div class="hero-card wish" id="news-card">
+      <span class="card-bg-num">📰</span>
+      <span class="card-label" style="color:rgba(0,0,0,0.5);">📰 Pop culture right now</span>
+      <p class="card-title" id="news-headline" style="font-size:1.1rem;line-height:1.3;margin-bottom:8px;">Loading latest...</p>
+      <p class="card-meta" id="news-source" style="color:rgba(0,0,0,0.45);">Fetching headlines</p>
+      <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;" id="news-dots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- MUSIC -->
+<section class="music-section" id="music">
+  <div class="sec-head">
+    <h2 class="sec-title dance-title" id="listening-title">
+      <span class="dl">W</span><span class="dl">h</span><span class="dl">a</span><span class="dl">t</span><span class="dl">&nbsp;</span><span class="dl">I</span><span class="dl">'</span><span class="dl">m</span><span class="dl">&nbsp;</span><span class="dl">L</span><span class="dl">i</span><span class="dl">s</span><span class="dl">t</span><span class="dl">e</span><span class="dl">n</span><span class="dl">i</span><span class="dl">n</span><span class="dl">g</span><span class="dl">&nbsp;</span><span class="dl">T</span><span class="dl">o</span>
+    </h2>
+    <span class="sec-num">01 / Music</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="music-grid">
+    <div class="music-left">
+      <p class="label">★ Album of the week</p>
+      <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid rgba(0,0,0,0.08);">
+        <div class="alb-art y" style="width:88px;height:88px;flex-shrink:0;font-size:1.6rem;">YE</div>
+        <div style="flex:1;">
+          <p class="alb-rank">★ Album of the week</p>
+          <p class="alb-name" style="font-size:1.2rem;margin-bottom:2px;">Bully</p>
+          <p class="alb-artist" style="margin-bottom:10px;">Ye</p>
+          <p class="alb-note">Ye said what he said and the production did not miss. Processing it still.</p>
+          <div style="margin-top:14px;background:#191414;padding:12px 16px;display:flex;align-items:center;gap:14px;">
+            <button id="preview-btn" onclick="togglePreview()" style="width:36px;height:36px;border-radius:50%;background:#1DB954;border:none;cursor:none;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;transition:transform 0.15s;" onmouseenter="this.style.transform='scale(1.1)'" onmouseleave="this.style.transform='scale(1)'">▶</button>
+            <div style="flex:1;">
+              <div style="font-size:0.6rem;color:white;letter-spacing:0.05em;margin-bottom:4px;" id="preview-title">Bomb — Ye</div>
+              <div style="height:3px;background:rgba(255,255,255,0.15);border-radius:2px;position:relative;">
+                <div id="preview-bar" style="height:100%;background:#1DB954;border-radius:2px;width:0%;transition:width 0.1s linear;"></div>
+              </div>
+              <div style="font-size:0.55rem;color:rgba(255,255,255,0.4);margin-top:4px;letter-spacing:0.1em;" id="preview-time">0:00 / 0:30</div>
+            </div>
+            <span style="font-size:0.5rem;color:#1DB954;letter-spacing:0.15em;text-transform:uppercase;">Spotify</span>
+          </div>
+          <audio id="preview-audio" preload="none"></audio>
+          <p style="font-size:0.5rem;color:#aaa;letter-spacing:0.1em;text-transform:uppercase;margin-top:6px;">30 sec preview via Spotify</p>
+        </div>
+      </div>
+      <p class="label">Your rotation</p>
+      <div class="spotify-wrap">
+        <iframe style="border-radius:0;" src="https://open.spotify.com/embed/playlist/37i9dQZF1Epf0sbFHjwgi5?utm_source=generator&theme=0" width="100%" height="232" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+    </div>
+    <div class="music-right">
+      <span class="mood-label">Mood Tags</span>
+      <div class="moods">
+        <span class="mood r on">Late Night</span>
+        <span class="mood">Focus</span>
+        <span class="mood r">Introspective</span>
+        <span class="mood">Drive</span>
+        <span class="mood">Hype</span>
+        <span class="mood">Chill</span>
+        <span class="mood r">Emotional</span>
+        <span class="mood">Gym</span>
+      </div>
+      <span class="mood-label">Current Singles</span>
+      <ul class="track-list">
+        <li><span class="t-name">Bomb</span><span class="t-time">2:47</span></li>
+        <li><span class="t-name">Mast</span><span class="t-time">3:12</span></li>
+        <li><span class="t-name">Futura Free</span><span class="t-time">10:27</span></li>
+        <li><span class="t-name">Good Days</span><span class="t-time">4:39</span></li>
+        <li><span class="t-name">Noid</span><span class="t-time">2:56</span></li>
+        <li><span class="t-name">30 For 30</span><span class="t-time">3:22</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section class="blog-section" id="blog">
+  <div class="sec-head">
+    <h2 class="sec-title">From The Blog</h2>
+    <span class="sec-num">02 / Writing</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="blog-grid">
+    <div class="blog-main" onclick="togglePost()">
+      <span class="blog-cat">Opinion</span>
+      <h3 class="blog-headline">Scorpios and the Color Yellow: A Theory</h3>
+      <p class="blog-excerpt">Everyone says Scorpios are dark, mysterious, all black everything. But I think we've been misread. Yellow is the most Scorpio color there is — it demands attention without asking for it, it's warm but it'll blind you, and nobody expects it from us. That's exactly the point.</p>
+      <div class="blog-byline">
+        <span>March 28, 2026</span>
+        <span class="read-btn">Read the full post →</span>
+      </div>
+    </div>
+    <div class="blog-side">
+      <div class="coming-card">
+        <span class="coming-plus">+</span>
+        <span class="coming-txt">Next post dropping soon</span>
+      </div>
+      <div class="coming-card">
+        <span class="coming-plus">+</span>
+        <span class="coming-txt">And another one</span>
+      </div>
+    </div>
+    <div class="full-post" id="full-post">
+      <p class="fp-cat">Opinion &middot; March 28, 2026</p>
+      <h2 class="fp-title">Scorpios and the Color Yellow: A Theory</h2>
+      <div class="fp-body">
+        <p>Everyone says Scorpios are dark. All black everything, mysterious, brooding, scary. And yeah — some of that's true. But I think we've been misread, and I think the color yellow proves it.</p>
+        <p>Yellow is the most Scorpio color there is. Think about it. It demands attention without asking for it. It's warm on the surface but stare at it long enough and it'll genuinely hurt your eyes. It shows up unexpected. Nobody sees yellow coming the way they see red or blue coming — and that element of surprise is deeply, fundamentally Scorpio.</p>
+        <p>We're not dark because we love the dark. We're dark because we understand contrast. And nothing hits harder than yellow on black. That's not coincidence. That's us.</p>
+        <p>Replace this with your actual writing when you're ready. The bones of the argument are here — take it wherever you want to go.</p>
+      </div>
+      <button class="close-btn" onclick="togglePost()">↑ Close Post</button>
+    </div>
+  </div>
+</section>
+
+<!-- RECIPE -->
+<section class="recipe-section" id="recipe">
+  <div class="sec-head">
+    <h2 class="sec-title">Recipe of the Week</h2>
+    <span class="sec-num">03 / Food</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="recipe-grid">
+    <div class="recipe-hero">
+      <span class="recipe-label">This week I made</span>
+      <h3 class="recipe-name">Tub In A Sub</h3>
+      <p class="recipe-desc">All the flavor of an Italian sub, none of the bread. Meat, cheese, peppers, olives — tossed in dressing and eaten straight from the container. Lazy genius.</p>
+      <div class="recipe-stats">
+        <div><span class="r-stat-n">10</span><span class="r-stat-l">Mins</span></div>
+        <div><span class="r-stat-n">2</span><span class="r-stat-l">Servings</span></div>
+        <div><span class="r-stat-n">★☆☆</span><span class="r-stat-l">Difficulty</span></div>
+      </div>
+      <div>
+        <span class="recipe-tag">Italian</span>
+        <span class="recipe-tag">No Cook</span>
+        <span class="recipe-tag">Low Effort</span>
+      </div>
+    </div>
+    <div class="recipe-col">
+      <span class="r-col-label">Ingredients</span>
+      <ul class="ing-list">
+        <li><span>Ham, sliced</span><span class="ing-amt">4 oz</span></li>
+        <li><span>Salami</span><span class="ing-amt">4 oz</span></li>
+        <li><span>Pepperoni</span><span class="ing-amt">2 oz</span></li>
+        <li><span>Provolone, chopped</span><span class="ing-amt">4 oz</span></li>
+        <li><span>Iceberg lettuce</span><span class="ing-amt">2 cups</span></li>
+        <li><span>Banana peppers</span><span class="ing-amt">¼ cup</span></li>
+        <li><span>Red onion, sliced</span><span class="ing-amt">¼ cup</span></li>
+        <li><span>Cherry tomatoes</span><span class="ing-amt">½ cup</span></li>
+        <li><span>Italian dressing</span><span class="ing-amt">3 tbsp</span></li>
+        <li><span>Red wine vinegar</span><span class="ing-amt">1 tbsp</span></li>
+        <li><span>Dried oregano</span><span class="ing-amt">1 tsp</span></li>
+      </ul>
+    </div>
+    <div class="recipe-col">
+      <span class="r-col-label">Steps</span>
+      <ol class="step-list">
+        <li>Chop all meats and cheese into bite-sized pieces and throw into a large bowl or container.</li>
+        <li>Add shredded lettuce, banana peppers, onion, tomatoes, and olives on top.</li>
+        <li>Drizzle Italian dressing and red wine vinegar. Sprinkle oregano.</li>
+        <li>Toss everything together until evenly coated. Taste and adjust.</li>
+        <li>Eat straight from the tub. That is the whole point.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- SCREEN -->
+<section class="screen-section" id="screen">
+  <div class="sec-head">
+    <h2 class="sec-title">What I'm Watching</h2>
+    <span class="sec-num">04 / Screen</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="screen-top">
+    <div class="screen-trailer">
+      <iframe src="https://www.youtube.com/embed/0pdqf4P9MB8?rel=0&modestbranding=1" title="La La Land Trailer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="screen-review-col">
+      <div>
+        <span class="screen-badge">★ Featured Review</span>
+        <h3 class="screen-film-title">La La Land</h3>
+        <p class="screen-film-year">2016 &middot; Damien Chazelle</p>
+        <div style="display:flex;align-items:center;margin-bottom:16px;">
+          <div class="stars">
+            <span class="star" data-i="0">★</span>
+            <span class="star" data-i="1">★</span>
+            <span class="star" data-i="2">★</span>
+            <span class="star" data-i="3">★</span>
+            <span class="star" data-i="4">★</span>
+          </div>
+          <span class="screen-score" id="score-label">5 / 5</span>
+        </div>
+        <p class="screen-quote">"The ending wrecks me every time. A film about chasing your dreams and what it actually costs — the ambition, the sacrifice, the what-ifs. Gosling and Stone carry this on pure chemistry."</p>
+        <div class="screen-tags">
+          <span class="s-tag">Musical</span>
+          <span class="s-tag">Romance</span>
+          <span class="s-tag">Drama</span>
+          <span class="s-tag">Rewatch</span>
+        </div>
+      </div>
+      <div class="screen-meta">
+        <div><strong>Director</strong>Damien Chazelle</div>
+        <div><strong>Runtime</strong>2h 8m</div>
+        <div><strong>Where</strong>Netflix</div>
+        <div><strong>Rewatchable?</strong>Every time</div>
+      </div>
+    </div>
+  </div>
+  <div class="screen-log" id="letterboxd-log">
+    <!-- Letterboxd feed loads here -->
+    <div class="log-card" style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;padding:48px;gap:12px;">
+      <span style="font-size:1.2rem;animation:spin 1s linear infinite;display:inline-block;">✦</span>
+      <span style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#999;">Loading from Letterboxd...</span>
+    </div>
+  </div>
+  <div style="padding:14px 48px;border-top:2px solid var(--black);display:flex;align-items:center;justify-content:space-between;">
+    <span style="font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:#aaa;">Pulled live from @kaiscinema on Letterboxd</span>
+    <a href="https://letterboxd.com/kaiscinema" target="_blank" style="font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);text-decoration:none;border-bottom:1px solid var(--red);padding-bottom:1px;cursor:none;">View full diary →</a>
+  </div>
+</section>
+
+<!-- WISHLIST -->
+<section class="wish-section" id="wishlist">
+  <div class="sec-head">
+    <h2 class="sec-title">What I Want This Week</h2>
+    <span class="sec-num">05 / Wishlist</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="wish-bar">
+    <h3>Spring 2026 Rotation</h3>
+    <p>● High &nbsp;&nbsp; ◐ Medium &nbsp;&nbsp; ○ Eventually</p>
+  </div>
+  <div class="wish-track-wrap">
+    <div class="wish-track" id="wish-track">
+      <div class="wish-card">
+        <span class="wish-n">01</span>
+        <p class="wish-cat">Footwear</p>
+        <p class="wish-name">New Balance 1906R — Sea Salt</p>
+        <p class="wish-brand">New Balance</p>
+        <p class="wish-price">$150</p>
+        <div class="wish-dot h"></div>
+      </div>
+      <div class="wish-card">
+        <span class="wish-n">02</span>
+        <p class="wish-cat">Bag / Carry</p>
+        <p class="wish-name">North Face Base Camp Duffel</p>
+        <p class="wish-brand">The North Face</p>
+        <p class="wish-price">$129</p>
+        <div class="wish-dot h"></div>
+      </div>
+      <div class="wish-card">
+        <span class="wish-n">03</span>
+        <p class="wish-cat">Tech</p>
+        <p class="wish-name">Sony WH-1000XM5 Headphones</p>
+        <p class="wish-brand">Sony</p>
+        <p class="wish-price">$279</p>
+        <div class="wish-dot m"></div>
+      </div>
+      <div class="wish-card">
+        <span class="wish-n">04</span>
+        <p class="wish-cat">Outerwear</p>
+        <p class="wish-name">Carhartt Detroit Jacket — Black</p>
+        <p class="wish-brand">Carhartt WIP</p>
+        <p class="wish-price">$210</p>
+        <div class="wish-dot l"></div>
+      </div>
+      <div class="wish-card">
+        <span class="wish-n">05</span>
+        <p class="wish-cat">Fragrance</p>
+        <p class="wish-name">Dior Sauvage EDP</p>
+        <p class="wish-brand">Dior</p>
+        <p class="wish-price">$165</p>
+        <div class="wish-dot m"></div>
+      </div>
+      <div class="wish-card">
+        <span class="wish-n">06</span>
+        <p class="wish-cat">Accessories</p>
+        <p class="wish-name">Maison Margiela Replica Candle</p>
+        <p class="wish-brand">Maison Margiela</p>
+        <p class="wish-price">$95</p>
+        <div class="wish-dot l"></div>
+      </div>
+    </div>
+  </div>
+  <div class="wish-carousel-controls">
+    <div class="wish-arrows">
+      <button class="wish-arrow" id="wish-prev">←</button>
+      <button class="wish-arrow" id="wish-next">→</button>
+    </div>
+    <div class="wish-dots" id="wish-dots"></div>
+    <span class="wish-count" id="wish-count">01 / 06</span>
+  </div>
+</section>
+
+<!-- WORK & PLAY -->
+<section class="wp-section" id="work">
+  <div class="sec-head">
+    <h2 class="sec-title">Work &amp; Play</h2>
+    <span class="sec-num">06 / About</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="wp-grid">
+    <div class="work-col">
+      <span class="wp-sub">The professional side</span>
+      <h3 class="wp-big">The<br><span class="r">Work.</span></h3>
+
+      <div class="cowboy-btns">
+        <a href="https://www.linkedin.com/in/malakaipatrick" target="_blank" class="cowboy-btn">
+          <span class="cb-icon">💼</span>
+          <span class="cb-text">
+            <span class="cb-title">LinkedIn</span>
+            <span class="cb-sub">View profile &amp; experience</span>
+          </span>
+          <span class="cb-arrow">↗</span>
+        </a>
+        <a href="/cdn-cgi/l/email-protection#b2dfd3ded3d9d3dbc2d3c6c0dbd1d9d1c0d7d3c6dbc4d7f2d5dfd3dbde9cd1dddf" class="cowboy-btn">
+          <span class="cb-icon">✉️</span>
+          <span class="cb-text">
+            <span class="cb-title">Send an Email</span>
+            <span class="cb-sub"><span class="__cf_email__" data-cfemail="6c010d000d070d051c0d181e050f070f1e090d18051a092c0b010d0500420f0301">[email&#160;protected]</span></span>
+          </span>
+          <span class="cb-arrow">→</span>
+        </a>
+        <a href="#" class="cowboy-btn" id="resume-btn" download>
+          <span class="cb-icon">📄</span>
+          <span class="cb-text">
+            <span class="cb-title">Request Resume</span>
+            <span class="cb-sub">PDF — updated Spring 2026</span>
+          </span>
+          <span class="cb-arrow">↓</span>
+        </a>
+      </div>
+
+    </div>
+    <div class="play-col">
+      <span class="wp-sub">The everything else</span>
+      <h3 class="wp-big" style="color:var(--black)">The<br><span class="b">Play.</span></h3>
+      <div class="myspace-grid">
+
+        <div class="ms-card" style="--accent:#E8192C;">
+          <div class="ms-header">
+            <div class="ms-icon-box" style="background:#E8192C;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            </div>
+            <div>
+              <p class="ms-title">The Traitors</p>
+              <p class="ms-status">&#9679; Currently Watching</p>
+            </div>
+          </div>
+          <div style="margin:12px 0;padding:10px;background:rgba(232,25,44,0.06);border-left:3px solid var(--red);">
+            <p style="font-size:0.62rem;line-height:1.6;color:#444;">The most psychological reality show on TV right now. Nobody is safe. Nobody can be trusted. Absolutely unhinged television.</p>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;color:#aaa;">Peacock</span>
+            <span style="font-family:'Anton',sans-serif;font-size:0.75rem;color:var(--red);letter-spacing:0.1em;">SEASON 3</span>
+          </div>
+        </div>
+
+        <div class="ms-card" style="--accent:#0A0A0A;">
+          <div class="ms-header">
+            <div class="ms-icon-box" style="background:#0A0A0A;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            </div>
+            <div>
+              <p class="ms-title">Supreme SS26</p>
+              <p class="ms-status">&#9679; On My Radar</p>
+            </div>
+          </div>
+          <div style="margin:12px 0;padding:10px;background:rgba(0,0,0,0.04);border-left:3px solid var(--black);">
+            <p style="font-size:0.62rem;line-height:1.6;color:#444;">Spring Summer 2026 is different. The workwear direction they are going with the Timberland collab and the graphic tees are hard. Watching the drops closely.</p>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;color:#aaa;">supremenewyork.com</span>
+            <span style="font-family:'Anton',sans-serif;font-size:0.75rem;color:var(--black);letter-spacing:0.1em;">SS26</span>
+          </div>
+        </div>
+
+        <div class="ms-card" style="--accent:#E8192C;grid-column:1/-1;">
+          <div class="ms-header" style="margin-bottom:10px;">
+            <div class="ms-icon-box" style="background:#E8192C;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+            </div>
+            <div style="flex:1;">
+              <p class="ms-title">Tattoo Sleeve Inspo</p>
+              <p class="ms-status">&#9679; In Progress — Left 65% / Right 10%</p>
+            </div>
+            <a href="https://pin.it/6PbeJl3JI" target="_blank" style="display:flex;align-items:center;gap:8px;background:#E60023;color:white;padding:9px 16px;text-decoration:none;font-family:'Space Mono',monospace;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;border:none;cursor:none;transition:all 0.15s;flex-shrink:0;" onmouseenter="this.style.background='#ad081b'" onmouseleave="this.style.background='#E60023'">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+              View on Pinterest
+            </a>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+            <div style="background:rgba(232,25,44,0.06);padding:8px 12px;">
+              <span style="font-size:0.48rem;letter-spacing:0.2em;text-transform:uppercase;color:#aaa;display:block;margin-bottom:4px;">Left Arm</span>
+              <div style="height:4px;background:rgba(0,0,0,0.1);margin-bottom:4px;"><div style="height:100%;width:65%;background:var(--red);"></div></div>
+              <span style="font-size:0.55rem;color:var(--red);font-family:'Anton',sans-serif;">65% — Chicano Lowrider</span>
+            </div>
+            <div style="background:rgba(232,25,44,0.06);padding:8px 12px;">
+              <span style="font-size:0.48rem;letter-spacing:0.2em;text-transform:uppercase;color:#aaa;display:block;margin-bottom:4px;">Right Arm</span>
+              <div style="height:4px;background:rgba(0,0,0,0.1);margin-bottom:4px;"><div style="height:100%;width:10%;background:var(--red);"></div></div>
+              <span style="font-size:0.55rem;color:var(--red);font-family:'Anton',sans-serif;">10% — Achilles and Thetis</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- COWBOY MINI GAME -->
+<section class="game-section" id="game">
+  <div class="sec-head" style="background:var(--black);border-bottom-color:rgba(255,255,255,0.1);">
+    <h2 class="sec-title" style="color:var(--white);">Quick Draw</h2>
+    <span class="sec-num" style="color:rgba(255,255,255,0.3);">07 / Game</span>
+    <div class="sec-line" style="background:rgba(255,255,255,0.08);"></div>
+  </div>
+  <div class="game-inner">
+    <div class="game-title-wrap">
+      <span class="game-eyebrow">★ It's high noon ★</span>
+      <h2 class="game-heading">Shoot the <span>Cans</span></h2>
+    </div>
+    <div class="game-ui">
+      <div>
+        <span style="font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);display:block;margin-bottom:2px;">Score</span>
+        <span class="game-score" id="game-score">000</span>
+      </div>
+      <div>
+        <span style="font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);display:block;margin-bottom:4px;text-align:center;">Lives</span>
+        <span class="game-lives" id="game-lives">🤠 🤠 🤠</span>
+      </div>
+      <div style="text-align:right;">
+        <span style="font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);display:block;margin-bottom:2px;">Level</span>
+        <span class="game-score" id="game-level" style="font-size:1rem;">1</span>
+      </div>
+    </div>
+    <div class="game-canvas-wrap">
+      <canvas id="game-canvas" width="700" height="300"></canvas>
+    </div>
+    <button class="game-btn" id="game-start-btn" onclick="startGame()">Draw Partner</button>
+    <p class="game-hint" id="game-hint">Click or tap the cans before they fall. Miss three and you're done.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-col">
+    <p class="f-logo">KAI<span>.</span>TODAY</p>
+    <p class="f-copy">&copy; 2026 Malakai Patrick</p>
+  </div>
+  <div class="f-col">
+    <span class="f-label">Navigate</span>
+    <ul class="f-links">
+      <li><a href="#music">Music</a></li>
+      <li><a href="#blog">Blog</a></li>
+      <li><a href="#recipe">Recipe</a></li>
+      <li><a href="#screen">Screen</a></li>
+      <li><a href="#wishlist">Wishlist</a></li>
+    </ul>
+  </div>
+  <div class="f-col">
+    <span class="f-label">Say something</span>
+    <ul class="f-links">
+      <li><a href="/cdn-cgi/l/email-protection#4c212d202d272d253c2d383e252f272f3e292d38253a290c2b212d2520622f2321"><span class="__cf_email__" data-cfemail="74191518151f151d041500061d171f17061115001d0211341319151d185a171b19">[email&#160;protected]</span></a></li>
+      <li><a href="https://www.linkedin.com/in/malakaipatrick" target="_blank">LinkedIn</a></li>
+
+    </ul>
+    <p class="f-copy" style="margin-top:24px;">Hosted on Netlify &middot; Built different</p>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  function togglePost() {
+    const post = document.getElementById('full-post');
+    post.classList.toggle('open');
+    if (post.classList.contains('open')) {
+      setTimeout(() => post.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  }
+
+  // Mood tags
+  document.querySelectorAll('.mood').forEach(m => {
+    m.addEventListener('click', () => {
+      m.classList.toggle('on');
+      if (m.classList.contains('r')) {
+        m.style.background = m.classList.contains('on') ? 'var(--red)' : '';
+        m.style.color = m.classList.contains('on') ? 'var(--white)' : '';
+      }
+    });
+  });
+
+  // Star rating
+  const stars = document.querySelectorAll('.stars .star');
+  const scoreLabel = document.getElementById('score-label');
+  let currentRating = 2;
+  stars.forEach((s, i) => {
+    s.addEventListener('mouseover', () => stars.forEach((st, j) => st.style.color = j <= i ? 'var(--yellow)' : '#ddd'));
+    s.addEventListener('mouseleave', () => stars.forEach((st, j) => st.style.color = j < currentRating ? 'var(--yellow)' : '#ddd'));
+    s.addEventListener('click', () => {
+      currentRating = i + 1;
+      scoreLabel.textContent = currentRating + ' / 5';
+    });
+  });
+</script>
+<script>
+// ── NEWS FEED ──
+const NEWS_FEEDS = [
+  'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.tmz.com/rss.xml'),
+  'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml'),
+];
+let newsItems = [];
+let newsIdx = 0;
+
+async function fetchNews() {
+  for (const feed of NEWS_FEEDS) {
+    try {
+      const res = await fetch(feed);
+      const txt = await res.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(txt, 'text/xml');
+      const items = doc.querySelectorAll('item');
+      items.forEach(item => {
+        const title = item.querySelector('title')?.textContent?.trim();
+        const source = item.querySelector('source')?.textContent || 'TMZ';
+        const link = item.querySelector('link')?.textContent?.trim() || '#';
+        if (title && title.length > 10) newsItems.push({title, source, link});
+      });
+      if (newsItems.length > 0) break;
+    } catch(e) {}
+  }
+  if (newsItems.length === 0) {
+    newsItems = [
+      {title: 'Pop culture news loading — check back in a sec', source: 'Headlines', link: '#'},
+    ];
+  }
+  renderNews();
+  buildNewsDots();
+  setInterval(() => { newsIdx = (newsIdx + 1) % Math.min(newsItems.length, 8); renderNews(); }, 6000);
+}
+
+function renderNews() {
+  const item = newsItems[newsIdx];
+  if (!item) return;
+  const el = document.getElementById('news-headline');
+  const src = document.getElementById('news-source');
+  if (el) { el.style.opacity = '0'; setTimeout(() => { el.textContent = item.title; el.style.opacity = '1'; }, 200); }
+  if (src) src.textContent = item.source + ' · Live';
+  document.querySelectorAll('.news-dot').forEach((d,i) => d.classList.toggle('active-dot', i === newsIdx % Math.min(newsItems.length,8)));
+}
+
+function buildNewsDots() {
+  const wrap = document.getElementById('news-dots');
+  if (!wrap) return;
+  for (let i = 0; i < Math.min(newsItems.length, 8); i++) {
+    const d = document.createElement('span');
+    d.className = 'news-dot';
+    d.style.cssText = 'width:6px;height:6px;border-radius:50%;background:rgba(0,0,0,0.2);display:inline-block;transition:all 0.2s;cursor:none;';
+    d.addEventListener('click', () => { newsIdx = i; renderNews(); });
+    wrap.appendChild(d);
+  }
+}
+
+document.getElementById('news-headline').style.transition = 'opacity 0.2s';
+fetchNews();
+
+// ── SPOTIFY PREVIEW ──
+// Ye - Bully track previews via Spotify oEmbed workaround
+// Using a known 30s preview MP3 URL for demonstration
+// In production you'd use Spotify Web API with client credentials
+const PREVIEWS = [
+  { title: 'Bomb — Ye', url: 'https://p.scdn.co/mp3-preview/a8c5c5a7e1a5c5a5a5a5a5a5a5a5a5a5a5a5a5a' },
+];
+
+let previewPlaying = false;
+let previewInterval = null;
+let previewSeconds = 0;
+const MAX_PREVIEW = 30;
+
+function togglePreview() {
+  const audio = document.getElementById('preview-audio');
+  const btn = document.getElementById('preview-btn');
+  const bar = document.getElementById('preview-bar');
+  const timeEl = document.getElementById('preview-time');
+
+  if (!previewPlaying) {
+    // Try to play — if no valid URL just simulate
+    audio.src = PREVIEWS[0].url;
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Simulate playback if no actual audio
+        simulatePreview(btn, bar, timeEl);
+      });
+    }
+    btn.textContent = '⏸';
+    previewPlaying = true;
+    audio.addEventListener('timeupdate', () => {
+      const pct = (audio.currentTime / MAX_PREVIEW) * 100;
+      bar.style.width = Math.min(pct, 100) + '%';
+      timeEl.textContent = formatTime(audio.currentTime) + ' / 0:30';
+      if (audio.currentTime >= MAX_PREVIEW) stopPreview(btn, bar, timeEl);
+    });
+    audio.addEventListener('ended', () => stopPreview(btn, bar, timeEl));
+  } else {
+    stopPreview(btn, bar, timeEl);
+  }
+}
+
+function simulatePreview(btn, bar, timeEl) {
+  previewSeconds = 0;
+  clearInterval(previewInterval);
+  previewInterval = setInterval(() => {
+    previewSeconds += 0.1;
+    const pct = (previewSeconds / MAX_PREVIEW) * 100;
+    bar.style.width = Math.min(pct, 100) + '%';
+    timeEl.textContent = formatTime(previewSeconds) + ' / 0:30';
+    if (previewSeconds >= MAX_PREVIEW) {
+      stopPreview(btn, bar, timeEl);
+    }
+  }, 100);
+}
+
+function stopPreview(btn, bar, timeEl) {
+  const audio = document.getElementById('preview-audio');
+  audio.pause();
+  audio.currentTime = 0;
+  clearInterval(previewInterval);
+  previewPlaying = false;
+  btn.textContent = '▶';
+  bar.style.width = '0%';
+  timeEl.textContent = '0:00 / 0:30';
+  previewSeconds = 0;
+}
+
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return m + ':' + String(sec).padStart(2,'0');
+}
+
+// ── DANCING LETTERS ──
+const danceTitle = document.getElementById('listening-title');
+if (danceTitle) {
+  let danceInterval = null;
+  let dancing = false;
+
+  function danceLetter(letters, idx) {
+    if (idx >= letters.length) return;
+    const l = letters[idx];
+    if (l.textContent.trim() === '') { danceLetter(letters, idx + 1); return; }
+    l.classList.remove('bounce');
+    void l.offsetWidth; // reflow
+    l.classList.add('bounce');
+    l.addEventListener('animationend', () => l.classList.remove('bounce'), { once: true });
+  }
+
+  function startDance() {
+    if (dancing) return;
+    dancing = true;
+    const letters = danceTitle.querySelectorAll('.dl');
+    let idx = 0;
+    const bpm = 120; // ~120bpm feel
+    const interval = (60 / bpm) * 1000 / 3;
+    danceInterval = setInterval(() => {
+      danceLetter(letters, idx % letters.length);
+      idx++;
+    }, interval);
+  }
+
+  function stopDance() {
+    dancing = false;
+    clearInterval(danceInterval);
+    danceTitle.querySelectorAll('.dl').forEach(l => {
+      l.classList.remove('bounce');
+      l.style.transform = '';
+      l.style.color = '';
+    });
+  }
+
+  danceTitle.addEventListener('mouseenter', startDance);
+  danceTitle.addEventListener('mouseleave', stopDance);
+}
+
+// ── HERO TUMBLE ANIMATION ──
+document.querySelectorAll('.tl').forEach((el, i) => {
+  const rot = (Math.random() * 60 - 30).toFixed(1);
+  el.style.setProperty('--r', rot + 'deg');
+  el.style.animationDelay = (i * 0.045 + 0.1) + 's';
+});
+
+// ── LETTERBOXD RSS ──
+async function loadLetterboxd() {
+  const log = document.getElementById('letterboxd-log');
+  const RSS = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://letterboxd.com/kaiscinema/rss/');
+  const TMDB_KEY = ''; // optional — leave blank to use poster from RSS
+
+  try {
+    const res = await fetch(RSS);
+    const txt = await res.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(txt, 'text/xml');
+    const items = Array.from(doc.querySelectorAll('item')).slice(0, 5);
+
+    if (!items.length) throw new Error('no items');
+
+    const colors = ['c1','c2','c3','c4','c5'];
+    log.innerHTML = '';
+
+    items.forEach((item, i) => {
+      const title = item.querySelector('title')?.textContent?.trim() || 'Unknown';
+      const filmTitle = title.replace(/,\s*\d{4}$/, '').trim();
+      const yearMatch = title.match(/,\s*(\d{4})$/);
+      const year = yearMatch ? yearMatch[1] : '';
+
+      // Get star rating from letterboxd:memberRating
+      const ratingEl = item.getElementsByTagNameNS('https://letterboxd.com', 'memberRating')[0]
+                    || item.querySelector('memberRating');
+      const rating = ratingEl ? parseFloat(ratingEl.textContent) : 0;
+      const fullStars = Math.floor(rating);
+      const halfStar = rating % 1 >= 0.5;
+
+      // Get poster from description img tag
+      const desc = item.querySelector('description')?.textContent || '';
+      const imgMatch = desc.match(/src="([^"]+)"/);
+      const imgUrl = imgMatch ? imgMatch[1] : null;
+
+      // Get film URL
+      const link = item.querySelector('link')?.textContent?.trim() || '#';
+
+      // Build star HTML
+      let starsHtml = '';
+      for (let s = 1; s <= 5; s++) {
+        if (s <= fullStars) starsHtml += '<span class="ls">★</span>';
+        else if (s === fullStars + 1 && halfStar) starsHtml += '<span class="ls" style="opacity:0.5">★</span>';
+        else starsHtml += '<span class="ls e">★</span>';
+      }
+
+      // initials fallback
+      const initials = filmTitle.split(' ').map(w => w[0]).join('').substring(0,2).toUpperCase();
+
+      const card = document.createElement('div');
+      card.className = 'log-card';
+      card.innerHTML = `
+        <span class="log-status s">Seen</span>
+        <div class="log-poster ${colors[i]}" style="${imgUrl ? 'padding:0;overflow:hidden;' : ''}">
+          ${imgUrl
+            ? `<img src="${imgUrl}" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.parentElement.innerHTML='${initials}<span class=\"log-poster-type\">Film</span>'" />`
+            : `${initials}<span class="log-poster-type">Film</span>`
+          }
+        </div>
+        <p class="log-title">${filmTitle}</p>
+        <p class="log-year">${year}</p>
+        <div class="log-stars">${starsHtml}</div>
+      `;
+      card.addEventListener('click', () => window.open(link, '_blank'));
+      log.appendChild(card);
+    });
+
+  } catch(e) {
+    log.innerHTML = `
+      <div class="log-card" style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;padding:48px;gap:12px;">
+        <span style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#aaa;">
+          Could not load Letterboxd feed — check back soon
+        </span>
+      </div>`;
+  }
+}
+loadLetterboxd();
+
+// ── CAROUSEL ──
+const track = document.getElementById('wish-track');
+const cards = track.querySelectorAll('.wish-card');
+const total = cards.length;
+const dotsWrap = document.getElementById('wish-dots');
+const countEl = document.getElementById('wish-count');
+let cur = 0;
+const visible = 4;
+
+// Build dots
+for (let i = 0; i < total - visible + 1; i++) {
+  const d = document.createElement('button');
+  d.className = 'wish-dot-btn' + (i === 0 ? ' active' : '');
+  d.addEventListener('click', () => goTo(i));
+  dotsWrap.appendChild(d);
+}
+
+function goTo(idx) {
+  cur = Math.max(0, Math.min(idx, total - visible));
+  const pct = (cur / total) * 100;
+  track.style.transform = `translateX(-${pct}%)`;
+  document.querySelectorAll('.wish-dot-btn').forEach((d, i) => d.classList.toggle('active', i === cur));
+  countEl.textContent = String(cur + 1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
+}
+
+document.getElementById('wish-prev').addEventListener('click', () => goTo(cur - 1));
+document.getElementById('wish-next').addEventListener('click', () => goTo(cur + 1));
+
+// swipe support
+let startX = 0;
+track.addEventListener('touchstart', e => startX = e.touches[0].clientX, {passive:true});
+track.addEventListener('touchend', e => {
+  const diff = startX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) goTo(diff > 0 ? cur + 1 : cur - 1);
+});
+
+// ── WEATHER & TIME ──
+const WMO = {0:'Clear Sky',1:'Mostly Clear',2:'Partly Cloudy',3:'Overcast',45:'Fog',48:'Icy Fog',51:'Light Drizzle',53:'Drizzle',55:'Heavy Drizzle',61:'Light Rain',63:'Rain',65:'Heavy Rain',71:'Light Snow',73:'Snow',75:'Heavy Snow',80:'Showers',81:'Rain Showers',82:'Heavy Showers',95:'Thunderstorm',96:'Hail Storm',99:'Hail Storm'};
+const ICONS = {0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'🌨️',73:'❄️',75:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
+
+function updateTime() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2,'0');
+  const m = String(now.getMinutes()).padStart(2,'0');
+  document.getElementById('w-time').textContent = h + ':' + m;
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('w-date').textContent = days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate();
+}
+updateTime();
+setInterval(updateTime, 1000);
+
+function getWeather(lat, lon, city) {
+  fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code&temperature_unit=fahrenheit&wind_speed_unit=mph`)
+    .then(r => r.json())
+    .then(data => {
+      const c = data.current;
+      const code = c.weather_code;
+      document.getElementById('w-temp').textContent = Math.round(c.temperature_2m) + '°F';
+      document.getElementById('w-feels').textContent = Math.round(c.apparent_temperature) + '°F';
+      document.getElementById('w-humid').textContent = Math.round(c.relative_humidity_2m) + '%';
+      document.getElementById('w-wind').textContent = Math.round(c.wind_speed_10m) + ' mph';
+      document.getElementById('w-desc').textContent = WMO[code] || 'Clear';
+      document.getElementById('w-icon').textContent = ICONS[code] || '🌡️';
+      document.getElementById('w-loc').textContent = city;
+    })
+    .catch(() => {
+      document.getElementById('w-desc').textContent = 'Weather unavailable';
+    });
+}
+
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(pos => {
+    const {latitude: lat, longitude: lon} = pos.coords;
+    fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`)
+      .then(r => r.json())
+      .then(d => {
+        const city = d.address.city || d.address.town || d.address.village || 'Your Location';
+        const state = d.address.state_code || '';
+        getWeather(lat, lon, city + (state ? ', ' + state : ''));
+      })
+      .catch(() => getWeather(lat, lon, 'Your Location'));
+  }, () => {
+    // fallback to Lincoln, NE
+    getWeather(40.8136, -96.7026, 'Lincoln, NE');
+  });
+} else {
+  getWeather(40.8136, -96.7026, 'Lincoln, NE');
+}
+</script>
+
+<!-- SHARE BUTTON -->
+<div class="share-wrap" id="share-wrap">
+  <div class="share-options" id="share-options">
+    <button class="share-opt" id="copy-link-btn" onclick="copyLink()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      Copy Link
+    </button>
+    <a class="share-opt" id="tweet-btn" href="#" target="_blank" onclick="shareTweet(event)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.741l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      Post on X
+    </a>
+    <a class="share-opt" href="https://www.instagram.com/" target="_blank">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      Instagram Story
+    </a>
+  </div>
+  <button class="share-btn" id="main-share-btn" onclick="toggleShare()">
+    <span class="share-badge">NEW</span>
+    <svg class="share-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+      <polyline points="16 6 12 2 8 6"/>
+      <line x1="12" y1="2" x2="12" y2="15"/>
+    </svg>
+    <span id="share-label">Spread the Word, Partner</span>
+  </button>
+</div>
+
+<!-- PAPER PLANE -->
+<div id="paper-plane" title="Catch me!">
+  <svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="2,24 46,4 38,44" fill="#FAFAF5" stroke="#0A0A0A" stroke-width="2" stroke-linejoin="round"/>
+    <line x1="38" y1="44" x2="20" y2="26" stroke="#0A0A0A" stroke-width="1.5"/>
+    <polyline points="20,26 24,38 30,32" fill="#F0EFE8" stroke="#0A0A0A" stroke-width="1.5" stroke-linejoin="round"/>
+    <line x1="14" y1="20" x2="38" y2="44" stroke="rgba(0,0,0,0.12)" stroke-width="1"/>
+  </svg>
+</div>
+
+<!-- SUBSCRIBE MODAL -->
+<div class="plane-modal-overlay" id="plane-modal-overlay">
+  <div class="plane-modal">
+    <div class="plane-modal-header">
+      <span class="plane-modal-icon">✈</span>
+      <div>
+        <div class="plane-modal-title">You caught it.</div>
+        <div class="plane-modal-sub">Drop your email for weekly updates</div>
+      </div>
+      <button class="plane-close" onclick="closePlaneModal()">✕</button>
+    </div>
+    <div class="plane-modal-body">
+      <p class="plane-modal-desc">Get a nudge every Friday when the new issue drops. Music, film, food, wishlist, the whole thing. No spam, just the update.</p>
+      <div id="plane-form-wrap">
+        <form class="plane-form" 
+              action="https://today.us20.list-manage.com/subscribe/post?u=3fa559dce00817962c6d8886d&amp;id=063cb32742&amp;f_id=00ea64e0f0" 
+              method="post" 
+              target="_blank"
+              onsubmit="handlePlaneSubmit(event)">
+          <input type="email" name="EMAIL" class="plane-input" placeholder="your@email.com" required />
+          <div class="mc-bot" aria-hidden="true">
+            <input type="text" name="b_3fa559dce00817962c6d8886d_063cb32742" tabindex="-1" value="">
+          </div>
+          <button type="submit" class="plane-submit"><span>Send It, Partner ✈</span></button>
+        </form>
+      </div>
+      <div class="plane-success" id="plane-success">
+        <div class="plane-success-icon">✈</div>
+        <div class="plane-success-msg">You are on the list.</div>
+        <div class="plane-success-sub">See you Friday.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  const star = document.getElementById('cursor-star');
+  const starPath = document.getElementById('star-path');
+  let angle = 0;
+  let lastX = 0, lastY = 0;
+  let spinInterval = null;
+
+  document.addEventListener('mousemove', e => {
+    star.style.top = e.clientY + 'px';
+    star.style.left = e.clientX + 'px';
+    const dx = e.clientX - lastX;
+    const dy = e.clientY - lastY;
+    const speed = Math.sqrt(dx*dx + dy*dy);
+    angle += speed * 1.8;
+    star.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+    lastX = e.clientX;
+    lastY = e.clientY;
+  });
+
+  document.querySelectorAll('a, button, .blog-main, .wish-card, .log-card, .mood, .hero-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      star.classList.add('big');
+      starPath.setAttribute('fill', '#FFD600');
+      starPath.setAttribute('stroke', '#E8192C');
+    });
+    el.addEventListener('mouseleave', () => {
+      star.classList.remove('big');
+      starPath.setAttribute('fill', '#E8192C');
+      starPath.setAttribute('stroke', '#0A0A0A');
+    });
+  });
+
+
+// ════════════════════════════════
+// COWBOY QUICK DRAW GAME
+// ════════════════════════════════
+(function() {
+  const canvas = document.getElementById('game-canvas');
+  const ctx = canvas.getContext('2d');
+  const scoreEl = document.getElementById('game-score');
+  const livesEl = document.getElementById('game-lives');
+  const levelEl = document.getElementById('game-level');
+  const startBtn = document.getElementById('game-start-btn');
+  const hintEl = document.getElementById('game-hint');
+
+  let cans = [], score = 0, lives = 3, level = 1, running = false, raf = null;
+  let particles = [];
+  const LIVES_ICONS = ['🤠','🤠','🤠'];
+
+  const W = canvas.width, H = canvas.height;
+  const GROUND = H - 40;
+
+  function drawBackground() {
+    // sky gradient
+    ctx.fillStyle = '#1a0a00';
+    ctx.fillRect(0, 0, W, H);
+
+    // stars
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    [[50,30],[120,15],[200,40],[340,20],[450,35],[580,18],[650,28],[700,45],[80,60],[300,55],[520,50]].forEach(([x,y]) => {
+      ctx.fillRect(x, y, 1.5, 1.5);
+    });
+
+    // moon
+    ctx.fillStyle = '#FFD600';
+    ctx.beginPath(); ctx.arc(620, 50, 22, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#1a0a00';
+    ctx.beginPath(); ctx.arc(630, 44, 18, 0, Math.PI*2); ctx.fill();
+
+    // mountains
+    ctx.fillStyle = '#2a1500';
+    [[0,180,120,100],[150,200,140,80],[380,170,160,120],[550,190,130,90],[620,180,150,110]].forEach(([x,by,w,h]) => {
+      ctx.beginPath(); ctx.moveTo(x, by); ctx.lineTo(x+w/2, by-h); ctx.lineTo(x+w, by); ctx.fill();
+    });
+
+    // cactus
+    ctx.fillStyle = '#1a3d1a';
+    ctx.fillRect(60, GROUND-60, 8, 60);
+    ctx.fillRect(48, GROUND-44, 20, 7);
+    ctx.fillRect(40, GROUND-55, 8, 25);
+
+    ctx.fillRect(580, GROUND-70, 8, 70);
+    ctx.fillRect(568, GROUND-50, 20, 7);
+    ctx.fillRect(588, GROUND-55, 8, 28);
+
+    // ground
+    ctx.fillStyle = '#3d1f00';
+    ctx.fillRect(0, GROUND, W, H-GROUND);
+    ctx.fillStyle = '#FFD600';
+    ctx.fillRect(0, GROUND, W, 2);
+
+    // fence posts
+    for (let i = 0; i < W; i += 60) {
+      ctx.fillStyle = '#5c3d1a';
+      ctx.fillRect(i, GROUND-20, 6, 22);
+      if (i > 0) { ctx.fillRect(i-54, GROUND-14, 54, 4); ctx.fillRect(i-54, GROUND-6, 54, 4); }
+    }
+  }
+
+  function spawnCan() {
+    const x = 120 + Math.random() * (W - 240);
+    const speed = 0.4 + level * 0.15 + Math.random() * 0.3;
+    cans.push({ x, y: GROUND - 28, vy: 0, vx: (Math.random()-0.5)*0.5, alive: true, hit: false, scale: 1, opacity: 1, speed, wobble: Math.random()*Math.PI*2 });
+  }
+
+  function drawCan(can) {
+    ctx.save();
+    ctx.globalAlpha = can.opacity;
+    ctx.translate(can.x, can.y);
+    ctx.scale(can.scale, can.scale);
+    // can body
+    ctx.fillStyle = '#c0392b';
+    ctx.fillRect(-10, -22, 20, 22);
+    // can top
+    ctx.fillStyle = '#e74c3c';
+    ctx.fillRect(-10, -22, 20, 5);
+    // label stripe
+    ctx.fillStyle = 'rgba(255,255,255,0.2)';
+    ctx.fillRect(-8, -15, 16, 8);
+    // shine
+    ctx.fillStyle = 'rgba(255,255,255,0.15)';
+    ctx.fillRect(-4, -20, 4, 16);
+    ctx.restore();
+  }
+
+  function spawnParticles(x, y) {
+    for (let i = 0; i < 12; i++) {
+      const angle = (Math.PI*2/12)*i + Math.random()*0.3;
+      const speed = 2 + Math.random()*4;
+      particles.push({
+        x, y, vx: Math.cos(angle)*speed, vy: Math.sin(angle)*speed - 2,
+        life: 1, color: ['#E8192C','#FFD600','#FAFAF5','#0033CC'][Math.floor(Math.random()*4)],
+        size: 2+Math.random()*4
+      });
+    }
+  }
+
+  function updateParticles() {
+    particles = particles.filter(p => p.life > 0);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.vy += 0.15;
+      p.life -= 0.04;
+      ctx.save();
+      ctx.globalAlpha = p.life;
+      ctx.fillStyle = p.color;
+      ctx.fillRect(p.x, p.y, p.size, p.size);
+      ctx.restore();
+    });
+  }
+
+  let frame = 0;
+  let spawnTimer = 0;
+  let spawnRate = 90;
+
+  function gameLoop() {
+    if (!running) return;
+    ctx.clearRect(0, 0, W, H);
+    drawBackground();
+    frame++;
+    spawnTimer++;
+
+    if (spawnTimer >= spawnRate) {
+      spawnCan();
+      spawnTimer = 0;
+      spawnRate = Math.max(30, 90 - level * 8);
+    }
+
+    cans.forEach((can, i) => {
+      if (!can.alive) return;
+      can.wobble += 0.05;
+      can.x += can.vx;
+      if (can.x < 20 || can.x > W-20) can.vx *= -1;
+
+      if (can.hit) {
+        can.vy += 0.4;
+        can.y += can.vy;
+        can.scale *= 0.92;
+        can.opacity -= 0.08;
+        if (can.opacity <= 0) { can.alive = false; }
+      } else {
+        // bounce on ground
+        can.y = GROUND - 28 + Math.sin(can.wobble) * 2;
+        // missed — fall off screen after delay
+        if (can.speed < 0) {
+          can.vy += 0.2;
+          can.y += can.vy;
+          if (can.y > H + 50) {
+            can.alive = false;
+            lives--;
+            updateLives();
+            if (lives <= 0) endGame();
+          }
+        }
+      }
+      drawCan(can);
+    });
+
+    // drop cans off after staying too long
+    cans.forEach(can => {
+      if (!can.alive || can.hit || can.speed < 0) return;
+      if (frame - (can.spawnFrame || frame) > 180 - level * 10) {
+        can.speed = -1;
+        can.spawnFrame = frame;
+      }
+    });
+    cans.forEach(can => { if (!can.spawnFrame) can.spawnFrame = frame; });
+
+    // remove dead cans
+    cans = cans.filter(c => c.alive);
+
+    updateParticles();
+
+    // level up every 10 points
+    const newLevel = Math.floor(score / 10) + 1;
+    if (newLevel !== level) { level = newLevel; levelEl.textContent = level; }
+
+    raf = requestAnimationFrame(gameLoop);
+  }
+
+  function handleShot(cx, cy) {
+    if (!running) return;
+    let hit = false;
+    cans.forEach(can => {
+      if (!can.alive || can.hit) return;
+      const dist = Math.sqrt((cx - can.x)**2 + (cy - can.y)**2);
+      if (dist < 22) {
+        can.hit = true;
+        spawnParticles(can.x, can.y);
+        score += level;
+        scoreEl.textContent = String(score).padStart(3, '0');
+        hit = true;
+      }
+    });
+    // muzzle flash
+    ctx.save();
+    ctx.fillStyle = '#FFD600';
+    ctx.globalAlpha = 0.5;
+    ctx.beginPath(); ctx.arc(cx, cy, 12, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+    return hit;
+  }
+
+  canvas.addEventListener('click', e => {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = W / rect.width;
+    const scaleY = H / rect.height;
+    const cx = (e.clientX - rect.left) * scaleX;
+    const cy = (e.clientY - rect.top) * scaleY;
+    handleShot(cx, cy);
+  });
+
+  canvas.addEventListener('touchstart', e => {
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = W / rect.width;
+    const scaleY = H / rect.height;
+    const t = e.touches[0];
+    const cx = (t.clientX - rect.left) * scaleX;
+    const cy = (t.clientY - rect.top) * scaleY;
+    handleShot(cx, cy);
+  }, {passive: false});
+
+  function updateLives() {
+    livesEl.textContent = LIVES_ICONS.slice(0, Math.max(0, lives)).join(' ') || '💀';
+  }
+
+  function endGame() {
+    running = false;
+    cancelAnimationFrame(raf);
+    ctx.clearRect(0,0,W,H);
+    drawBackground();
+    ctx.fillStyle = 'rgba(0,0,0,0.75)';
+    ctx.fillRect(0,0,W,H);
+    ctx.fillStyle = '#FFD600';
+    ctx.font = 'bold 48px Anton, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('YOU GOT GOT', W/2, H/2 - 40);
+    ctx.fillStyle = '#FAFAF5';
+    ctx.font = '20px Anton, sans-serif';
+    ctx.fillText('SCORE: ' + String(score).padStart(3,'0') + '  |  LEVEL: ' + level, W/2, H/2 + 4);
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.font = '11px Space Mono, monospace';
+    ctx.fillText('CLICK "DRAW PARTNER" TO RIDE AGAIN', W/2, H/2 + 36);
+    startBtn.textContent = 'Ride Again, Partner';
+    hintEl.textContent = 'Score: ' + score + ' — Level: ' + level;
+  }
+
+  window.startGame = function() {
+    cans = []; particles = []; score = 0; lives = 3; level = 1; frame = 0; spawnTimer = 0; spawnRate = 90;
+    scoreEl.textContent = '000';
+    levelEl.textContent = '1';
+    livesEl.textContent = '🤠 🤠 🤠';
+    startBtn.textContent = 'Running...';
+    hintEl.textContent = "Click the cans! Miss 3 and you are done.";
+    running = true;
+    cancelAnimationFrame(raf);
+    gameLoop();
+  };
+
+  // draw idle screen
+  drawBackground();
+  ctx.fillStyle = 'rgba(0,0,0,0.6)';
+  ctx.fillRect(0,0,W,H);
+  ctx.fillStyle = '#FFD600';
+  ctx.font = 'bold 36px Anton, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText("IT'S HIGH NOON", W/2, H/2 - 16);
+  ctx.fillStyle = 'rgba(255,255,255,0.5)';
+  ctx.font = '12px Space Mono, monospace';
+  ctx.fillText('CLICK "DRAW PARTNER" TO START', W/2, H/2 + 18);
+})();
+
+
+// ── PAPER PLANE ──
+(function() {
+  const plane = document.getElementById('paper-plane');
+  const overlay = document.getElementById('plane-modal-overlay');
+  if (!plane) return;
+
+  const W = () => window.innerWidth;
+  const H = () => window.innerHeight;
+
+  let x = W() * 0.15, y = H() * 0.3;
+  let vx = 1.8, vy = 0.7;
+  let angle = 0;
+  let caught = false;
+  let visible = true;
+  let hideTimer = null;
+
+  function setPos() {
+    plane.style.left = x + 'px';
+    plane.style.top = y + 'px';
+    plane.style.transform = 'rotate(' + angle + 'deg)';
+  }
+
+  function fly() {
+    if (caught || !visible) return;
+    x += vx;
+    y += vy;
+
+    // gentle sine wave
+    vy += Math.sin(Date.now() * 0.001) * 0.04;
+
+    // bounce off edges
+    if (x < 0) { x = 0; vx = Math.abs(vx); }
+    if (x > W() - 52) { x = W() - 52; vx = -Math.abs(vx); }
+    if (y < 60) { y = 60; vy = Math.abs(vy); }
+    if (y > H() - 80) { y = H() - 80; vy = -Math.abs(vy); }
+
+    // clamp speed
+    const speed = Math.sqrt(vx*vx + vy*vy);
+    if (speed > 3) { vx = vx/speed*3; vy = vy/speed*3; }
+    if (speed < 1) { vx *= 1.05; vy *= 1.05; }
+
+    // vary direction occasionally
+    if (Math.random() < 0.008) { vx += (Math.random()-0.5)*1.2; vy += (Math.random()-0.5)*1.2; }
+
+    angle = Math.atan2(vy, vx) * (180/Math.PI);
+    setPos();
+    requestAnimationFrame(fly);
+  }
+
+  // hide/show cycle — disappears every 45s, comes back after 15s
+  function startHideCycle() {
+    hideTimer = setInterval(() => {
+      if (caught) return;
+      visible = false;
+      plane.style.display = 'none';
+      setTimeout(() => {
+        if (caught) return;
+        x = Math.random() * (W() - 100) + 50;
+        y = Math.random() * (H() * 0.4) + 100;
+        vx = (Math.random() > 0.5 ? 1 : -1) * (1.5 + Math.random());
+        vy = (Math.random() > 0.5 ? 1 : -1) * 0.8;
+        visible = true;
+        plane.style.display = 'block';
+        fly();
+      }, 15000);
+    }, 45000);
+  }
+
+  plane.addEventListener('click', () => {
+    caught = true;
+    clearInterval(hideTimer);
+    plane.style.display = 'none';
+    openPlaneModal();
+  });
+
+  setPos();
+  fly();
+  startHideCycle();
+})();
+
+window.openPlaneModal = function() {
+  document.getElementById('plane-modal-overlay').classList.add('open');
+};
+window.closePlaneModal = function() {
+  document.getElementById('plane-modal-overlay').classList.remove('open');
+  // respawn plane after close
+  setTimeout(() => {
+    const plane = document.getElementById('paper-plane');
+    if (plane) {
+      plane.style.display = 'block';
+      plane.style.left = (window.innerWidth * 0.2) + 'px';
+      plane.style.top = (window.innerHeight * 0.4) + 'px';
+    }
+  }, 2000);
+};
+window.handlePlaneSubmit = function(e) {
+  // let the form submit to Mailchimp in background tab, show success
+  setTimeout(() => {
+    document.getElementById('plane-form-wrap').style.display = 'none';
+    document.getElementById('plane-success').style.display = 'block';
+    setTimeout(() => {
+      closePlaneModal();
+      document.getElementById('plane-form-wrap').style.display = 'block';
+      document.getElementById('plane-success').style.display = 'none';
+    }, 3000);
+  }, 400);
+};
+
+// ── SHARE ──
+let shareOpen = false;
+
+function toggleShare() {
+  shareOpen = !shareOpen;
+  const opts = document.getElementById('share-options');
+  const label = document.getElementById('share-label');
+  const badge = document.querySelector('.share-badge');
+  opts.classList.toggle('open', shareOpen);
+  label.textContent = shareOpen ? 'Holster Up' : 'Spread the Word, Partner';
+  if (badge) badge.style.display = shareOpen ? 'none' : 'block';
+}
+
+function copyLink() {
+  const btn = document.getElementById('copy-link-btn');
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    btn.classList.add('copied');
+    btn.textContent = '✓ Link Copied!';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Copy Link`;
+    }, 2000);
+  });
+}
+
+function shareTweet(e) {
+  e.preventDefault();
+  const text = encodeURIComponent('Reading malakaipatrick.today — music, film, food, and whatever else is on my mind this week. Worth a look.');
+  const url = encodeURIComponent(window.location.href);
+  window.open(`https://tw
