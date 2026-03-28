@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1491,6 +1490,60 @@ body.chaos .cursor-star { filter: invert(1); }
   color: var(--white);
   font-size: 0.75rem;
 }
+
+/* ── REVIEW REACTIONS ── */
+.reaction-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+.reaction-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border: 1.5px solid rgba(0,0,0,0.12);
+  background: none;
+  cursor: none;
+  font-size: 0.68rem;
+  font-family: 'Space Mono', monospace;
+  letter-spacing: 0.06em;
+  transition: all 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+.reaction-btn:hover { border-color: var(--black); background: var(--off); }
+.reaction-btn.reacted { border-color: var(--red); background: rgba(232,25,44,0.06); }
+.reaction-btn .r-emoji { font-size: 1rem; }
+.reaction-btn .r-count { font-size: 0.58rem; color: #999; }
+.reaction-btn.reacted .r-count { color: var(--red); }
+.reaction-pop {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  pointer-events: none;
+  animation: reactionPop 0.5s ease forwards;
+  opacity: 0;
+}
+@keyframes reactionPop {
+  0% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 1; transform: scale(1.3); }
+  100% { opacity: 0; transform: scale(1) translateY(-20px); }
+}
+.reaction-label {
+  font-size: 0.48rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #aaa;
+  margin-bottom: 8px;
+  display: block;
+}
 </style>
 </head>
 <body>
@@ -1502,10 +1555,14 @@ body.chaos .cursor-star { filter: invert(1); }
   <a class="nav-logo" href="#">THE<span> DIGEST</span></a>
   <div style="overflow:hidden;flex:1;margin:0 32px;">
     <div style="display:flex;gap:0;animation:navmarquee 18s linear infinite;white-space:nowrap;width:max-content;">
-      <span style="font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#999;padding:0 40px;">You are now reading &mdash; Malakai Patrick Today</span>
-      <span style="font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#999;padding:0 40px;">You are now reading &mdash; Malakai Patrick Today</span>
-      <span style="font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#999;padding:0 40px;">You are now reading &mdash; Malakai Patrick Today</span>
-      <span style="font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#999;padding:0 40px;">You are now reading &mdash; Malakai Patrick Today</span>
+      <span style="font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#999;padding:0 40px;">Stay a while &mdash;</span>
+      <span style="font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#999;padding:0 40px;">Get comfy &mdash;</span>
+      <span style="font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#999;padding:0 40px;">Scroll slow &mdash;</span>
+      <span style="font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#999;padding:0 40px;">Watch for the hints &mdash;</span>
+      <span style="font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#999;padding:0 40px;">Stay a while &mdash;</span>
+      <span style="font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#999;padding:0 40px;">Get comfy &mdash;</span>
+      <span style="font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#999;padding:0 40px;">Scroll slow &mdash;</span>
+      <span style="font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#999;padding:0 40px;">Watch for the hints &mdash;</span>
     </div>
   </div>
   <span class="nav-issue">Vol. 01 &mdash; Ongoing</span>
@@ -1768,7 +1825,7 @@ body.chaos .cursor-star { filter: invert(1); }
 <section class="screen-section" id="screen">
   <div class="sec-head">
     <h2 class="sec-title dance-title"><span class="dl">W</span><span class="dl">h</span><span class="dl">a</span><span class="dl">t</span><span class="dl">&nbsp;</span><span class="dl">I</span><span class="dl">'</span><span class="dl">m</span><span class="dl">&nbsp;</span><span class="dl">W</span><span class="dl">a</span><span class="dl">t</span><span class="dl">c</span><span class="dl">h</span><span class="dl">i</span><span class="dl">n</span><span class="dl">g</span></h2>
-    <span class="sec-num">04 / Screen</span>
+    <span class="sec-num">04 / Recently Watched</span>
     <div class="sec-line"></div>
   </div>
   <div class="screen-top">
@@ -1788,21 +1845,46 @@ body.chaos .cursor-star { filter: invert(1); }
             <span class="star" data-i="3">★</span>
             <span class="star" data-i="4">★</span>
           </div>
-          <span class="screen-score" id="score-label">5 / 5</span>
+          <span class="screen-score" id="score-label">2 / 5</span>
         </div>
         <p class="screen-quote">Yeah I will be that guy. I hated it. Overhyped, self-congratulatory, and the ending was not the gut punch everyone pretends it is. Gosling and Stone have chemistry but the movie worships itself too much to let you actually feel anything.</p>
         <div class="screen-tags">
           <span class="s-tag">Musical</span>
           <span class="s-tag">Romance</span>
           <span class="s-tag">Drama</span>
-          <span class="s-tag">Rewatch</span>
+          <span class="s-tag">One & Done</span>
         </div>
       </div>
       <div class="screen-meta">
         <div><strong>Director</strong>Damien Chazelle</div>
         <div><strong>Runtime</strong>2h 8m</div>
         <div><strong>Where</strong>Netflix</div>
-        <div><strong>Rewatchable?</strong>Every time</div>
+        <div><strong>Rewatchable?</strong>Hard No</div>
+      </div>
+      <div style="margin-top:16px;">
+        <span class="reaction-label">Do you agree with this take?</span>
+        <div class="reaction-bar" id="review-reactions">
+          <button class="reaction-btn" onclick="react(this,'💀','skull')" data-key="skull">
+            <span class="r-emoji">💀</span>
+            <span>He&rsquo;s right</span>
+            <span class="r-count" id="r-skull">0</span>
+          </button>
+          <button class="reaction-btn" onclick="react(this,'😤','mad')" data-key="mad">
+            <span class="r-emoji">😤</span>
+            <span>La La Land is a classic</span>
+            <span class="r-count" id="r-mad">0</span>
+          </button>
+          <button class="reaction-btn" onclick="react(this,'🤷','shrug')" data-key="shrug">
+            <span class="r-emoji">🤷</span>
+            <span>Complicated</span>
+            <span class="r-count" id="r-shrug">0</span>
+          </button>
+          <button class="reaction-btn" onclick="react(this,'🎬','cinema')" data-key="cinema">
+            <span class="r-emoji">🎬</span>
+            <span>Haven&rsquo;t seen it</span>
+            <span class="r-count" id="r-cinema">0</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -1814,7 +1896,7 @@ body.chaos .cursor-star { filter: invert(1); }
     </div>
   </div>
   <div style="padding:14px 48px;border-top:2px solid var(--black);display:flex;align-items:center;justify-content:space-between;">
-    <span style="font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:#aaa;">Pulled live from @kaiscinema on Letterboxd</span>
+    <span style="font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:#aaa;">Recently Watched — pulled live from @kaiscinema on Letterboxd</span>
     <a href="https://letterboxd.com/kaiscinema" target="_blank" style="font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);text-decoration:none;border-bottom:1px solid var(--red);padding-bottom:1px;cursor:none;">View full diary →</a>
   </div>
 </section>
@@ -3185,6 +3267,68 @@ async function loadSOTWArt() {
   } catch(e) {}
 }
 loadSOTWArt();
+
+
+// ── REVIEW REACTIONS ──
+const REACTION_KEYS = ['skull','mad','shrug','cinema'];
+let myReaction = localStorage.getItem('lalaland-reaction') || null;
+
+async function loadReactions() {
+  try {
+    const res = await fetch('/.netlify/functions/leaderboard');
+    // We piggyback on JSONbin for reactions too using a separate key
+    // For now use localStorage to persist counts per device
+    REACTION_KEYS.forEach(key => {
+      const stored = parseInt(localStorage.getItem('r-' + key) || '0');
+      const el = document.getElementById('r-' + key);
+      if (el) el.textContent = stored;
+    });
+    if (myReaction) {
+      const btn = document.querySelector('[data-key="' + myReaction + '"]');
+      if (btn) btn.classList.add('reacted');
+    }
+  } catch(e) {}
+}
+
+window.react = function(btn, emoji, key) {
+  // Remove previous reaction
+  if (myReaction && myReaction !== key) {
+    const old = document.querySelector('[data-key="' + myReaction + '"]');
+    if (old) {
+      old.classList.remove('reacted');
+      const oldCount = parseInt(document.getElementById('r-' + myReaction).textContent) - 1;
+      document.getElementById('r-' + myReaction).textContent = Math.max(0, oldCount);
+      localStorage.setItem('r-' + myReaction, Math.max(0, oldCount));
+    }
+  }
+
+  const alreadyReacted = myReaction === key;
+  
+  if (alreadyReacted) {
+    btn.classList.remove('reacted');
+    myReaction = null;
+    localStorage.removeItem('lalaland-reaction');
+    const count = parseInt(document.getElementById('r-' + key).textContent) - 1;
+    document.getElementById('r-' + key).textContent = Math.max(0, count);
+    localStorage.setItem('r-' + key, Math.max(0, count));
+  } else {
+    btn.classList.add('reacted');
+    myReaction = key;
+    localStorage.setItem('lalaland-reaction', key);
+    const count = parseInt(document.getElementById('r-' + key).textContent) + 1;
+    document.getElementById('r-' + key).textContent = count;
+    localStorage.setItem('r-' + key, count);
+
+    // Pop animation
+    const pop = document.createElement('div');
+    pop.className = 'reaction-pop';
+    pop.textContent = emoji;
+    btn.appendChild(pop);
+    setTimeout(() => pop.remove(), 500);
+  }
+};
+
+loadReactions();
 
 // ── LOGO CHAOS MODE ── tap 5x
 let logoTaps = 0, logoTimer = null;
