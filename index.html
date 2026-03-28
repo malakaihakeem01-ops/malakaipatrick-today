@@ -17,6 +17,22 @@
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: var(--white); color: var(--black); font-family: 'Space Mono', monospace; overflow-x: hidden; cursor: none; }
+@media (hover: none) and (pointer: coarse) {
+  body { cursor: auto; }
+  .cursor-star { display: none !important; }
+  a, button, .blog-main, .wish-card, .log-card, .mood { cursor: auto; }
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
 .cursor-star {
   position: fixed;
   top: 0; left: 0;
@@ -408,7 +424,7 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
   position: fixed;
   bottom: 32px;
   right: 32px;
-  z-index: 1000;
+  z-index: 400;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -457,7 +473,6 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
   gap: 6px;
   align-items: flex-end;
 }
-
 .share-options.open { display: flex; }
 
 .share-opt {
@@ -557,7 +572,7 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
 #game-canvas { width: 100%; border: 3px solid var(--yellow); display: block; background: #111; cursor: none; pointer-events: auto; position: relative; z-index: 10; }
 .game-ui { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 700px; margin-bottom: 16px; }
 .game-score { font-family: 'Anton', sans-serif; font-size: 1.4rem; color: var(--yellow); letter-spacing: 0.1em; }
-.game-lives { font-size: 1rem; letter-spacing: 0.1em; }
+.game-lives { font-family: 'Anton', sans-serif; font-size: 1.2rem; letter-spacing: 0.15em; color: var(--yellow); }
 .game-btn {
   font-family: 'Anton', sans-serif; font-size: 0.9rem; letter-spacing: 0.2em; text-transform: uppercase;
   padding: 14px 36px; background: var(--yellow); color: var(--black); border: 3px solid var(--yellow);
@@ -622,7 +637,7 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
   .cur-item:nth-child(even) { border-right: none; }
   .cur-item { border-bottom: 1px solid rgba(0,0,0,0.1); }
 
-  footer { grid-template-columns: 1fr; }
+  footer { grid-template-columns: 1fr; margin-bottom: 64px; }
   .f-col { border-right: none; border-bottom: 2px solid var(--black); padding: 28px 20px; }
   .f-col:last-child { border-bottom: none; }
 
@@ -777,6 +792,109 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
 }
 /* hidden mailchimp bot field */
 .mc-bot { position: absolute; left: -5000px; }
+
+/* ── BACK TO TOP ── */
+#back-top {
+  position: fixed;
+  bottom: 32px;
+  left: 32px;
+  z-index: 400;
+  background: var(--black);
+  color: var(--white);
+  border: 2px solid var(--yellow);
+  width: 44px;
+  height: 44px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: none;
+  transition: all 0.15s;
+}
+#back-top:hover { background: var(--yellow); color: var(--black); }
+#back-top.visible { display: flex; }
+
+/* ── SECTION DOT NAV ── */
+.dot-nav {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.dot-nav a {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.2);
+  display: block;
+  transition: all 0.2s;
+  cursor: none;
+  position: relative;
+}
+.dot-nav a:hover, .dot-nav a.active { background: var(--red); transform: scale(1.4); }
+.dot-nav a::before {
+  content: attr(data-label);
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--black);
+  color: var(--white);
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.15s;
+  pointer-events: none;
+}
+.dot-nav a:hover::before { opacity: 1; }
+@media (max-width: 768px) { .dot-nav { display: none; } }
+
+/* ── STICKY MOBILE NAV ── */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border-top: 2px solid var(--black);
+  z-index: 500;
+  padding: 8px 0 env(safe-area-inset-bottom, 8px);
+}
+@media (max-width: 768px) { .mobile-nav { display: flex; } }
+.mobile-nav a {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  text-decoration: none;
+  color: var(--black);
+  font-size: 0.42rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 0;
+  transition: color 0.15s;
+  cursor: none;
+}
+.mobile-nav a:hover, .mobile-nav a.active { color: var(--red); }
+.mobile-nav-icon { font-size: 1rem; }
+
+/* ── SKELETON LOADING ── */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 2px;
+}
+@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 </style>
 </head>
 <body>
@@ -949,28 +1067,21 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
     <div class="blog-main" onclick="togglePost()">
       <span class="blog-cat">Opinion</span>
       <h3 class="blog-headline">Scorpios and the Color Yellow: A Theory</h3>
-      <p class="blog-excerpt">Everyone says Scorpios are dark, mysterious, all black everything. But I think we've been misread. Yellow is the most Scorpio color there is — it demands attention without asking for it, it's warm but it'll blind you, and nobody expects it from us. That's exactly the point.</p>
+      <p class="blog-excerpt">Everyone says Scorpios are dark, mysterious, all black everything. But I think we've been misread. Yellow is the most Scorpio color there is. It demands attention without asking for it, it's warm but it'll blind you, and nobody expects it from us. That's exactly the point.</p>
       <div class="blog-byline">
         <span>March 28, 2026</span>
         <span class="read-btn">Read the full post →</span>
       </div>
     </div>
     <div class="blog-side">
-      <div class="coming-card">
-        <span class="coming-plus">+</span>
-        <span class="coming-txt">Next post dropping soon</span>
-      </div>
-      <div class="coming-card">
-        <span class="coming-plus">+</span>
-        <span class="coming-txt">And another one</span>
-      </div>
+      <div class="coming-card" style="opacity:0;pointer-events:none;height:0;padding:0;border:none;overflow:hidden;"></div>
     </div>
     <div class="full-post" id="full-post">
       <p class="fp-cat">Opinion &middot; March 28, 2026</p>
       <h2 class="fp-title">Scorpios and the Color Yellow: A Theory</h2>
       <div class="fp-body">
         <p>Everyone says Scorpios are dark. All black everything, mysterious, brooding, scary. And yeah — some of that's true. But I think we've been misread, and I think the color yellow proves it.</p>
-        <p>Yellow is the most Scorpio color there is. Think about it. It demands attention without asking for it. It's warm on the surface but stare at it long enough and it'll genuinely hurt your eyes. It shows up unexpected. Nobody sees yellow coming the way they see red or blue coming — and that element of surprise is deeply, fundamentally Scorpio.</p>
+        <p>Yellow is the most Scorpio color there is. Think about it. It demands attention without asking for it. It's warm on the surface but stare at it long enough and it'll genuinely hurt your eyes. It shows up unexpected. Nobody sees yellow coming the way they see red or blue coming. That element of surprise is deeply, fundamentally Scorpio.</p>
         <p>We're not dark because we love the dark. We're dark because we understand contrast. And nothing hits harder than yellow on black. That's not coincidence. That's us.</p>
         <p>Replace this with your actual writing when you're ready. The bones of the argument are here — take it wherever you want to go.</p>
       </div>
@@ -1172,29 +1283,35 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
       <h3 class="wp-big">The<br><span class="r">Work.</span></h3>
 
       <div class="cowboy-btns">
-        <a href="https://www.linkedin.com/in/malakaipatrick" target="_blank" class="cowboy-btn">
-          <span class="cb-icon">💼</span>
-          <span class="cb-text">
-            <span class="cb-title">LinkedIn</span>
-            <span class="cb-sub">View profile &amp; experience</span>
+        <a href="mailto:malakaipatrickcreative@gmail.com?subject=LinkedIn%20Request%20%E2%80%94%20malakaipatrick.today&body=Hey%20Kai%2C%20I%20came%20across%20your%20site%20and%20would%20love%20to%20connect%20on%20LinkedIn." class="cowboy-btn">
+          <span class="cb-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position:relative;z-index:1;"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
           </span>
-          <span class="cb-arrow">↗</span>
-        </a>
-        <a href="/cdn-cgi/l/email-protection#b2dfd3ded3d9d3dbc2d3c6c0dbd1d9d1c0d7d3c6dbc4d7f2d5dfd3dbde9cd1dddf" class="cowboy-btn">
-          <span class="cb-icon">✉️</span>
           <span class="cb-text">
-            <span class="cb-title">Send an Email</span>
-            <span class="cb-sub"><span class="__cf_email__" data-cfemail="6c010d000d070d051c0d181e050f070f1e090d18051a092c0b010d0500420f0301">[email&#160;protected]</span></span>
+            <span class="cb-title">Request LinkedIn</span>
+            <span class="cb-sub">Email me and I will send it over</span>
           </span>
-          <span class="cb-arrow">→</span>
+          <span class="cb-arrow" style="position:relative;z-index:1;">→</span>
         </a>
-        <a href="#" class="cowboy-btn" id="resume-btn" download>
-          <span class="cb-icon">📄</span>
+        <a href="mailto:malakaipatrickcreative@gmail.com?subject=Hey%20Kai%20%E2%80%94%20malakaipatrick.today" class="cowboy-btn">
+          <span class="cb-icon" style="position:relative;z-index:1;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position:relative;z-index:1;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </span>
           <span class="cb-text">
-            <span class="cb-title">Request Resume</span>
+            <span class="cb-title">Send a Message</span>
+            <span class="cb-sub">Opens your email client</span>
+          </span>
+          <span class="cb-arrow" style="position:relative;z-index:1;">→</span>
+        </a>
+        <a href="https://docs.google.com/document/d/1BBmlBQaLM8Puy6Fl9EWuwQ4XddiN9BxZ/export?format=pdf" target="_blank" class="cowboy-btn" id="resume-btn">
+          <span class="cb-icon" style="position:relative;z-index:1;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position:relative;z-index:1;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </span>
+          <span class="cb-text">
+            <span class="cb-title">Download Resume</span>
             <span class="cb-sub">PDF — updated Spring 2026</span>
           </span>
-          <span class="cb-arrow">↓</span>
+          <span class="cb-arrow" style="position:relative;z-index:1;">↓</span>
         </a>
       </div>
 
@@ -1296,7 +1413,7 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
       </div>
       <div>
         <span style="font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);display:block;margin-bottom:4px;text-align:center;">Lives</span>
-        <span class="game-lives" id="game-lives">🤠 🤠 🤠</span>
+        <span class="game-lives" id="game-lives">3 LIVES</span>
       </div>
       <div style="text-align:right;">
         <span style="font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);display:block;margin-bottom:2px;">Level</span>
@@ -1383,7 +1500,7 @@ let newsIdx = 0;
 async function fetchNews() {
   for (const feed of NEWS_FEEDS) {
     try {
-      const res = await fetch(feed);
+      const res = await fetch(feed, { signal: AbortSignal.timeout(6000) });
       const txt = await res.text();
       const parser = new DOMParser();
       const doc = parser.parseFromString(txt, 'text/xml');
@@ -1682,6 +1799,9 @@ async function loadSpotify() {
       if (heroTitle) heroTitle.textContent = track.title + ' — ' + track.artist;
       const heroMeta = document.querySelector('.hero-card.music .card-meta');
       if (heroMeta) heroMeta.textContent = track.album;
+      // Show album not track in hero title
+      const heroTitleEl = document.querySelector('.hero-card.music .card-title');
+      if (heroTitleEl) heroTitleEl.textContent = track.album + ' — ' + track.artist;
     }
 
     if (recentTracks && recentTracks.length > 0) {
@@ -1790,6 +1910,193 @@ if (navigator.geolocation) {
 }
 </script>
 
+
+<script>
+// ════════════════════════════════
+// COWBOY QUICK DRAW GAME
+// ════════════════════════════════
+(function() {
+  const canvas = document.getElementById('game-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const scoreEl = document.getElementById('game-score');
+  const livesEl = document.getElementById('game-lives');
+  const levelEl = document.getElementById('game-level');
+  const startBtn = document.getElementById('game-start-btn');
+  const hintEl = document.getElementById('game-hint');
+
+  let cans = [], score = 0, lives = 3, level = 1, running = false, raf = null;
+  let particles = [];
+  const LIVES_ICONS = ['[1]','[2]','[3]'];
+  const W = canvas.width, H = canvas.height;
+  const GROUND = H - 40;
+
+  function drawBackground() {
+    ctx.fillStyle = '#1a0a00';
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    [[50,30],[120,15],[200,40],[340,20],[450,35],[580,18],[650,28],[80,60],[300,55],[520,50]].forEach(([x,y]) => ctx.fillRect(x,y,1.5,1.5));
+    ctx.fillStyle = '#FFD600';
+    ctx.beginPath(); ctx.arc(620,50,22,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#1a0a00';
+    ctx.beginPath(); ctx.arc(630,44,18,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#2a1500';
+    [[0,180,120,100],[150,200,140,80],[380,170,160,120],[550,190,130,90],[620,180,150,110]].forEach(([x,by,w,h]) => {
+      ctx.beginPath(); ctx.moveTo(x,by); ctx.lineTo(x+w/2,by-h); ctx.lineTo(x+w,by); ctx.fill();
+    });
+    ctx.fillStyle = '#1a3d1a';
+    ctx.fillRect(60,GROUND-60,8,60); ctx.fillRect(48,GROUND-44,20,7); ctx.fillRect(40,GROUND-55,8,25);
+    ctx.fillRect(580,GROUND-70,8,70); ctx.fillRect(568,GROUND-50,20,7); ctx.fillRect(588,GROUND-55,8,28);
+    ctx.fillStyle = '#3d1f00'; ctx.fillRect(0,GROUND,W,H-GROUND);
+    ctx.fillStyle = '#FFD600'; ctx.fillRect(0,GROUND,W,2);
+    for (let i=0;i<W;i+=60) {
+      ctx.fillStyle='#5c3d1a'; ctx.fillRect(i,GROUND-20,6,22);
+      if(i>0){ctx.fillRect(i-54,GROUND-14,54,4);ctx.fillRect(i-54,GROUND-6,54,4);}
+    }
+  }
+
+  function spawnCan() {
+    const x = 120 + Math.random()*(W-240);
+    const speed = 0.4 + level*0.15 + Math.random()*0.3;
+    cans.push({x,y:GROUND-28,vy:0,vx:(Math.random()-0.5)*0.5,alive:true,hit:false,scale:1,opacity:1,speed,wobble:Math.random()*Math.PI*2,spawnFrame:0});
+  }
+
+  function drawCan(can) {
+    ctx.save(); ctx.globalAlpha=can.opacity; ctx.translate(can.x,can.y); ctx.scale(can.scale,can.scale);
+    ctx.fillStyle='#c0392b'; ctx.fillRect(-10,-22,20,22);
+    ctx.fillStyle='#e74c3c'; ctx.fillRect(-10,-22,20,5);
+    ctx.fillStyle='rgba(255,255,255,0.2)'; ctx.fillRect(-8,-15,16,8);
+    ctx.fillStyle='rgba(255,255,255,0.15)'; ctx.fillRect(-4,-20,4,16);
+    ctx.restore();
+  }
+
+  function spawnParticles(x,y) {
+    for(let i=0;i<12;i++){
+      const angle=(Math.PI*2/12)*i+Math.random()*0.3;
+      const sp=2+Math.random()*4;
+      particles.push({x,y,vx:Math.cos(angle)*sp,vy:Math.sin(angle)*sp-2,life:1,color:['#E8192C','#FFD600','#FAFAF5','#0033CC'][Math.floor(Math.random()*4)],size:2+Math.random()*4});
+    }
+  }
+
+  function updateParticles() {
+    particles=particles.filter(p=>p.life>0);
+    particles.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy; p.vy+=0.15; p.life-=0.04;
+      ctx.save(); ctx.globalAlpha=p.life; ctx.fillStyle=p.color; ctx.fillRect(p.x,p.y,p.size,p.size); ctx.restore();
+    });
+  }
+
+  let frame=0,spawnTimer=0,spawnRate=90;
+
+  function gameLoop() {
+    if(!running) return;
+    ctx.clearRect(0,0,W,H); drawBackground(); frame++; spawnTimer++;
+    if(spawnTimer>=spawnRate){spawnCan();spawnTimer=0;spawnRate=Math.max(30,90-level*8);}
+    cans.forEach(can=>{
+      if(!can.alive) return;
+      if(!can.spawnFrame) can.spawnFrame=frame;
+      can.wobble+=0.05; can.x+=can.vx;
+      if(can.x<20||can.x>W-20) can.vx*=-1;
+      if(can.hit){
+        can.vy+=0.4; can.y+=can.vy; can.scale*=0.92; can.opacity-=0.08;
+        if(can.opacity<=0) can.alive=false;
+      } else {
+        can.y=GROUND-28+Math.sin(can.wobble)*2;
+        if(frame-can.spawnFrame>180-level*10){
+          can.vy+=0.2; can.y+=can.vy;
+          if(can.y>H+50){can.alive=false;lives--;updateLives();if(lives<=0)endGame();}
+        }
+      }
+      drawCan(can);
+    });
+    cans=cans.filter(c=>c.alive);
+    updateParticles();
+    const newLevel=Math.floor(score/10)+1;
+    if(newLevel!==level){level=newLevel;levelEl.textContent=level;}
+    raf=requestAnimationFrame(gameLoop);
+  }
+
+  function handleShot(cx,cy) {
+    if(!running) return;
+    cans.forEach(can=>{
+      if(!can.alive||can.hit) return;
+      if(Math.sqrt((cx-can.x)**2+(cy-can.y)**2)<22){
+        can.hit=true; spawnParticles(can.x,can.y);
+        score+=level; scoreEl.textContent=String(score).padStart(3,'0');
+      }
+    });
+  }
+
+  canvas.style.pointerEvents='auto';
+  canvas.addEventListener('click',e=>{
+    const rect=canvas.getBoundingClientRect();
+    handleShot((e.clientX-rect.left)*(W/rect.width),(e.clientY-rect.top)*(H/rect.height));
+  });
+  canvas.addEventListener('touchstart',e=>{
+    e.preventDefault();
+    const rect=canvas.getBoundingClientRect();
+    const t=e.touches[0];
+    handleShot((t.clientX-rect.left)*(W/rect.width),(t.clientY-rect.top)*(H/rect.height));
+  },{passive:false});
+
+  function updateLives(){livesEl.textContent = lives > 0 ? lives + ' LIVES' : 'GAME OVER';}
+
+  function endGame(){
+    running=false; cancelAnimationFrame(raf);
+    ctx.clearRect(0,0,W,H); drawBackground();
+    ctx.fillStyle='rgba(0,0,0,0.75)'; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#FFD600'; ctx.font='bold 48px Anton,sans-serif'; ctx.textAlign='center';
+    ctx.fillText('YOU GOT GOT',W/2,H/2-40);
+    ctx.fillStyle='#FAFAF5'; ctx.font='20px Anton,sans-serif';
+    ctx.fillText('SCORE: '+String(score).padStart(3,'0')+'  |  LEVEL: '+level,W/2,H/2+4);
+    ctx.fillStyle='rgba(255,255,255,0.4)'; ctx.font='11px Space Mono,monospace';
+    ctx.fillText('CLICK "DRAW PARTNER" TO RIDE AGAIN',W/2,H/2+36);
+    startBtn.textContent='Ride Again, Partner';
+    hintEl.textContent='Score: '+score+' — Level: '+level;
+  }
+
+  window.startGame = function() {
+    cans=[]; particles=[]; score=0; lives=3; level=1; frame=0; spawnTimer=0; spawnRate=90;
+    scoreEl.textContent='000'; levelEl.textContent='1'; livesEl.textContent='3 LIVES';
+    startBtn.textContent='Running...';
+    hintEl.textContent='Click the cans! Miss 3 and you are done.';
+    running=true; cancelAnimationFrame(raf); gameLoop();
+  };
+
+  drawBackground();
+  ctx.fillStyle='rgba(0,0,0,0.6)'; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#FFD600'; ctx.font='bold 36px Anton,sans-serif'; ctx.textAlign='center';
+  ctx.fillText("IT'S HIGH NOON",W/2,H/2-16);
+  ctx.fillStyle='rgba(255,255,255,0.5)'; ctx.font='12px Space Mono,monospace';
+  ctx.fillText('CLICK "DRAW PARTNER" TO START',W/2,H/2+18);
+})();
+</script>
+
+
+<!-- SECTION DOT NAV -->
+<nav class="dot-nav">
+  <a href="#music" data-label="Music" data-section="music"></a>
+  <a href="#blog" data-label="Blog" data-section="blog"></a>
+  <a href="#recipe" data-label="Recipe" data-section="recipe"></a>
+  <a href="#screen" data-label="Screen" data-section="screen"></a>
+  <a href="#wishlist" data-label="Wishlist" data-section="wishlist"></a>
+  <a href="#work" data-label="Work & Play" data-section="work"></a>
+  <a href="#game" data-label="Quick Draw" data-section="game"></a>
+</nav>
+
+<!-- BACK TO TOP -->
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-nav">
+  <a href="#music"><span class="mobile-nav-icon">♫</span>Music</a>
+  <a href="#blog"><span class="mobile-nav-icon">✦</span>Blog</a>
+  <a href="#recipe"><span class="mobile-nav-icon">◈</span>Recipe</a>
+  <a href="#screen"><span class="mobile-nav-icon">▶</span>Screen</a>
+  <a href="#wishlist"><span class="mobile-nav-icon">★</span>Wishlist</a>
+  <a href="#work"><span class="mobile-nav-icon">◉</span>Work</a>
+</nav>
+
 <!-- SHARE BUTTON -->
 <div class="share-wrap" id="share-wrap">
   <div class="share-options" id="share-options">
@@ -1871,34 +2178,247 @@ if (navigator.geolocation) {
   </svg>
 </div>
 
+
 <script>
   const star = document.getElementById('cursor-star');
   const starPath = document.getElementById('star-path');
-  let angle = 0, lastX = 0, lastY = 0;
-  star.style.display = 'block';
-  star.style.top = '100px';
-  star.style.left = '100px';
-  document.addEventListener('mousemove', e => {
-    star.style.top = e.clientY + 'px';
-    star.style.left = e.clientX + 'px';
-    const dx = e.clientX - lastX;
-    const dy = e.clientY - lastY;
-    angle += Math.sqrt(dx*dx + dy*dy) * 1.8;
-    star.style.transform = 'translate(-50%, -50%) rotate(' + angle + 'deg)';
-    lastX = e.clientX; lastY = e.clientY;
-  });
-  document.querySelectorAll('a, button, .blog-main, .wish-card, .log-card, .mood, .hero-card').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      star.style.width = '40px'; star.style.height = '40px';
-      starPath.setAttribute('fill', '#FFD600');
-      starPath.setAttribute('stroke', '#E8192C');
+
+  // Hide on touch devices
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+    star.style.display = 'none';
+  } else {
+    let angle = 0, lastX = 0, lastY = 0;
+    star.style.display = 'block';
+    star.style.top = '100px';
+    star.style.left = '100px';
+    document.addEventListener('mousemove', e => {
+      star.style.top = e.clientY + 'px';
+      star.style.left = e.clientX + 'px';
+      const dx = e.clientX - lastX;
+      const dy = e.clientY - lastY;
+      angle += Math.sqrt(dx*dx + dy*dy) * 1.8;
+      star.style.transform = 'translate(-50%, -50%) rotate(' + angle + 'deg)';
+      lastX = e.clientX; lastY = e.clientY;
     });
-    el.addEventListener('mouseleave', () => {
-      star.style.width = '28px'; star.style.height = '28px';
-      starPath.setAttribute('fill', '#E8192C');
-      starPath.setAttribute('stroke', '#0A0A0A');
+    document.querySelectorAll('a, button, .blog-main, .wish-card, .log-card, .mood, .hero-card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        star.style.width = '40px'; star.style.height = '40px';
+        starPath.setAttribute('fill', '#FFD600');
+        starPath.setAttribute('stroke', '#E8192C');
+      });
+      el.addEventListener('mouseleave', () => {
+        star.style.width = '28px'; star.style.height = '28px';
+        starPath.setAttribute('fill', '#E8192C');
+        starPath.setAttribute('stroke', '#0A0A0A');
+      });
     });
-  });
+  }
 </script>
+
+<script>
+// ── SHARE ──
+let shareOpen = false;
+
+function toggleShare() {
+  shareOpen = !shareOpen;
+  const opts = document.getElementById('share-options');
+  const label = document.getElementById('share-label');
+  const badge = document.querySelector('.share-badge');
+  opts.classList.toggle('open', shareOpen);
+  label.textContent = shareOpen ? 'Holster Up' : 'Spread the Word, Partner';
+  if (badge) badge.style.display = shareOpen ? 'none' : 'block';
+  if (shareOpen) {
+    setTimeout(() => {
+      shareOpen = false;
+      opts.classList.remove('open');
+      label.textContent = 'Spread the Word, Partner';
+      if (badge) badge.style.display = 'block';
+    }, 5000);
+  }
+}
+
+function copyLink() {
+  const btn = document.getElementById('copy-link-btn');
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    btn.classList.add('copied');
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Copy Link'; }, 2000);
+  });
+}
+
+function shareTweet(e) {
+  e.preventDefault();
+  const text = encodeURIComponent('Reading malakaipatrick.today — music, film, food, and whatever else is on my mind this week.');
+  const url = encodeURIComponent(window.location.href);
+  window.open('https://twitter.com/intent/tweet?text=' + text + '&url=' + url, '_blank');
+}
+
+document.addEventListener('click', e => {
+  if (shareOpen && !document.getElementById('share-wrap').contains(e.target)) {
+    shareOpen = false;
+    document.getElementById('share-options').classList.remove('open');
+    document.getElementById('share-label').textContent = 'Spread the Word, Partner';
+  }
+});
+
+// ── PAPER PLANE ──
+(function() {
+  const plane = document.getElementById('paper-plane');
+  if (!plane) return;
+  if ('ontouchstart' in window) { plane.style.display = 'none'; return; }
+  const W = () => window.innerWidth, H = () => window.innerHeight;
+  let x = W()*0.15, y = H()*0.3, vx = 1.8, vy = 0.7, angle = 0, caught = false, visible = true;
+
+  function setPos() { plane.style.left=x+'px'; plane.style.top=y+'px'; plane.style.transform='rotate('+angle+'deg)'; }
+
+  function fly() {
+    if (caught || !visible) return;
+    x+=vx; y+=vy; vy+=Math.sin(Date.now()*0.001)*0.04;
+    if(x<0){x=0;vx=Math.abs(vx);} if(x>W()-52){x=W()-52;vx=-Math.abs(vx);}
+    if(y<60){y=60;vy=Math.abs(vy);} if(y>H()-80){y=H()-80;vy=-Math.abs(vy);}
+    const sp=Math.sqrt(vx*vx+vy*vy);
+    if(sp>3){vx=vx/sp*3;vy=vy/sp*3;} if(sp<1){vx*=1.05;vy*=1.05;}
+    if(Math.random()<0.008){vx+=(Math.random()-0.5)*1.2;vy+=(Math.random()-0.5)*1.2;}
+    angle=Math.atan2(vy,vx)*(180/Math.PI);
+    setPos(); requestAnimationFrame(fly);
+  }
+
+  plane.style.display='block'; setPos(); fly();
+
+  plane.addEventListener('click', () => { caught=true; plane.style.display='none'; openPlaneModal(); });
+})();
+
+window.openPlaneModal = function() { document.getElementById('plane-modal-overlay').classList.add('open'); };
+window.closePlaneModal = function() { document.getElementById('plane-modal-overlay').classList.remove('open'); };
+window.handlePlaneSubmit = function(e) {
+  setTimeout(() => {
+    document.getElementById('plane-form-wrap').style.display='none';
+    document.getElementById('plane-success').style.display='block';
+    setTimeout(() => { closePlaneModal(); document.getElementById('plane-form-wrap').style.display='block'; document.getElementById('plane-success').style.display='none'; }, 3000);
+  }, 400);
+};
+
+// ── BACK TO TOP & DOT NAV ──
+const backTop = document.getElementById('back-top');
+if (backTop) {
+  window.addEventListener('scroll', () => {
+    backTop.classList.toggle('visible', window.scrollY > 400);
+    const sections = ['music','blog','recipe','screen','wishlist','work','game'];
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      const dot = document.querySelector('.dot-nav a[data-section="'+id+'"]');
+      if (!el || !dot) return;
+      const rect = el.getBoundingClientRect();
+      dot.classList.toggle('active', rect.top <= 200 && rect.bottom >= 200);
+    });
+  });
+}
+</script>
+
+<script>
+(function() {
+  const canvas = document.getElementById('game-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const scoreEl = document.getElementById('game-score');
+  const livesEl = document.getElementById('game-lives');
+  const levelEl = document.getElementById('game-level');
+  const startBtn = document.getElementById('game-start-btn');
+  const hintEl = document.getElementById('game-hint');
+  let cans=[], score=0, lives=3, level=1, running=false, raf=null, particles=[];
+  const W=canvas.width, H=canvas.height, GROUND=H-40;
+
+  function drawBg() {
+    ctx.fillStyle='#1a0a00'; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='rgba(255,255,255,0.6)';
+    [[50,30],[120,15],[200,40],[340,20],[450,35],[580,18],[650,28],[80,60],[300,55],[520,50]].forEach(([x,y])=>ctx.fillRect(x,y,1.5,1.5));
+    ctx.fillStyle='#FFD600'; ctx.beginPath(); ctx.arc(620,50,22,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#1a0a00'; ctx.beginPath(); ctx.arc(630,44,18,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#2a1500';
+    [[0,180,120,100],[150,200,140,80],[380,170,160,120],[550,190,130,90]].forEach(([x,by,w,h])=>{ctx.beginPath();ctx.moveTo(x,by);ctx.lineTo(x+w/2,by-h);ctx.lineTo(x+w,by);ctx.fill();});
+    ctx.fillStyle='#1a3d1a'; ctx.fillRect(60,GROUND-60,8,60); ctx.fillRect(48,GROUND-44,20,7); ctx.fillRect(40,GROUND-55,8,25);
+    ctx.fillStyle='#3d1f00'; ctx.fillRect(0,GROUND,W,H-GROUND);
+    ctx.fillStyle='#FFD600'; ctx.fillRect(0,GROUND,W,2);
+    for(let i=0;i<W;i+=60){ctx.fillStyle='#5c3d1a';ctx.fillRect(i,GROUND-20,6,22);if(i>0){ctx.fillRect(i-54,GROUND-14,54,4);ctx.fillRect(i-54,GROUND-6,54,4);}}
+  }
+
+  function spawnCan() {
+    cans.push({x:120+Math.random()*(W-240),y:GROUND-28,vy:0,vx:(Math.random()-0.5)*0.5,alive:true,hit:false,scale:1,opacity:1,wobble:Math.random()*Math.PI*2,spawnFrame:frame});
+  }
+
+  function drawCan(c) {
+    ctx.save(); ctx.globalAlpha=c.opacity; ctx.translate(c.x,c.y); ctx.scale(c.scale,c.scale);
+    ctx.fillStyle='#c0392b'; ctx.fillRect(-10,-22,20,22);
+    ctx.fillStyle='#e74c3c'; ctx.fillRect(-10,-22,20,5);
+    ctx.fillStyle='rgba(255,255,255,0.2)'; ctx.fillRect(-8,-15,16,8);
+    ctx.restore();
+  }
+
+  function spawnParticles(x,y) {
+    for(let i=0;i<12;i++){const a=(Math.PI*2/12)*i;const sp=2+Math.random()*4;particles.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-2,life:1,color:['#E8192C','#FFD600','#FAFAF5','#0033CC'][Math.floor(Math.random()*4)],size:3});}
+  }
+
+  function doParticles() {
+    particles=particles.filter(p=>p.life>0);
+    particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=0.15;p.life-=0.04;ctx.save();ctx.globalAlpha=p.life;ctx.fillStyle=p.color;ctx.fillRect(p.x,p.y,p.size,p.size);ctx.restore();});
+  }
+
+  let frame=0,spawnTimer=0,spawnRate=90;
+
+  function loop() {
+    if(!running)return;
+    ctx.clearRect(0,0,W,H); drawBg(); frame++; spawnTimer++;
+    if(spawnTimer>=spawnRate){spawnCan();spawnTimer=0;spawnRate=Math.max(30,90-level*8);}
+    cans.forEach(c=>{
+      if(!c.alive)return;
+      c.wobble+=0.05; c.x+=c.vx;
+      if(c.x<20||c.x>W-20)c.vx*=-1;
+      if(c.hit){c.vy+=0.4;c.y+=c.vy;c.scale*=0.92;c.opacity-=0.08;if(c.opacity<=0)c.alive=false;}
+      else{
+        c.y=GROUND-28+Math.sin(c.wobble)*2;
+        if(frame-c.spawnFrame>180-level*10){c.vy+=0.2;c.y+=c.vy;if(c.y>H+50){c.alive=false;lives--;updateLives();if(lives<=0)endGame();}}
+      }
+      drawCan(c);
+    });
+    cans=cans.filter(c=>c.alive); doParticles();
+    const nl=Math.floor(score/10)+1; if(nl!==level){level=nl;levelEl.textContent=level;}
+    raf=requestAnimationFrame(loop);
+  }
+
+  function shoot(cx,cy) {
+    if(!running)return;
+    cans.forEach(c=>{if(!c.alive||c.hit)return;if(Math.sqrt((cx-c.x)**2+(cy-c.y)**2)<22){c.hit=true;spawnParticles(c.x,c.y);score+=level;scoreEl.textContent=String(score).padStart(3,'0');}});
+  }
+
+  function updateLives(){livesEl.textContent=lives>0?lives+' LIVES':'GAME OVER';}
+
+  function endGame(){
+    running=false;cancelAnimationFrame(raf);
+    ctx.clearRect(0,0,W,H);drawBg();
+    ctx.fillStyle='rgba(0,0,0,0.75)';ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#FFD600';ctx.font='bold 48px Anton,sans-serif';ctx.textAlign='center';ctx.fillText("YOU GOT GOT",W/2,H/2-40);
+    ctx.fillStyle='#FAFAF5';ctx.font='20px Anton,sans-serif';ctx.fillText('SCORE: '+String(score).padStart(3,'0')+'  |  LEVEL: '+level,W/2,H/2+4);
+    ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='11px Space Mono,monospace';ctx.fillText('CLICK DRAW PARTNER TO RIDE AGAIN',W/2,H/2+36);
+    startBtn.textContent='Ride Again, Partner';
+  }
+
+  canvas.style.pointerEvents='auto';
+  canvas.addEventListener('click',e=>{const r=canvas.getBoundingClientRect();shoot((e.clientX-r.left)*(W/r.width),(e.clientY-r.top)*(H/r.height));});
+  canvas.addEventListener('touchstart',e=>{e.preventDefault();const r=canvas.getBoundingClientRect();const t=e.touches[0];shoot((t.clientX-r.left)*(W/r.width),(t.clientY-r.top)*(H/r.height));},{passive:false});
+
+  window.startGame=function(){
+    cans=[];particles=[];score=0;lives=3;level=1;frame=0;spawnTimer=0;spawnRate=90;
+    scoreEl.textContent='000';levelEl.textContent='1';livesEl.textContent='3 LIVES';
+    startBtn.textContent='Running...';hintEl.textContent='Click the cans. Miss 3 and you are done.';
+    running=true;cancelAnimationFrame(raf);loop();
+  };
+
+  drawBg();
+  ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#FFD600';ctx.font='bold 36px Anton,sans-serif';ctx.textAlign='center';ctx.fillText("IT'S HIGH NOON",W/2,H/2-16);
+  ctx.fillStyle='rgba(255,255,255,0.5)';ctx.font='12px Space Mono,monospace';ctx.fillText('CLICK DRAW PARTNER TO START',W/2,H/2+18);
+})();
+</script>
+
 </body>
 </html>
