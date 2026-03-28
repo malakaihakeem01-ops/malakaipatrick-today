@@ -21,10 +21,13 @@ body { background: var(--white); color: var(--black); font-family: 'Space Mono',
   top: 0; left: 0;
   width: 28px; height: 28px;
   pointer-events: none;
-  z-index: 99999;
+  z-index: 999999 !important;
   transform: translate(-50%, -50%) rotate(0deg);
   transition: transform 0.15s ease, width 0.15s ease, height 0.15s ease;
   filter: drop-shadow(0 0 3px rgba(0,0,0,0.15));
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 .cursor-star svg { width: 100%; height: 100%; }
 .cursor-star.big { width: 40px; height: 40px; }
@@ -1052,7 +1055,7 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
           </div>
           <span class="screen-score" id="score-label">5 / 5</span>
         </div>
-        <p class="screen-quote">"The ending wrecks me every time. A film about chasing your dreams and what it actually costs — the ambition, the sacrifice, the what-ifs. Gosling and Stone carry this on pure chemistry."</p>
+        <p class="screen-quote">Yeah I will be that guy. I hated it. Overhyped, self-congratulatory, and the ending was not the gut punch everyone pretends it is. Gosling and Stone have chemistry but the movie worships itself too much to let you actually feel anything.</p>
         <div class="screen-tags">
           <span class="s-tag">Musical</span>
           <span class="s-tag">Romance</span>
@@ -1634,7 +1637,7 @@ loadLetterboxd();
 // ── SPOTIFY LIVE ──
 async function loadSpotify() {
   try {
-    const res = await fetch('/.netlify/functions/spotify');
+    const res = await fetch('/.netlify/functions/spotify', { cache: 'no-store' });
     const data = await res.json();
 
     const { nowPlaying, recentTracks } = data;
@@ -2135,7 +2138,8 @@ if (navigator.geolocation) {
     hintEl.textContent = 'Score: ' + score + ' — Level: ' + level;
   }
 
-  window.startGame = function() {
+  window.startGame = startGame;
+  function startGame() {
     cans = []; particles = []; score = 0; lives = 3; level = 1; frame = 0; spawnTimer = 0; spawnRate = 90;
     scoreEl.textContent = '000';
     levelEl.textContent = '1';
