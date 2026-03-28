@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>kaispace.blog</title>
+<title>The Digest — kaispace.blog</title>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Unbounded:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -1420,6 +1420,77 @@ body.chaos .cursor-star { filter: invert(1); }
 @media (max-width: 768px) {
   .cowboy-side { width: 44px; }
 }
+
+/* ── HERO VINYL ── */
+.hero-vinyl-wrap {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+  margin: 0 auto 16px;
+}
+.hero-vinyl {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #111 18%, #1a1a1a 19%, #222 28%, #1a1a1a 29%, #222 38%, #1a1a1a 39%, #222 48%, #111 49%);
+  border: 3px solid #333;
+  position: relative;
+  animation: heroVinylSpin 4s linear infinite;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5), inset 0 0 0 2px #333;
+}
+@keyframes heroVinylSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.hero-vinyl-label {
+  position: absolute;
+  inset: 28%;
+  border-radius: 50%;
+  background: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 2px solid #111;
+}
+.hero-vinyl-label img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.hero-vinyl-label-fallback {
+  font-family: 'Anton', sans-serif;
+  font-size: 0.7rem;
+  color: var(--white);
+  text-align: center;
+  padding: 4px;
+  line-height: 1.1;
+}
+.hero-vinyl-hole {
+  position: absolute;
+  inset: 47%;
+  border-radius: 50%;
+  background: #111;
+  z-index: 2;
+  border: 1px solid #333;
+}
+.hero-vinyl-track-name {
+  font-family: 'Anton', sans-serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  text-align: center;
+  margin-top: 8px;
+  line-height: 1.4;
+}
+.hero-vinyl-track-name span {
+  display: block;
+  color: var(--white);
+  font-size: 0.75rem;
+}
 </style>
 </head>
 <body>
@@ -1428,7 +1499,7 @@ body.chaos .cursor-star { filter: invert(1); }
 
 <!-- NAV -->
 <nav>
-  <a class="nav-logo" href="#">KAI<span>.</span>TODAY</a>
+  <a class="nav-logo" href="#">THE<span> DIGEST</span></a>
   <div style="overflow:hidden;flex:1;margin:0 32px;">
     <div style="display:flex;gap:0;animation:navmarquee 18s linear infinite;white-space:nowrap;width:max-content;">
       <span style="font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#999;padding:0 40px;">You are now reading &mdash; Malakai Patrick Today</span>
@@ -1468,14 +1539,14 @@ body.chaos .cursor-star { filter: invert(1); }
     <span>Blog <span class="ticker-dot">✦</span></span>
     <span>Recipes <span class="ticker-dot">✦</span></span>
     <span>On My Radar <span class="ticker-dot">✦</span></span>
-    <span>Kai Patrick <span class="ticker-dot">✦</span></span>
+    <span>The Digest <span class="ticker-dot">✦</span></span>
     <span>kaispace.blog <span class="ticker-dot">✦</span></span>
     <span>Updated Weekly <span class="ticker-dot">✦</span></span>
     <span>Music <span class="ticker-dot">✦</span></span>
     <span>Blog <span class="ticker-dot">✦</span></span>
     <span>Recipes <span class="ticker-dot">✦</span></span>
     <span>On My Radar <span class="ticker-dot">✦</span></span>
-    <span>Kai Patrick <span class="ticker-dot">✦</span></span>
+    <span>The Digest <span class="ticker-dot">✦</span></span>
     <span>kaispace.blog <span class="ticker-dot">✦</span></span>
     <span>Updated Weekly <span class="ticker-dot">✦</span></span>
   </div>
@@ -1498,11 +1569,21 @@ body.chaos .cursor-star { filter: invert(1); }
     <p class="hero-date">Lincoln, NE &mdash; Spring 2026</p>
   </div>
   <div class="hero-right">
-    <div class="hero-card music">
-      <span class="card-bg-num">♫</span>
-      <span class="card-label" style="letter-spacing:0.2em;font-size:0.52rem;opacity:0.7;">SONG OF THE WEEK</span>
-      <p class="card-title">WYWD</p>
-      <p class="card-meta">Girl Unit ft. Kelela &middot; On repeat</p>
+    <div class="hero-card music" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 20px;">
+      <span style="font-size:0.48rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:14px;display:block;">★ Song of the Week</span>
+      <div class="hero-vinyl-wrap">
+        <div class="hero-vinyl">
+          <div class="hero-vinyl-label" id="sotw-label">
+            <div class="hero-vinyl-label-fallback" id="sotw-fallback">WYWD</div>
+            <img id="sotw-art" src="" style="display:none;" />
+          </div>
+          <div class="hero-vinyl-hole"></div>
+        </div>
+      </div>
+      <div class="hero-vinyl-track-name">
+        <span id="sotw-title">WYWD</span>
+        Girl Unit ft. Kelela
+      </div>
     </div>
     <div class="hero-card wish" id="news-card" style="padding:0;overflow:hidden;position:relative;">
       <div id="news-photo" style="position:absolute;inset:0;background-size:cover;background-position:center;transition:opacity 0.4s;opacity:0;"></div>
@@ -1753,50 +1834,65 @@ body.chaos .cursor-star { filter: invert(1); }
     <div class="wish-track" id="wish-track">
       <div class="wish-card">
         <span class="wish-n">01</span>
-        <p class="wish-cat">Footwear</p>
-        <p class="wish-name">New Balance 1906R — Sea Salt</p>
-        <p class="wish-brand">New Balance</p>
-        <p class="wish-price">$150</p>
+        <p class="wish-cat">Reality TV · Drama</p>
+        <p class="wish-name">Taylor Frankie Paul</p>
+        <p class="wish-brand">SLC MomTok Fallout</p>
+        <p style="font-size:0.62rem;line-height:1.6;color:#666;margin:10px 0;font-family:'DM Serif Display',serif;font-style:italic;">The most chaotic social media implosion of the year. Soft swapping, divorce, DV charges — this story has everything.</p>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px;">
+          <a href="https://www.people.com/parents/taylor-frankie-paul-divorce-update/" target="_blank" style="font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);text-decoration:none;border-bottom:1px solid var(--red);padding-bottom:1px;width:fit-content;cursor:none;">The Divorce → People</a>
+          <a href="https://www.today.com/parents/taylor-frankie-paul-domestic-violence" target="_blank" style="font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);text-decoration:none;border-bottom:1px solid var(--blue);padding-bottom:1px;width:fit-content;cursor:none;">The Charges → Today</a>
+        </div>
         <div class="wish-dot h"></div>
       </div>
+
       <div class="wish-card">
         <span class="wish-n">02</span>
-        <p class="wish-cat">Bag / Carry</p>
-        <p class="wish-name">North Face Base Camp Duffel</p>
-        <p class="wish-brand">The North Face</p>
-        <p class="wish-price">$129</p>
-        <div class="wish-dot h"></div>
-      </div>
-      <div class="wish-card">
-        <span class="wish-n">03</span>
-        <p class="wish-cat">Tech</p>
-        <p class="wish-name">Sony WH-1000XM5 Headphones</p>
-        <p class="wish-brand">Sony</p>
-        <p class="wish-price">$279</p>
+        <p class="wish-cat">Food · Tinned Fish</p>
+        <p class="wish-name">Fishwife Sardines</p>
+        <p class="wish-brand">Fishwife Co.</p>
+        <p style="font-size:0.62rem;line-height:1.6;color:#666;margin:10px 0;font-family:'DM Serif Display',serif;font-style:italic;">The tinned fish girlies were right. Smoked Atlantic salmon, olive oil packed sardines. Protein, flavor, no effort. This is the move.</p>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px;">
+          <a href="https://fishwife.us" target="_blank" style="font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);text-decoration:none;border-bottom:1px solid var(--red);padding-bottom:1px;width:fit-content;cursor:none;">Shop Fishwife →</a>
+        </div>
         <div class="wish-dot m"></div>
       </div>
+
+      <div class="wish-card">
+        <span class="wish-n">03</span>
+        <p class="wish-cat">Animation · New Season</p>
+        <p class="wish-name">Invincible — Season 3</p>
+        <p class="wish-brand">Amazon Prime Video</p>
+        <p style="font-size:0.62rem;line-height:1.6;color:#666;margin:10px 0;font-family:'DM Serif Display',serif;font-style:italic;">Season 2 set the bar impossibly high. The animation, the writing, the violence. One of the best shows on TV period.</p>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px;">
+          <a href="https://www.amazon.com/Invincible" target="_blank" style="font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);text-decoration:none;border-bottom:1px solid var(--red);padding-bottom:1px;width:fit-content;cursor:none;">Watch on Prime →</a>
+        </div>
+        <div class="wish-dot h"></div>
+      </div>
+
       <div class="wish-card">
         <span class="wish-n">04</span>
-        <p class="wish-cat">Outerwear</p>
-        <p class="wish-name">Carhartt Detroit Jacket — Black</p>
-        <p class="wish-brand">Carhartt WIP</p>
-        <p class="wish-price">$210</p>
-        <div class="wish-dot l"></div>
+        <p class="wish-cat">Footwear</p>
+        <p class="wish-name">New Balance 1906R — Sea Salt</p>
+        <p class="wish-brand">New Balance · $150</p>
+        <p style="font-size:0.62rem;line-height:1.6;color:#666;margin:10px 0;font-family:'DM Serif Display',serif;font-style:italic;">The most wearable colorway they have dropped in years. Sea Salt goes with everything.</p>
+        <div class="wish-dot h"></div>
       </div>
+
       <div class="wish-card">
         <span class="wish-n">05</span>
         <p class="wish-cat">Fragrance</p>
         <p class="wish-name">Dior Sauvage EDP</p>
-        <p class="wish-brand">Dior</p>
-        <p class="wish-price">$165</p>
+        <p class="wish-brand">Dior · $165</p>
+        <p style="font-size:0.62rem;line-height:1.6;color:#666;margin:10px 0;font-family:'DM Serif Display',serif;font-style:italic;">The signature. Not original but it works every single time.</p>
         <div class="wish-dot m"></div>
       </div>
+
       <div class="wish-card">
         <span class="wish-n">06</span>
         <p class="wish-cat">Accessories</p>
         <p class="wish-name">Maison Margiela Replica Candle</p>
-        <p class="wish-brand">Maison Margiela</p>
-        <p class="wish-price">$95</p>
+        <p class="wish-brand">Maison Margiela · $95</p>
+        <p style="font-size:0.62rem;line-height:1.6;color:#666;margin:10px 0;font-family:'DM Serif Display',serif;font-style:italic;">Beach Walk scent. Makes any room feel like somewhere better.</p>
         <div class="wish-dot l"></div>
       </div>
     </div>
@@ -1996,7 +2092,7 @@ body.chaos .cursor-star { filter: invert(1); }
 <!-- FOOTER -->
 <footer>
   <div class="f-col">
-    <p class="f-logo">KAI<span>.</span>TODAY</p>
+    <p class="f-logo">THE<span> DIGEST</span></p>
     <p class="f-copy">&copy; 2026 Malakai Patrick</p>
   </div>
   <div class="f-col">
@@ -2431,7 +2527,7 @@ const total = cards.length;
 const dotsWrap = document.getElementById('wish-dots');
 const countEl = document.getElementById('wish-count');
 let cur = 0;
-const visible = 4;
+const visible = window.innerWidth <= 768 ? 1 : 3;
 
 // Build dots
 for (let i = 0; i < total - visible + 1; i++) {
@@ -3066,6 +3162,29 @@ function renderTopTracks() {
 renderTopTracks();
 // Reshuffle every 30 seconds
 setInterval(renderTopTracks, 30000);
+
+
+// ── SONG OF THE WEEK VINYL ART ──
+// Uses Spotify search to get album art for the Song of the Week
+async function loadSOTWArt() {
+  try {
+    // Try to get art from our Spotify function
+    const res = await fetch('/.netlify/functions/spotify', { cache: 'no-store' });
+    const data = await res.json();
+    // Use now playing or recent track art as a visual
+    const track = data.nowPlaying || (data.recentTracks && data.recentTracks[0]);
+    if (track && track.albumArt) {
+      const img = document.getElementById('sotw-art');
+      const fallback = document.getElementById('sotw-fallback');
+      if (img && fallback) {
+        img.src = track.albumArt;
+        img.style.display = 'block';
+        fallback.style.display = 'none';
+      }
+    }
+  } catch(e) {}
+}
+loadSOTWArt();
 
 // ── LOGO CHAOS MODE ── tap 5x
 let logoTaps = 0, logoTimer = null;
