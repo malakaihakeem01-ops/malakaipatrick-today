@@ -1208,6 +1208,185 @@ body.chaos .cursor-star { filter: invert(1); }
   0%, 100% { transform: rotate(-15deg) scale(1); filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2)); }
   50% { transform: rotate(-15deg) scale(1.15); filter: drop-shadow(0 0 10px var(--yellow)); }
 }
+
+/* ── FLOATING BOOKSHELF ── */
+#bookshelf-widget {
+  position: fixed;
+  left: 32px;
+  bottom: 90px;
+  z-index: 4996;
+  pointer-events: auto;
+}
+@media (max-width: 768px) {
+  #bookshelf-widget { left: 12px; bottom: 90px; }
+}
+.shelf-btn {
+  width: 54px;
+  height: 54px;
+  background: var(--blue);
+  border: 3px solid var(--black);
+  box-shadow: 4px 4px 0 var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: none;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+}
+.shelf-btn:hover { transform: scale(1.1) rotate(-5deg); }
+.shelf-btn svg { width: 28px; height: 28px; }
+
+.bookshelf-modal {
+  position: fixed;
+  left: 32px;
+  bottom: 160px;
+  width: 320px;
+  background: #fdfcf0;
+  border: 3px solid var(--black);
+  box-shadow: 8px 8px 0 var(--black);
+  z-index: 4995;
+  display: none;
+  flex-direction: column;
+  animation: shelfPop 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+  max-height: 70vh;
+  overflow: hidden;
+}
+@media (max-width: 768px) {
+  .bookshelf-modal { left: 12px; width: calc(100vw - 24px); bottom: 160px; }
+}
+.bookshelf-modal.open { display: flex; }
+@keyframes shelfPop {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.shelf-header {
+  background: var(--black);
+  color: var(--white);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.shelf-header-title {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.shelf-header-sub {
+  font-size: 0.48rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-top: 2px;
+}
+.shelf-close {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  font-size: 1rem;
+  cursor: none;
+  font-family: 'Space Mono', monospace;
+}
+.shelf-tabs {
+  display: flex;
+  border-bottom: 2px solid var(--black);
+  flex-shrink: 0;
+}
+.shelf-tab {
+  flex: 1;
+  padding: 10px 6px;
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: none;
+  border: none;
+  background: none;
+  border-right: 1px solid var(--black);
+  transition: background 0.15s;
+  font-family: 'Space Mono', monospace;
+}
+.shelf-tab:last-child { border-right: none; }
+.shelf-tab.active { background: var(--yellow); font-weight: 700; }
+.shelf-tab:hover:not(.active) { background: rgba(0,0,0,0.05); }
+.shelf-content {
+  overflow-y: auto;
+  flex: 1;
+}
+.shelf-item {
+  display: flex;
+  gap: 14px;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  align-items: flex-start;
+  transition: background 0.15s;
+}
+.shelf-item:hover { background: rgba(0,0,0,0.03); }
+.shelf-item:last-child { border-bottom: none; }
+.shelf-spine {
+  width: 8px;
+  flex-shrink: 0;
+  align-self: stretch;
+  min-height: 48px;
+  border-radius: 1px;
+}
+.shelf-item-body { flex: 1; }
+.shelf-item-label {
+  font-size: 0.45rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #aaa;
+  margin-bottom: 4px;
+}
+.shelf-item-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 0.88rem;
+  line-height: 1.3;
+  margin-bottom: 3px;
+  color: var(--black);
+}
+.shelf-item-meta {
+  font-size: 0.55rem;
+  color: #888;
+  letter-spacing: 0.06em;
+}
+.shelf-item-link {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--blue);
+  text-decoration: none;
+  border-bottom: 1px solid var(--blue);
+}
+.shelf-panel { display: none; }
+.shelf-panel.active { display: block; }
+
+/* little books on the button */
+.shelf-books {
+  position: absolute;
+  bottom: 54px;
+  left: 0;
+  display: flex;
+  gap: 2px;
+  align-items: flex-end;
+}
+.shelf-book {
+  width: 6px;
+  border-radius: 1px 1px 0 0;
+  animation: bookWobble 2s ease-in-out infinite;
+}
+.shelf-book:nth-child(2) { animation-delay: 0.3s; }
+.shelf-book:nth-child(3) { animation-delay: 0.6s; }
+.shelf-book:nth-child(4) { animation-delay: 0.9s; }
+.shelf-book:nth-child(5) { animation-delay: 1.2s; }
+@keyframes bookWobble {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.08); }
+}
 </style>
 </head>
 <body>
@@ -1257,14 +1436,14 @@ body.chaos .cursor-star { filter: invert(1); }
     <span>Recipes <span class="ticker-dot">✦</span></span>
     <span>On My Radar <span class="ticker-dot">✦</span></span>
     <span>Kai Patrick <span class="ticker-dot">✦</span></span>
-    <span>malakaipatrick.today <span class="ticker-dot">✦</span></span>
+    <span>kaispace.blog <span class="ticker-dot">✦</span></span>
     <span>Updated Weekly <span class="ticker-dot">✦</span></span>
     <span>Music <span class="ticker-dot">✦</span></span>
     <span>Blog <span class="ticker-dot">✦</span></span>
     <span>Recipes <span class="ticker-dot">✦</span></span>
     <span>On My Radar <span class="ticker-dot">✦</span></span>
     <span>Kai Patrick <span class="ticker-dot">✦</span></span>
-    <span>malakaipatrick.today <span class="ticker-dot">✦</span></span>
+    <span>kaispace.blog <span class="ticker-dot">✦</span></span>
     <span>Updated Weekly <span class="ticker-dot">✦</span></span>
   </div>
 </div>
@@ -2862,7 +3041,7 @@ window.submitAdvice = function(btn) {
   form.style.display = 'none';
   document.getElementById('advice-success').style.display = 'block';
   // mailto fallback so Kai actually gets it
-  const subject = encodeURIComponent('Ask Kai Anything — malakaipatrick.today');
+  const subject = encodeURIComponent('Ask Kai Anything — kaispace.blog');
   const body = encodeURIComponent(ta.value);
   window.open('mailto:malakaipatrickcreative@gmail.com?subject=' + subject + '&body=' + body);
 };
@@ -3116,6 +3295,159 @@ if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
     setTimeout(() => star.remove(), 600);
   }
 }
+</script>
+
+<!-- FLOATING BOOKSHELF -->
+<div id="bookshelf-widget">
+  <div class="shelf-books">
+    <div class="shelf-book" style="height:22px;background:#E8192C;"></div>
+    <div class="shelf-book" style="height:28px;background:#0033CC;"></div>
+    <div class="shelf-book" style="height:18px;background:#FFD600;"></div>
+    <div class="shelf-book" style="height:24px;background:#0A0A0A;"></div>
+    <div class="shelf-book" style="height:20px;background:#E8192C;"></div>
+  </div>
+  <div class="shelf-btn" onclick="toggleShelf()" title="Good Reads">
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+      <line x1="12" y1="6" x2="16" y2="6"/>
+      <line x1="12" y1="10" x2="16" y2="10"/>
+    </svg>
+  </div>
+</div>
+
+<div class="bookshelf-modal" id="bookshelf-modal">
+  <div class="shelf-header">
+    <div>
+      <div class="shelf-header-title">Good Reads</div>
+      <div class="shelf-header-sub">Books · Albums · Links · Takes</div>
+    </div>
+    <button class="shelf-close" onclick="toggleShelf()">✕</button>
+  </div>
+  <div class="shelf-tabs">
+    <button class="shelf-tab active" onclick="switchShelfTab('albums')">Albums</button>
+    <button class="shelf-tab" onclick="switchShelfTab('reads')">Reads</button>
+    <button class="shelf-tab" onclick="switchShelfTab('links')">Links</button>
+  </div>
+  <div class="shelf-content">
+
+    <div class="shelf-panel active" id="shelf-albums">
+      <div class="shelf-item">
+        <div class="shelf-spine" style="background:#0033CC;"></div>
+        <div class="shelf-item-body">
+          <p class="shelf-item-label">Album · Frank Ocean</p>
+          <p class="shelf-item-title">Blonde</p>
+          <p class="shelf-item-meta">2016 · Boys Don't Cry</p>
+          <p style="font-size:0.62rem;color:#555;line-height:1.6;margin-top:6px;font-family:'DM Serif Display',serif;font-style:italic;">The standard. Everything after this is trying to catch up.</p>
+        </div>
+      </div>
+      <div class="shelf-item">
+        <div class="shelf-spine" style="background:#E8192C;"></div>
+        <div class="shelf-item-body">
+          <p class="shelf-item-label">Album · SZA</p>
+          <p class="shelf-item-title">SOS</p>
+          <p class="shelf-item-meta">2022 · Top Dawg Entertainment</p>
+          <p style="font-size:0.62rem;color:#555;line-height:1.6;margin-top:6px;font-family:'DM Serif Display',serif;font-style:italic;">928 minutes of Broken Clocks says everything.</p>
+        </div>
+      </div>
+      <div class="shelf-item">
+        <div class="shelf-spine" style="background:#FFD600;"></div>
+        <div class="shelf-item-body">
+          <p class="shelf-item-label">Album · Don Toliver</p>
+          <p class="shelf-item-title">Heaven or Hell</p>
+          <p class="shelf-item-meta">2020 · Cactus Jack</p>
+          <p style="font-size:0.62rem;color:#555;line-height:1.6;margin-top:6px;font-family:'DM Serif Display',serif;font-style:italic;">No Idea and Can't Feel My Legs live on this. Underrated project.</p>
+        </div>
+      </div>
+      <div class="shelf-item">
+        <div class="shelf-spine" style="background:#0A0A0A;"></div>
+        <div class="shelf-item-body">
+          <p class="shelf-item-label">Album · Mac Miller</p>
+          <p class="shelf-item-title">Swimming</p>
+          <p class="shelf-item-meta">2018 · Warner Records</p>
+          <p style="font-size:0.62rem;color:#555;line-height:1.6;margin-top:6px;font-family:'DM Serif Display',serif;font-style:italic;">Self Care is the only song that sounds like healing in real time.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="shelf-panel" id="shelf-reads">
+      <div class="shelf-item">
+        <div class="shelf-spine" style="background:#E8192C;"></div>
+        <div class="shelf-item-body">
+          <p class="shelf-item-label">Opinion · Kai Patrick</p>
+          <p class="shelf-item-title">Scorpios and the Color Yellow</p>
+          <p class="shelf-item-meta">March 2026 · kaispace.blog</p>
+          <p style="font-size:0.62rem;color:#555;line-height:1.6;margin-top:6px;font-family:'DM Serif Display',serif;font-style:italic;">Everyone says Scorpios are dark. I think they've been misread.</p>
+          <a href="#blog" onclick="toggleShelf();togglePost('post-scorpio')" class="shelf-item-link">Read it →</a>
+        </div>
+      </div>
+      <div class="shelf-item">
+        <div class="shelf-spine" style="background:#0033CC;"></div>
+        <div class="shelf-item-body">
+          <p class="shelf-item-label">Advice · Kai Patrick</p>
+          <p class="shelf-item-title">The 8-Ball Archives: Vol 1</p>
+          <p class="shelf-item-meta">March 2026 · kaispace.blog</p>
+          <p style="font-size:0.62rem;color:#555;line-height:1.6;margin-top:6px;font-family:'DM Serif Display',serif;font-style:italic;">You asked, I answered. Unhinged questions only.</p>
+          <a href="#blog" onclick="toggleShelf();togglePost('post-advice')" class="shelf-item-link">Read it →</a>
+        </div>
+      </div>
+      <div class="shelf-item">
+        <div class="shelf-spine" style="background:#FFD600;"></div>
+        <div class="shelf-item-body">
+          <p class="shelf-item-label">Coming Soon · Kai Patrick</p>
+          <p class="shelf-item-title">Why Don Toliver Is the Most Underrated Voice in Rap</p>
+          <p class="shelf-item-meta">Dropping soon · kaispace.blog</p>
+          <p style="font-size:0.62rem;color:#555;line-height:1.6;margin-top:6px;font-family:'DM Serif Display',serif;font-style:italic;">The numbers don't lie. 4 tracks in my top 15 all time.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="shelf-panel" id="shelf-links">
+      <div class="shelf-item">
+        <div class="shelf-spine" style="background:#0033CC;"></div>
+        <div class="shelf-item-body">
+          <p class="shelf-item-label">Music · Pitchfork</p>
+          <p class="shelf-item-title">Frank Ocean's Endless Influence</p>
+          <p class="shelf-item-meta">pitchfork.com</p>
+          <a href="https://pitchfork.com" target="_blank" class="shelf-item-link">Read →</a>
+        </div>
+      </div>
+      <div class="shelf-item">
+        <div class="shelf-spine" style="background:#E8192C;"></div>
+        <div class="shelf-item-body">
+          <p class="shelf-item-label">Culture · The Atlantic</p>
+          <p class="shelf-item-title">What Reality TV Gets Right About Human Nature</p>
+          <p class="shelf-item-meta">theatlantic.com</p>
+          <a href="https://theatlantic.com" target="_blank" class="shelf-item-link">Read →</a>
+        </div>
+      </div>
+      <div class="shelf-item">
+        <div class="shelf-spine" style="background:#FFD600;"></div>
+        <div class="shelf-item-body">
+          <p class="shelf-item-label">Business · Harvard Business Review</p>
+          <p class="shelf-item-title">The Art of the Pivot: How to Change Direction Without Losing Momentum</p>
+          <p class="shelf-item-meta">hbr.org</p>
+          <a href="https://hbr.org" target="_blank" class="shelf-item-link">Read →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+// ── BOOKSHELF ──
+let shelfOpen = false;
+window.toggleShelf = function() {
+  shelfOpen = !shelfOpen;
+  document.getElementById('bookshelf-modal').classList.toggle('open', shelfOpen);
+};
+window.switchShelfTab = function(tab) {
+  document.querySelectorAll('.shelf-tab').forEach((t, i) => {
+    t.classList.toggle('active', ['albums','reads','links'][i] === tab);
+  });
+  document.querySelectorAll('.shelf-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('shelf-' + tab).classList.add('active');
+};
 </script>
 </body>
 </html>
