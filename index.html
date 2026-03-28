@@ -8,12 +8,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Unbounded:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 :root {
+  /* Default Colors */
   --red: #E8192C;
   --blue: #0033CC;
   --yellow: #FFD600;
   --black: #0A0A0A;
   --white: #FAFAF5;
   --off: #F0EFE8;
+  --invert: 0;
+  --hue: 0deg;
+}
+
+/* Chaos Mode Overrides */
+body.chaos {
+  --white: #05050A;    /* Deep black-blue */
+  --black: #FAFAF5;    /* Off-white */
+  --off: #15151F;      /* Dark grey */
+  --red: #FF4D5D;      /* Brighter, neon red */
+  --yellow: #FFEA00;   /* High-vis yellow */
+  --blue: #3366FF;     /* Electric blue */
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: var(--white); color: var(--black); font-family: 'Space Mono', monospace; overflow-x: hidden; cursor: none; }
@@ -641,7 +654,14 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
   .cur-item:nth-child(even) { border-right: none; }
   .cur-item { border-bottom: 1px solid rgba(0,0,0,0.1); }
 
-  footer { grid-template-columns: 1fr; margin-bottom: 64px; }
+  body.chaos { 
+  background-color: var(--white);
+  color: var(--black);
+}
+
+body.chaos .cursor-star { 
+  filter: drop-shadow(0 0 8px var(--red)); 
+}
   .f-col { border-right: none; border-bottom: 2px solid var(--black); padding: 28px 20px; }
   .f-col:last-child { border-bottom: none; }
 
@@ -934,7 +954,7 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
   color: var(--black);
 }
 .advice-modal {
-  background: rgba(250,250,245,0.92);
+  background: var(--white); opacity: 0.95;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 3px solid var(--black);
@@ -1260,7 +1280,7 @@ body.chaos .cursor-star { filter: invert(1); }
     </div>
     <div class="hero-card wish" id="news-card">
       <span class="card-bg-num">📰</span>
-      <span class="card-label" style="color:rgba(0,0,0,0.5);">📰 Pop culture right now</span>
+      <span class="card-label" style="color: var(--black); opacity: 0.6;">📰 Pop culture right now</span>
       <p class="card-title" id="news-headline" style="font-size:1.1rem;line-height:1.3;margin-bottom:8px;">Loading latest...</p>
       <p class="card-meta" id="news-source" style="color:rgba(0,0,0,0.45);">Fetching headlines</p>
       <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;" id="news-dots"></div>
