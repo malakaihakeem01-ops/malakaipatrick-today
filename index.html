@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -812,7 +811,7 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
   transition: all 0.15s;
 }
 #back-top:hover { background: var(--yellow); color: var(--black); }
-#back-top.visible { display: flex; }
+#back-top.visible { display: flex !important; opacity: 1; }
 
 /* ── SECTION DOT NAV ── */
 .dot-nav {
@@ -829,7 +828,7 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.15);
   display: block;
   transition: all 0.2s;
   cursor: none;
@@ -975,9 +974,9 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
   <div class="hero-right">
     <div class="hero-card music">
       <span class="card-bg-num">♫</span>
-      <span class="card-label">🎵 Album of the week</span>
-      <p class="card-title">Bully &mdash; Ye</p>
-      <p class="card-meta">Album &middot; On repeat since it dropped</p>
+      <span class="card-label" style="letter-spacing:0.2em;font-size:0.52rem;opacity:0.7;">SONG OF THE WEEK</span>
+      <p class="card-title">WYWD</p>
+      <p class="card-meta">Girl Unit ft. Kelela &middot; On repeat</p>
     </div>
     <div class="hero-card wish" id="news-card">
       <span class="card-bg-num">📰</span>
@@ -1303,15 +1302,15 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
           </span>
           <span class="cb-arrow" style="position:relative;z-index:1;">→</span>
         </a>
-        <a href="https://docs.google.com/document/d/1BBmlBQaLM8Puy6Fl9EWuwQ4XddiN9BxZ/export?format=pdf" target="_blank" class="cowboy-btn" id="resume-btn">
+        <a href="mailto:malakaipatrickcreative@gmail.com?subject=Resume%20Request%20%E2%80%94%20malakaipatrick.today&body=Hey%20Kai%2C%20I%20came%20across%20your%20site%20and%20would%20love%20to%20see%20your%20resume." class="cowboy-btn" id="resume-btn">
           <span class="cb-icon" style="position:relative;z-index:1;">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position:relative;z-index:1;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
           </span>
           <span class="cb-text">
-            <span class="cb-title">Download Resume</span>
-            <span class="cb-sub">PDF — updated Spring 2026</span>
+            <span class="cb-title">Request Resume</span>
+            <span class="cb-sub">Email me and I will send it over</span>
           </span>
-          <span class="cb-arrow" style="position:relative;z-index:1;">↓</span>
+          <span class="cb-arrow" style="position:relative;z-index:1;">→</span>
         </a>
       </div>
 
@@ -1794,11 +1793,7 @@ async function loadSpotify() {
         document.getElementById('preview-player').style.display = 'none';
       }
 
-      // update hero card
-      const heroTitle = document.querySelector('.hero-card.music .card-title');
-      if (heroTitle) heroTitle.textContent = track.title + ' — ' + track.artist;
-      const heroMeta = document.querySelector('.hero-card.music .card-meta');
-      if (heroMeta) heroMeta.textContent = track.album;
+      // hero card is manually curated, not overwritten by Spotify
       // Show album not track in hero title
       const heroTitleEl = document.querySelector('.hero-card.music .card-title');
       if (heroTitleEl) heroTitleEl.textContent = track.album + ' — ' + track.artist;
