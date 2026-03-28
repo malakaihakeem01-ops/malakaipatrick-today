@@ -135,7 +135,7 @@ nav {
 .album-row:last-child { border-bottom: none; }
 .alb-art { width: 68px; height: 68px; flex-shrink: 0; border: 2px solid var(--black); display: flex; align-items: center; justify-content: center; font-family: 'Anton', sans-serif; font-size: 1.2rem; }
 .alb-art.y { background: var(--yellow); color: var(--black); }
-.alb-rank { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 4px; }
+.alb-rank { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 4px; text-shadow: 0 0 8px rgba(232, 25, 44, 0.4); }
 .alb-name { font-family: 'DM Serif Display', serif; font-size: 1rem; margin-bottom: 3px; }
 .alb-artist { font-size: 0.6rem; letter-spacing: 0.06em; color: #777; text-transform: uppercase; }
 .alb-note { font-size: 0.68rem; font-style: italic; color: #555; margin-top: 6px; font-family: 'DM Serif Display', serif; line-height: 1.5; }
@@ -238,7 +238,21 @@ nav {
 .log-stars { display: flex; gap: 2px; }
 .ls { font-size: 0.7rem; color: var(--yellow); }
 .ls.e { color: #ddd; }
-
+/* NEW VINYL ANIMATION */
+.np-vinyl-wrap {
+  width: 100px; height: 100px;
+  position: relative; display: flex;
+  align-items: center; justify-content: center;
+}
+.vinyl-record {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #111 30%, #1a1a1a 40%, #111 70%);
+  border: 3px solid var(--black);
+  animation: vinylSpin 3s linear infinite paused;
+}
+.vinyl-record.playing { animation-play-state: running; }
+@keyframes vinylSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 /* ── WISHLIST ── */
 .wish-section { border-bottom: 3px solid var(--black); }
 .wish-bar { display: flex; align-items: center; gap: 20px; padding: 14px 48px; background: var(--blue); color: var(--white); border-bottom: 2px solid var(--black); }
@@ -385,7 +399,7 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
 .weather-date { font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 3px; }
 .weather-extras { display: flex; gap: 24px; }
 .w-extra { text-align: center; }
-.w-extra-val { font-family: 'Anton', sans-serif; font-size: 0.95rem; color: var(--white); display: block; }
+..w-extra-val { font-family: 'Anton', sans-serif; font-size: 0.95rem; color: var(--white); display: block; }
 .w-extra-label { font-size: 0.48rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
 
 /* ── HERO TITLE TUMBLE ── */
@@ -1301,7 +1315,11 @@ body.chaos .cursor-star { filter: invert(1); }
     <div class="music-left">
       <p class="label">★ Now Playing</p>
       <div id="now-playing-block" style="display:flex;gap:16px;align-items:flex-start;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid rgba(0,0,0,0.08);">
-        <div id="np-art" style="width:88px;height:88px;flex-shrink:0;border:2px solid var(--black);background:var(--yellow);display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:1.4rem;overflow:hidden;">
+        <div id="np-art" class="np-vinyl-wrap">
+  <div class="vinyl-record" id="vinyl-record">
+    <img id="vinyl-label-art" src="" style="position:absolute; inset:25%; border-radius:50%; border:2px solid #000; display:none;">
+  </div>
+</div>
           <span id="np-art-fallback">♫</span>
         </div>
         <div style="flex:1;">
