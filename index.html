@@ -8,25 +8,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Unbounded:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  /* Default Colors */
   --red: #E8192C;
   --blue: #0033CC;
   --yellow: #FFD600;
   --black: #0A0A0A;
   --white: #FAFAF5;
   --off: #F0EFE8;
-  --invert: 0;
-  --hue: 0deg;
-}
-
-/* Chaos Mode Overrides */
-body.chaos {
-  --white: #05050A;    /* Deep black-blue */
-  --black: #FAFAF5;    /* Off-white */
-  --off: #15151F;      /* Dark grey */
-  --red: #FF4D5D;      /* Brighter, neon red */
-  --yellow: #FFEA00;   /* High-vis yellow */
-  --blue: #3366FF;     /* Electric blue */
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: var(--white); color: var(--black); font-family: 'Space Mono', monospace; overflow-x: hidden; cursor: none; }
@@ -135,7 +122,7 @@ nav {
 .album-row:last-child { border-bottom: none; }
 .alb-art { width: 68px; height: 68px; flex-shrink: 0; border: 2px solid var(--black); display: flex; align-items: center; justify-content: center; font-family: 'Anton', sans-serif; font-size: 1.2rem; }
 .alb-art.y { background: var(--yellow); color: var(--black); }
-.alb-rank { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 4px; text-shadow: 0 0 8px rgba(232, 25, 44, 0.4); }
+.alb-rank { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 4px; }
 .alb-name { font-family: 'DM Serif Display', serif; font-size: 1rem; margin-bottom: 3px; }
 .alb-artist { font-size: 0.6rem; letter-spacing: 0.06em; color: #777; text-transform: uppercase; }
 .alb-note { font-size: 0.68rem; font-style: italic; color: #555; margin-top: 6px; font-family: 'DM Serif Display', serif; line-height: 1.5; }
@@ -238,21 +225,7 @@ nav {
 .log-stars { display: flex; gap: 2px; }
 .ls { font-size: 0.7rem; color: var(--yellow); }
 .ls.e { color: #ddd; }
-/* NEW VINYL ANIMATION */
-.np-vinyl-wrap {
-  width: 100px; height: 100px;
-  position: relative; display: flex;
-  align-items: center; justify-content: center;
-}
-.vinyl-record {
-  width: 100%; height: 100%;
-  border-radius: 50%;
-  background: radial-gradient(circle, #111 30%, #1a1a1a 40%, #111 70%);
-  border: 3px solid var(--black);
-  animation: vinylSpin 3s linear infinite paused;
-}
-.vinyl-record.playing { animation-play-state: running; }
-@keyframes vinylSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
 /* ── WISHLIST ── */
 .wish-section { border-bottom: 3px solid var(--black); }
 .wish-bar { display: flex; align-items: center; gap: 20px; padding: 14px 48px; background: var(--blue); color: var(--white); border-bottom: 2px solid var(--black); }
@@ -399,7 +372,7 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
 .weather-date { font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 3px; }
 .weather-extras { display: flex; gap: 24px; }
 .w-extra { text-align: center; }
-..w-extra-val { font-family: 'Anton', sans-serif; font-size: 0.95rem; color: var(--white); display: block; }
+.w-extra-val { font-family: 'Anton', sans-serif; font-size: 0.95rem; color: var(--white); display: block; }
 .w-extra-label { font-size: 0.48rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
 
 /* ── HERO TITLE TUMBLE ── */
@@ -668,14 +641,7 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
   .cur-item:nth-child(even) { border-right: none; }
   .cur-item { border-bottom: 1px solid rgba(0,0,0,0.1); }
 
-  body.chaos { 
-  background-color: var(--white);
-  color: var(--black);
-}
-
-body.chaos .cursor-star { 
-  filter: drop-shadow(0 0 8px var(--red)); 
-}
+  footer { grid-template-columns: 1fr; margin-bottom: 64px; }
   .f-col { border-right: none; border-bottom: 2px solid var(--black); padding: 28px 20px; }
   .f-col:last-child { border-bottom: none; }
 
@@ -968,7 +934,7 @@ body.chaos .cursor-star {
   color: var(--black);
 }
 .advice-modal {
-  background: var(--white); opacity: 0.95;
+  background: rgba(250,250,245,0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 3px solid var(--black);
@@ -1294,7 +1260,7 @@ body.chaos .cursor-star { filter: invert(1); }
     </div>
     <div class="hero-card wish" id="news-card">
       <span class="card-bg-num">📰</span>
-      <span class="card-label" style="color: var(--black); opacity: 0.6;">📰 Pop culture right now</span>
+      <span class="card-label" style="color:rgba(0,0,0,0.5);">📰 Pop culture right now</span>
       <p class="card-title" id="news-headline" style="font-size:1.1rem;line-height:1.3;margin-bottom:8px;">Loading latest...</p>
       <p class="card-meta" id="news-source" style="color:rgba(0,0,0,0.45);">Fetching headlines</p>
       <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;" id="news-dots"></div>
@@ -1315,11 +1281,7 @@ body.chaos .cursor-star { filter: invert(1); }
     <div class="music-left">
       <p class="label">★ Now Playing</p>
       <div id="now-playing-block" style="display:flex;gap:16px;align-items:flex-start;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid rgba(0,0,0,0.08);">
-        <div id="np-art" class="np-vinyl-wrap">
-  <div class="vinyl-record" id="vinyl-record">
-    <img id="vinyl-label-art" src="" style="position:absolute; inset:25%; border-radius:50%; border:2px solid #000; display:none;">
-  </div>
-</div>
+        <div id="np-art" style="width:88px;height:88px;flex-shrink:0;border:2px solid var(--black);background:var(--yellow);display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:1.4rem;overflow:hidden;">
           <span id="np-art-fallback">♫</span>
         </div>
         <div style="flex:1;">
@@ -1796,7 +1758,7 @@ body.chaos .cursor-star { filter: invert(1); }
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   function togglePost(postId) {
     document.querySelectorAll('.full-post.open').forEach(p => {
       if (p.id !== postId) p.classList.remove('open');
@@ -2893,110 +2855,7 @@ if (backTop) {
 }
 </script>
 
-<script>
-(function() {
-  const canvas = document.getElementById('game-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const scoreEl = document.getElementById('game-score');
-  const livesEl = document.getElementById('game-lives');
-  const levelEl = document.getElementById('game-level');
-  const startBtn = document.getElementById('game-start-btn');
-  const hintEl = document.getElementById('game-hint');
-  let cans=[], score=0, lives=3, level=1, running=false, raf=null, particles=[];
-  const W=canvas.width, H=canvas.height, GROUND=H-40;
 
-  function drawBg() {
-    ctx.fillStyle='#1a0a00'; ctx.fillRect(0,0,W,H);
-    ctx.fillStyle='rgba(255,255,255,0.6)';
-    [[50,30],[120,15],[200,40],[340,20],[450,35],[580,18],[650,28],[80,60],[300,55],[520,50]].forEach(([x,y])=>ctx.fillRect(x,y,1.5,1.5));
-    ctx.fillStyle='#FFD600'; ctx.beginPath(); ctx.arc(620,50,22,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle='#1a0a00'; ctx.beginPath(); ctx.arc(630,44,18,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle='#2a1500';
-    [[0,180,120,100],[150,200,140,80],[380,170,160,120],[550,190,130,90]].forEach(([x,by,w,h])=>{ctx.beginPath();ctx.moveTo(x,by);ctx.lineTo(x+w/2,by-h);ctx.lineTo(x+w,by);ctx.fill();});
-    ctx.fillStyle='#1a3d1a'; ctx.fillRect(60,GROUND-60,8,60); ctx.fillRect(48,GROUND-44,20,7); ctx.fillRect(40,GROUND-55,8,25);
-    ctx.fillStyle='#3d1f00'; ctx.fillRect(0,GROUND,W,H-GROUND);
-    ctx.fillStyle='#FFD600'; ctx.fillRect(0,GROUND,W,2);
-    for(let i=0;i<W;i+=60){ctx.fillStyle='#5c3d1a';ctx.fillRect(i,GROUND-20,6,22);if(i>0){ctx.fillRect(i-54,GROUND-14,54,4);ctx.fillRect(i-54,GROUND-6,54,4);}}
-  }
-
-  function spawnCan() {
-    cans.push({x:120+Math.random()*(W-240),y:GROUND-28,vy:0,vx:(Math.random()-0.5)*0.5,alive:true,hit:false,scale:1,opacity:1,wobble:Math.random()*Math.PI*2,spawnFrame:frame});
-  }
-
-  function drawCan(c) {
-    ctx.save(); ctx.globalAlpha=c.opacity; ctx.translate(c.x,c.y); ctx.scale(c.scale,c.scale);
-    ctx.fillStyle='#c0392b'; ctx.fillRect(-10,-22,20,22);
-    ctx.fillStyle='#e74c3c'; ctx.fillRect(-10,-22,20,5);
-    ctx.fillStyle='rgba(255,255,255,0.2)'; ctx.fillRect(-8,-15,16,8);
-    ctx.restore();
-  }
-
-  function spawnParticles(x,y) {
-    for(let i=0;i<12;i++){const a=(Math.PI*2/12)*i;const sp=2+Math.random()*4;particles.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-2,life:1,color:['#E8192C','#FFD600','#FAFAF5','#0033CC'][Math.floor(Math.random()*4)],size:3});}
-  }
-
-  function doParticles() {
-    particles=particles.filter(p=>p.life>0);
-    particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=0.15;p.life-=0.04;ctx.save();ctx.globalAlpha=p.life;ctx.fillStyle=p.color;ctx.fillRect(p.x,p.y,p.size,p.size);ctx.restore();});
-  }
-
-  let frame=0,spawnTimer=0,spawnRate=90;
-
-  function loop() {
-    if(!running)return;
-    ctx.clearRect(0,0,W,H); drawBg(); frame++; spawnTimer++;
-    if(spawnTimer>=spawnRate){spawnCan();spawnTimer=0;spawnRate=Math.max(30,90-level*8);}
-    cans.forEach(c=>{
-      if(!c.alive)return;
-      c.wobble+=0.05; c.x+=c.vx;
-      if(c.x<20||c.x>W-20)c.vx*=-1;
-      if(c.hit){c.vy+=0.4;c.y+=c.vy;c.scale*=0.92;c.opacity-=0.08;if(c.opacity<=0)c.alive=false;}
-      else{
-        c.y=GROUND-28+Math.sin(c.wobble)*2;
-        if(frame-c.spawnFrame>180-level*10){c.vy+=0.2;c.y+=c.vy;if(c.y>H+50){c.alive=false;lives--;updateLives();if(lives<=0)endGame();}}
-      }
-      drawCan(c);
-    });
-    cans=cans.filter(c=>c.alive); doParticles();
-    const nl=Math.floor(score/10)+1; if(nl!==level){level=nl;levelEl.textContent=level;}
-    raf=requestAnimationFrame(loop);
-  }
-
-  function shoot(cx,cy) {
-    if(!running)return;
-    cans.forEach(c=>{if(!c.alive||c.hit)return;if(Math.sqrt((cx-c.x)**2+(cy-c.y)**2)<22){c.hit=true;spawnParticles(c.x,c.y);score+=level;scoreEl.textContent=String(score).padStart(3,'0');}});
-  }
-
-  function updateLives(){livesEl.textContent=lives>0?lives+' LIVES':'GAME OVER';}
-
-  function endGame(){
-    running=false;cancelAnimationFrame(raf);
-    ctx.clearRect(0,0,W,H);drawBg();
-    ctx.fillStyle='rgba(0,0,0,0.75)';ctx.fillRect(0,0,W,H);
-    ctx.fillStyle='#FFD600';ctx.font='bold 48px Anton,sans-serif';ctx.textAlign='center';ctx.fillText("YOU GOT GOT",W/2,H/2-40);
-    ctx.fillStyle='#FAFAF5';ctx.font='20px Anton,sans-serif';ctx.fillText('SCORE: '+String(score).padStart(3,'0')+'  |  LEVEL: '+level,W/2,H/2+4);
-    ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='11px Space Mono,monospace';ctx.fillText('CLICK DRAW PARTNER TO RIDE AGAIN',W/2,H/2+36);
-    startBtn.textContent='Ride Again, Partner';
-  }
-
-  canvas.style.pointerEvents='auto';
-  canvas.addEventListener('click',e=>{const r=canvas.getBoundingClientRect();shoot((e.clientX-r.left)*(W/r.width),(e.clientY-r.top)*(H/r.height));});
-  canvas.addEventListener('touchstart',e=>{e.preventDefault();const r=canvas.getBoundingClientRect();const t=e.touches[0];shoot((t.clientX-r.left)*(W/r.width),(t.clientY-r.top)*(H/r.height));},{passive:false});
-
-  window.startGame=function(){
-    cans=[];particles=[];score=0;lives=3;level=1;frame=0;spawnTimer=0;spawnRate=90;
-    scoreEl.textContent='000';levelEl.textContent='1';livesEl.textContent='3 LIVES';
-    startBtn.textContent='Running...';hintEl.textContent='Click the cans. Miss 3 and you are done.';
-    running=true;cancelAnimationFrame(raf);loop();
-  };
-
-  drawBg();
-  ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(0,0,W,H);
-  ctx.fillStyle='#FFD600';ctx.font='bold 36px Anton,sans-serif';ctx.textAlign='center';ctx.fillText("IT'S HIGH NOON",W/2,H/2-16);
-  ctx.fillStyle='rgba(255,255,255,0.5)';ctx.font='12px Space Mono,monospace';ctx.fillText('CLICK DRAW PARTNER TO START',W/2,H/2+18);
-})();
-</script>
 
 </body>
 </html>
