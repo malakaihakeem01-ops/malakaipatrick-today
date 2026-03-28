@@ -93,7 +93,7 @@ nav {
 .music-grid { display: grid; grid-template-columns: 1.4fr 1fr; }
 .music-left { padding: 40px 48px; border-right: 2px solid var(--black); }
 .music-left p.label { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: #999; margin-bottom: 14px; }
-.spotify-wrap { border: 2px solid var(--black); margin-bottom: 28px; }
+.spotify-wrap { margin-bottom: 28px; }
 .album-row { display: flex; gap: 18px; align-items: flex-start; padding: 20px 0; border-bottom: 1px solid rgba(0,0,0,0.08); }
 .album-row:last-child { border-bottom: none; }
 .alb-art { width: 68px; height: 68px; flex-shrink: 0; border: 2px solid var(--black); display: flex; align-items: center; justify-content: center; font-family: 'Anton', sans-serif; font-size: 1.2rem; }
@@ -549,7 +549,7 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
 .game-heading { font-family: 'Anton', sans-serif; font-size: 3rem; color: var(--white); text-transform: uppercase; letter-spacing: 0.08em; }
 .game-heading span { color: var(--red); }
 .game-canvas-wrap { position: relative; width: 100%; max-width: 700px; margin: 28px 0; }
-#game-canvas { width: 100%; border: 3px solid var(--yellow); display: block; background: #111; cursor: none; }
+#game-canvas { width: 100%; border: 3px solid var(--yellow); display: block; background: #111; cursor: none; pointer-events: auto; position: relative; z-index: 10; }
 .game-ui { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 700px; margin-bottom: 16px; }
 .game-score { font-family: 'Anton', sans-serif; font-size: 1.4rem; color: var(--yellow); letter-spacing: 0.1em; }
 .game-lives { font-size: 1rem; letter-spacing: 0.1em; }
@@ -641,7 +641,7 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
 /* ── PAPER PLANE ── */
 #paper-plane {
   position: fixed;
-  z-index: 500;
+  z-index: 5000;
   pointer-events: auto;
   cursor: none;
   transition: none;
@@ -877,32 +877,35 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
   </div>
   <div class="music-grid">
     <div class="music-left">
-      <p class="label">★ Album of the week</p>
-      <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid rgba(0,0,0,0.08);">
-        <div class="alb-art y" style="width:88px;height:88px;flex-shrink:0;font-size:1.6rem;">YE</div>
+      <p class="label">★ Now Playing</p>
+      <div id="now-playing-block" style="display:flex;gap:16px;align-items:flex-start;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid rgba(0,0,0,0.08);">
+        <div id="np-art" style="width:88px;height:88px;flex-shrink:0;border:2px solid var(--black);background:var(--yellow);display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:1.4rem;overflow:hidden;">
+          <span id="np-art-fallback">♫</span>
+        </div>
         <div style="flex:1;">
-          <p class="alb-rank">★ Album of the week</p>
-          <p class="alb-name" style="font-size:1.2rem;margin-bottom:2px;">Bully</p>
-          <p class="alb-artist" style="margin-bottom:10px;">Ye</p>
-          <p class="alb-note">Ye said what he said and the production did not miss. Processing it still.</p>
-          <div style="margin-top:14px;background:#191414;padding:12px 16px;display:flex;align-items:center;gap:14px;">
+          <p class="alb-rank" id="np-status">★ Loading...</p>
+          <p class="alb-name" style="font-size:1.2rem;margin-bottom:2px;" id="np-title">—</p>
+          <p class="alb-artist" style="margin-bottom:10px;" id="np-artist">—</p>
+          <p class="alb-note" id="np-album"></p>
+          <div id="preview-player" style="margin-top:14px;background:#191414;padding:12px 16px;display:flex;align-items:center;gap:14px;">
             <button id="preview-btn" onclick="togglePreview()" style="width:36px;height:36px;border-radius:50%;background:#1DB954;border:none;cursor:none;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;transition:transform 0.15s;" onmouseenter="this.style.transform='scale(1.1)'" onmouseleave="this.style.transform='scale(1)'">▶</button>
             <div style="flex:1;">
-              <div style="font-size:0.6rem;color:white;letter-spacing:0.05em;margin-bottom:4px;" id="preview-title">Bomb — Ye</div>
-              <div style="height:3px;background:rgba(255,255,255,0.15);border-radius:2px;position:relative;">
+              <div style="font-size:0.6rem;color:white;letter-spacing:0.05em;margin-bottom:4px;" id="preview-title">Loading track...</div>
+              <div style="height:3px;background:rgba(255,255,255,0.15);border-radius:2px;">
                 <div id="preview-bar" style="height:100%;background:#1DB954;border-radius:2px;width:0%;transition:width 0.1s linear;"></div>
               </div>
               <div style="font-size:0.55rem;color:rgba(255,255,255,0.4);margin-top:4px;letter-spacing:0.1em;" id="preview-time">0:00 / 0:30</div>
             </div>
-            <span style="font-size:0.5rem;color:#1DB954;letter-spacing:0.15em;text-transform:uppercase;">Spotify</span>
+            <a id="np-spotify-link" href="#" target="_blank" style="font-size:0.5rem;color:#1DB954;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;">Open ↗</a>
           </div>
           <audio id="preview-audio" preload="none"></audio>
-          <p style="font-size:0.5rem;color:#aaa;letter-spacing:0.1em;text-transform:uppercase;margin-top:6px;">30 sec preview via Spotify</p>
         </div>
       </div>
-      <p class="label">Your rotation</p>
-      <div class="spotify-wrap">
-        <iframe style="border-radius:0;" src="https://open.spotify.com/embed/playlist/37i9dQZF1Epf0sbFHjwgi5?utm_source=generator&theme=0" width="100%" height="232" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <p class="label">Recently played</p>
+      <div id="recent-tracks">
+        <ul class="track-list" id="recent-list">
+          <li><span class="t-name" style="color:#aaa;">Loading...</span></li>
+        </ul>
       </div>
     </div>
     <div class="music-right">
@@ -1628,6 +1631,53 @@ async function loadLetterboxd() {
 }
 loadLetterboxd();
 
+// ── SPOTIFY LIVE ──
+async function loadSpotify() {
+  try {
+    const res = await fetch('/.netlify/functions/spotify');
+    const data = await res.json();
+
+    const { nowPlaying, recentTracks } = data;
+
+    if (nowPlaying) {
+      document.getElementById('np-status').textContent = nowPlaying.isPlaying ? '● Now Playing' : '◎ Recently Played';
+      document.getElementById('np-title').textContent = nowPlaying.title;
+      document.getElementById('np-artist').textContent = nowPlaying.artist;
+      document.getElementById('np-album').textContent = nowPlaying.album;
+      document.getElementById('np-spotify-link').href = nowPlaying.url;
+
+      if (nowPlaying.albumArt) {
+        const artEl = document.getElementById('np-art');
+        artEl.innerHTML = '<img src="' + nowPlaying.albumArt + '" style="width:100%;height:100%;object-fit:cover;display:block;" />';
+      }
+
+      if (nowPlaying.preview) {
+        document.getElementById('preview-audio').src = nowPlaying.preview;
+        document.getElementById('preview-title').textContent = nowPlaying.title + ' — ' + nowPlaying.artist;
+      } else {
+        document.getElementById('preview-player').style.display = 'none';
+      }
+
+      // update hero card
+      const heroTitle = document.querySelector('.hero-card.music .card-title');
+      if (heroTitle) heroTitle.textContent = nowPlaying.title + ' — ' + nowPlaying.artist;
+    }
+
+    if (recentTracks && recentTracks.length > 0) {
+      const list = document.getElementById('recent-list');
+      list.innerHTML = recentTracks.map(t =>
+        '<li><a href="' + t.url + '" target="_blank" style="text-decoration:none;color:inherit;display:flex;justify-content:space-between;align-items:center;width:100%;"><span class="t-name">' + t.title + '</span><span class="t-time" style="font-size:0.58rem;color:#aaa;">' + t.artist + '</span></a></li>'
+      ).join('');
+    }
+  } catch(e) {
+    document.getElementById('np-status').textContent = '★ Album of the week';
+    document.getElementById('np-title').textContent = 'Take Care';
+    document.getElementById('np-artist').textContent = 'Drake';
+    document.getElementById('np-album').textContent = 'Take Care — 2011';
+  }
+}
+loadSpotify();
+
 // ── CAROUSEL ──
 const track = document.getElementById('wish-track');
 const cards = track.querySelectorAll('.wish-card');
@@ -1795,9 +1845,14 @@ if (navigator.geolocation) {
 <script>
   const star = document.getElementById('cursor-star');
   const starPath = document.getElementById('star-path');
+  if (!star) { console.log('star not found'); }
   let angle = 0;
   let lastX = 0, lastY = 0;
-  let spinInterval = null;
+
+  // Force visible on init
+  star.style.display = 'block';
+  star.style.top = '50px';
+  star.style.left = '50px';
 
   document.addEventListener('mousemove', e => {
     star.style.top = e.clientY + 'px';
@@ -2034,6 +2089,7 @@ if (navigator.geolocation) {
     return hit;
   }
 
+  canvas.style.pointerEvents = 'auto';
   canvas.addEventListener('click', e => {
     const rect = canvas.getBoundingClientRect();
     const scaleX = W / rect.width;
@@ -2114,7 +2170,7 @@ if (navigator.geolocation) {
   const W = () => window.innerWidth;
   const H = () => window.innerHeight;
 
-  let x = W() * 0.15, y = H() * 0.3;
+  let x = Math.max(100, W() * 0.15), y = Math.max(100, H() * 0.3);
   let vx = 1.8, vy = 0.7;
   let angle = 0;
   let caught = false;
@@ -2180,6 +2236,7 @@ if (navigator.geolocation) {
     openPlaneModal();
   });
 
+  plane.style.display = 'block';
   setPos();
   fly();
   startHideCycle();
