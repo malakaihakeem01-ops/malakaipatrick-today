@@ -1721,6 +1721,20 @@ body.chaos .cursor-star { filter: invert(1); }
   font-style: italic;
   padding: 8px 0;
 }
+
+/* ── FLASHING BLOG ── */
+.flash-blog {
+  animation: blogFlash 2.5s ease-in-out infinite;
+  color: var(--red);
+  font-style: normal;
+}
+@keyframes blogFlash {
+  0%, 100% { opacity: 1; text-shadow: 0 0 8px var(--red); }
+  20% { opacity: 0.1; text-shadow: none; }
+  25% { opacity: 1; text-shadow: 0 0 12px var(--red); }
+  45% { opacity: 0.15; text-shadow: none; }
+  50% { opacity: 1; text-shadow: 0 0 8px var(--red); }
+}
 </style>
 </head>
 <body>
@@ -1770,7 +1784,7 @@ body.chaos .cursor-star { filter: invert(1); }
 <div class="ticker">
   <div class="ticker-inner">
     <span>Music <span class="ticker-dot">✦</span></span>
-    <span>Blog <span class="ticker-dot">✦</span></span>
+    <span><span class="flash-blog">BLOG</span> <span class="ticker-dot">✦</span></span>
     <span>Recipes <span class="ticker-dot">✦</span></span>
     <span>On My Radar <span class="ticker-dot">✦</span></span>
     <span>The Digest <span class="ticker-dot">✦</span></span>
@@ -1907,7 +1921,7 @@ body.chaos .cursor-star { filter: invert(1); }
 <!-- BLOG -->
 <section class="blog-section" id="blog">
   <div class="sec-head">
-    <h2 class="sec-title dance-title"><span class="dl">F</span><span class="dl">r</span><span class="dl">o</span><span class="dl">m</span><span class="dl">&nbsp;</span><span class="dl">T</span><span class="dl">h</span><span class="dl">e</span><span class="dl">&nbsp;</span><span class="dl">B</span><span class="dl">l</span><span class="dl">o</span><span class="dl">g</span></h2>
+    <h2 class="sec-title dance-title"><span class="dl">F</span><span class="dl">r</span><span class="dl">o</span><span class="dl">m</span><span class="dl">&nbsp;</span><span class="dl">T</span><span class="dl">h</span><span class="dl">e</span><span class="dl">&nbsp;</span><span class="dl flash-blog" style="animation-delay:0.2s">B</span><span class="dl flash-blog" style="animation-delay:0.3s">l</span><span class="dl flash-blog" style="animation-delay:0.4s">o</span><span class="dl flash-blog" style="animation-delay:0.5s">g</span></h2>
     <span class="sec-num">02 / Writing</span>
     <div class="sec-line"></div>
   </div>
@@ -2458,7 +2472,7 @@ body.chaos .cursor-star { filter: invert(1); }
     <span class="f-label">Navigate</span>
     <ul class="f-links">
       <li><a href="#music">Music</a></li>
-      <li><a href="#blog">Blog</a></li>
+      <li><a href="#blog"><span class="flash-blog">Blog</span></a></li>
       <li><a href="#recipe">Recipe</a></li>
       <li><a href="#screen">Screen</a></li>
       <li><a href="#wishlist">On My Radar</a></li>
