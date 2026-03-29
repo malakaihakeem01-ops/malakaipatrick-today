@@ -832,9 +832,10 @@ footer { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 3px soli
   top: 50%;
   transform: translateY(-50%);
   z-index: 300;
-  display: none;
+  display: flex;
   flex-direction: column;
   gap: 10px;
+}
 }
 .dot-nav a {
   width: 8px;
@@ -3262,8 +3263,7 @@ const total = cards.length;
 const dotsWrap = document.getElementById('wish-dots');
 const countEl = document.getElementById('wish-count');
 let cur = 0;
-const visible = window.innerWidth <= 768 ? 1 : 3;
-
+const visible = window.innerWidth <= 768 ? 1 : 4;
 // Build dots
 for (let i = 0; i < total - visible + 1; i++) {
   const d = document.createElement('button');
@@ -4056,9 +4056,7 @@ window.switchInlineTab = function(tab, btn) {
   const btn = document.getElementById('dark-toggle');
   if (btn) btn.textContent = saved === 'dark' ? '☀️' : '🌙';
 
-  // Always start light unless user explicitly toggled
-localStorage.removeItem('kaispace-theme');
-document.documentElement.removeAttribute('data-theme');
+ 
 
 window.toggleDark = function() {
     const current = document.documentElement.getAttribute('data-theme');
@@ -4473,7 +4471,7 @@ document.addEventListener('mousemove', e => {
           <p class="shelf-item-title">The 8-Ball Archives: Vol 1</p>
           <p class="shelf-item-meta">March 2026 · kaispace.blog</p>
           <p style="font-size:0.62rem;color:#555;line-height:1.6;margin-top:6px;font-family:'DM Serif Display',serif;font-style:italic;">You asked, I answered. Unhinged questions only.</p>
-          <a href="#blog" onclick="toggleShelf();togglePost('post-advice')" class="shelf-item-link">Read it →</a>
+<a href="#blog" onclick="toggleShelf();togglePost('post-scorpio')" class="shelf-item-link">Read it →</a>
         </div>
       </div>
       <div class="shelf-item">
