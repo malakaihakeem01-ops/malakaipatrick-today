@@ -1736,7 +1736,39 @@ body.chaos .cursor-star { filter: invert(1); }
     gap: 8px;
   }
 }
+
+/* ── TRACK TUMBLE ANIMATION ── */
+.track-tumble {
+  display: inline-block;
+  opacity: 0;
+  animation: trackTumbleIn 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+@keyframes trackTumbleIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px) rotate(var(--tr, -15deg)) scale(1.2);
+    filter: blur(1px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(4px) rotate(calc(var(--tr, -15deg) * -0.2)) scale(0.98);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg) scale(1);
+    filter: blur(0);
+  }
+}
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DLWTXMQSPF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DLWTXMQSPF');
+</script>
 </head>
 <body>
 
@@ -3555,12 +3587,18 @@ function renderTopTracks() {
   const list = document.getElementById('top-tracks-list');
   if (!list) return;
   const shuffled = [...ALL_TOP_TRACKS].sort(() => Math.random() - 0.5).slice(0, 6);
-  list.innerHTML = shuffled.map(t => `
-    <li>
-      <span class="t-name">${t.name}</span>
-      <span class="t-time" style="font-size:0.52rem;color:#aaa;letter-spacing:0.04em;">${t.artist}</span>
-    </li>
-  `).join('');
+  list.innerHTML = '';
+  shuffled.forEach((t, i) => {
+    const li = document.createElement('li');
+    li.style.overflow = 'hidden';
+    const rot = (Math.random() * 20 - 10).toFixed(1);
+    const delay = (i * 0.08).toFixed(2);
+    li.innerHTML = `
+      <span class="t-name track-tumble" style="--tr:${rot}deg;animation-delay:${delay}s">${t.name}</span>
+      <span class="t-time track-tumble" style="font-size:0.52rem;color:#aaa;letter-spacing:0.04em;--tr:${-rot}deg;animation-delay:${(i * 0.08 + 0.03).toFixed(2)}s">${t.artist}</span>
+    `;
+    list.appendChild(li);
+  });
 }
 
 renderTopTracks();
