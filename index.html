@@ -103,7 +103,7 @@ nav {
 .hero-title .b { color: var(--blue); }
 .hero-sub { font-family: 'Unbounded', sans-serif; font-size: 0.62rem; font-weight: 400; line-height: 1.8; color: #888; margin-top: 28px; max-width: 380px; letter-spacing: 0.04em; }
 .hero-date { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: #bbb; }
-.hero-right { display: grid; grid-template-rows: 1fr 0.85fr 0.85fr; }
+.hero-right { display: grid; grid-template-rows: 1fr 1fr; }
 .hero-card { padding: 44px; display: flex; flex-direction: column; justify-content: flex-end; position: relative; overflow: hidden; border-bottom: 3px solid var(--black); transition: filter 0.2s; cursor: pointer; }
 .hero-card:hover { filter: brightness(0.95); }
 .hero-card:last-child { border-bottom: none; }
@@ -2032,30 +2032,7 @@ body.chaos .cursor-star { filter: invert(1); }
         Girl Unit ft. Kelela
       </div>
     </div>
-    <div class="hero-card" style="background:var(--black);color:var(--white);padding:16px 20px;display:flex;flex-direction:column;justify-content:space-between;" id="hero-horoscope-card">
-      <div>
-        <span style="font-size:0.45rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.4);display:block;margin-bottom:6px;">⭐ Daily Horoscope</span>
-        <select id="hero-sign-select" onchange="loadHeroHoroscope(this.value)" style="width:100%;padding:5px 8px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);color:var(--white);font-family:'Space Mono',monospace;font-size:0.52rem;letter-spacing:0.04em;outline:none;cursor:none;text-transform:uppercase;margin-bottom:8px;">
-          <option value="">Pick your sign...</option>
-          <option value="aries">♈ Aries</option>
-          <option value="taurus">♉ Taurus</option>
-          <option value="gemini">♊ Gemini</option>
-          <option value="cancer">♋ Cancer</option>
-          <option value="leo">♌ Leo</option>
-          <option value="virgo">♍ Virgo</option>
-          <option value="libra">♎ Libra</option>
-          <option value="scorpio">♏ Scorpio</option>
-          <option value="sagittarius">♐ Sagittarius</option>
-          <option value="capricorn">♑ Capricorn</option>
-          <option value="aquarius">♒ Aquarius</option>
-          <option value="pisces">♓ Pisces</option>
-        </select>
-        <p id="hero-horoscope-text" style="font-family:'DM Serif Display',serif;font-style:italic;font-size:0.7rem;line-height:1.6;color:rgba(255,255,255,0.7);">Select your sign above.</p>
-      </div>
-      <p id="hero-horoscope-sign" style="font-family:'Anton',sans-serif;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--yellow);margin-top:6px;"></p>
-    </div>
-
-        <div class="hero-card wish" id="news-card" style="padding:0;overflow:hidden;position:relative;">
+    <div class="hero-card wish" id="news-card" style="padding:0;overflow:hidden;position:relative;">
       <div id="news-photo" style="position:absolute;inset:0;background-size:cover;background-position:center;transition:opacity 0.4s;opacity:0;"></div>
       <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(255,214,0,0.97) 40%, rgba(255,214,0,0.5) 70%, transparent 100%);"></div>
       <div style="position:relative;z-index:2;padding:32px 28px 20px;display:flex;flex-direction:column;justify-content:flex-end;height:100%;">
@@ -2079,6 +2056,29 @@ body.chaos .cursor-star { filter: invert(1); }
     </div>
   </div>
 </section>
+
+
+<!-- HOROSCOPE STRIP -->
+<div style="background:var(--black);border-bottom:3px solid var(--black);padding:16px 48px;display:flex;align-items:center;gap:24px;overflow:hidden;" id="horoscope-strip">
+  <span style="font-family:'Anton',sans-serif;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--yellow);white-space:nowrap;">⭐ Daily</span>
+  <select id="hero-sign-select" onchange="loadHeroHoroscope(this.value)" style="padding:4px 10px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);color:var(--white);font-family:'Space Mono',monospace;font-size:0.5rem;letter-spacing:0.06em;outline:none;cursor:none;text-transform:uppercase;flex-shrink:0;">
+    <option value="">Your sign...</option>
+    <option value="aries">♈ Aries</option>
+    <option value="taurus">♉ Taurus</option>
+    <option value="gemini">♊ Gemini</option>
+    <option value="cancer">♋ Cancer</option>
+    <option value="leo">♌ Leo</option>
+    <option value="virgo">♍ Virgo</option>
+    <option value="libra">♎ Libra</option>
+    <option value="scorpio">♏ Scorpio</option>
+    <option value="sagittarius">♐ Sagittarius</option>
+    <option value="capricorn">♑ Capricorn</option>
+    <option value="aquarius">♒ Aquarius</option>
+    <option value="pisces">♓ Pisces</option>
+  </select>
+  <p id="hero-horoscope-text" style="font-family:'DM Serif Display',serif;font-style:italic;font-size:0.72rem;line-height:1.5;color:rgba(255,255,255,0.6);flex:1;margin:0;">Pick your sign to read today's horoscope.</p>
+  <span id="hero-horoscope-sign" style="font-family:'Anton',sans-serif;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);white-space:nowrap;"></span>
+</div>
 
 <!-- MUSIC -->
 <section class="music-section" id="music">
@@ -4019,10 +4019,10 @@ window.loadHoroscope = async function(sign) {
   const body = document.getElementById('horoscope-body');
   body.innerHTML = '<div class="horoscope-loading">Reading the stars...</div>';
   try {
-    const res = await fetch('https://freehoroscopeapi.com/api/v1/get-horoscope/daily?sign=' + sign);
+    const res = await fetch('https://aztro.sameerkumar.website/?sign=' + sign + '&day=today', { method: 'POST' });
     const data = await res.json();
-    const text = data.data?.horoscope || data.data?.horoscope_data || 'The stars are quiet today.';
-    const date = data.data?.date || new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+    const text = data.description || 'The stars are quiet today.';
+    const date = data.current_date || new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
     const names = { aries:'Aries', taurus:'Taurus', gemini:'Gemini', cancer:'Cancer', leo:'Leo', virgo:'Virgo', libra:'Libra', scorpio:'Scorpio', sagittarius:'Sagittarius', capricorn:'Capricorn', aquarius:'Aquarius', pisces:'Pisces' };
     body.innerHTML = `
       <div class="horoscope-sign">${names[sign] || sign}</div>
@@ -4042,7 +4042,7 @@ window.loadHeroHoroscope = async function(sign) {
   const signEl = document.getElementById('hero-horoscope-sign');
   if (textEl) textEl.textContent = 'Reading the stars...';
   try {
-    const res = await fetch('https://freehoroscopeapi.com/api/v1/get-horoscope/daily?sign=' + sign);
+    const res = await fetch('https://aztro.sameerkumar.website/?sign=' + sign + '&day=today', { method: 'POST' });
     const data = await res.json();
     const text = data.data?.horoscope || data.data?.horoscope_data || 'The stars are quiet today.';
     const names = { aries:'Aries', taurus:'Taurus', gemini:'Gemini', cancer:'Cancer', leo:'Leo', virgo:'Virgo', libra:'Libra', scorpio:'Scorpio', sagittarius:'Sagittarius', capricorn:'Capricorn', aquarius:'Aquarius', pisces:'Pisces' };
