@@ -4245,39 +4245,25 @@ window.switchShelfTab = function(tab) {
   </div>
 </div>
 <script>
-// ── STICKY NOTE WIDGET - GLOBAL via JSONbin ──
-const JBIN_ID = '69c8076d5fdde574550b0edd';
-const JBIN_KEY = '$2a$10$s5euoo2tsq9SdRl4j/OyJu2cLdoLCVH7O90DsJf.QusBuqJxUvZCW';
-const JBIN_URL = 'https://api.jsonbin.io/v3/b/' + JBIN_ID;
+// ── STICKY NOTE WIDGET - via Netlify function --
 let stickyOpen = false;
-let stickyData = { count: 0, notes: [], scores: [] };
+let stickyData = { count: 0, notes: [] };
 
 async function loadStickyData() {
   try {
-    const res = await fetch(JBIN_URL + '/latest', { headers: { 'X-Master-Key': JBIN_KEY } });
-    const json = await res.json();
-    stickyData = json.record || { count: 0, notes: [], scores: [] };
-
-    // Bump visitor count once per browser session
+    const res = await fetch('/.netlify/functions/leaderboard?type=sticky');
+    stickyData = await res.json();
     if (!sessionStorage.getItem('digest-counted')) {
       sessionStorage.setItem('digest-counted', '1');
+      await fetch('/.netlify/functions/leaderboard?type=sticky', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bump: true })
+      });
       stickyData.count = (stickyData.count || 0) + 1;
-      saveStickyData();
     }
     updateStickyUI();
-  } catch(e) {
-    updateStickyUI();
-  }
-}
-
-async function saveStickyData() {
-  try {
-    await fetch(JBIN_URL, {
-      method: 'PUT',
-      headers: { 'X-Master-Key': JBIN_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify(stickyData)
-    });
-  } catch(e) {}
+  } catch(e) { updateStickyUI(); }
 }
 
 function updateStickyUI() {
@@ -4299,13 +4285,34 @@ function updateStickyUI() {
   }
 }
 
-window.toggleSticky = function() {
+function toggleSticky() {
   stickyOpen = !stickyOpen;
   document.getElementById('sticky-panel').classList.toggle('open', stickyOpen);
   if (stickyOpen) loadStickyData();
 };
 
-window.submitStickyNote = async function() {
+async function submitStickyNote() {
+  const name = document.getElementById('sticky-name').value.trim() || 'Anonymous';
+  const msg = document.getElementById('sticky-msg').value.trim();
+  if (!msg) return;
+  try {
+    await fetch('/.netlify/functions/leaderboard?type=sticky', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ note: { name, msg } })
+    });
+    document.getElementById('sticky-form').style.display = 'none';
+    document.getElementById('sticky-success').style.display = 'block';
+    stickyData.notes = stickyData.notes || [];
+    stickyData.notes.push({ name, msg, date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) });
+    updateStickyUI();
+  } catch(e) {}
+};
+
+loadStickyData();
+};
+
+async function submitStickyNote() {
   const name = document.getElementById('sticky-name').value.trim() || 'Anonymous';
   const msg = document.getElementById('sticky-msg').value.trim();
   if (!msg) return;
