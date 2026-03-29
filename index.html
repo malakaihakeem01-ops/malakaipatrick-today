@@ -101,9 +101,9 @@ nav {
 .hero-title { font-family: 'Anton', sans-serif; font-size: clamp(5rem, 10vw, 9rem); line-height: 0.88; letter-spacing: -0.01em; text-transform: uppercase; }
 .hero-title .r { color: var(--red); }
 .hero-title .b { color: var(--blue); }
-.hero-sub { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 1.05rem; line-height: 1.6; color: #555; margin-top: 32px; max-width: 380px; }
+.hero-sub { font-family: 'Unbounded', sans-serif; font-size: 0.62rem; font-weight: 400; line-height: 1.8; color: #888; margin-top: 28px; max-width: 380px; letter-spacing: 0.04em; }
 .hero-date { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: #bbb; }
-.hero-right { display: grid; grid-template-rows: 1fr 1fr; }
+.hero-right { display: grid; grid-template-rows: 1fr 0.85fr 0.85fr; }
 .hero-card { padding: 44px; display: flex; flex-direction: column; justify-content: flex-end; position: relative; overflow: hidden; border-bottom: 3px solid var(--black); transition: filter 0.2s; cursor: pointer; }
 .hero-card:hover { filter: brightness(0.95); }
 .hero-card:last-child { border-bottom: none; }
@@ -1432,14 +1432,14 @@ body.chaos .cursor-star { filter: invert(1); }
 /* ── HERO VINYL ── */
 .hero-vinyl-wrap {
   position: relative;
-  width: 140px;
-  height: 140px;
+  width: 100px;
+  height: 100px;
   flex-shrink: 0;
-  margin: 0 auto 16px;
+  margin: 0 auto 10px;
 }
 .hero-vinyl {
-  width: 140px;
-  height: 140px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   background: radial-gradient(circle, #111 18%, #1a1a1a 19%, #222 28%, #1a1a1a 29%, #222 38%, #1a1a1a 39%, #222 48%, #111 49%);
   border: 3px solid #333;
@@ -1954,7 +1954,7 @@ body.chaos .cursor-star { filter: invert(1); }
       <span style="font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#999;padding:0 40px;">Watch for the hints -</span>
     </div>
   </div>
-  <span class="nav-issue">Vol. 01 - Ongoing</span>
+  <span class="nav-issue">Vol. 01 - Spring 2026</span>
 </nav>
 
 <!-- WEATHER BAR -->
@@ -1987,14 +1987,14 @@ body.chaos .cursor-star { filter: invert(1); }
     <span>On My Radar <span class="ticker-dot">✦</span></span>
     <span>Kaispace <span class="ticker-dot">✦</span></span>
     <span>kaispace.blog <span class="ticker-dot">✦</span></span>
-    <span>Updated Weekly <span class="ticker-dot">✦</span></span>
+    <span>Updated Monthly <span class="ticker-dot">✦</span></span>
     <span>Music <span class="ticker-dot">✦</span></span>
     <span>Blog <span class="ticker-dot">✦</span></span>
     <span>Recipes <span class="ticker-dot">✦</span></span>
     <span>On My Radar <span class="ticker-dot">✦</span></span>
     <span>Kaispace <span class="ticker-dot">✦</span></span>
     <span>kaispace.blog <span class="ticker-dot">✦</span></span>
-    <span>Updated Weekly <span class="ticker-dot">✦</span></span>
+    <span>Updated Monthly <span class="ticker-dot">✦</span></span>
   </div>
 </div>
 
@@ -2002,7 +2002,7 @@ body.chaos .cursor-star { filter: invert(1); }
 <section class="hero">
   <div class="hero-left">
     <div>
-      <p class="hero-eyebrow">★ Personal magazine - updated every friday</p>
+      <p class="hero-eyebrow">★ Personal magazine - updated monthly</p>
       <h1 class="hero-title" id="hero-title">
         <span class="word-wrap"><span class="tl">W</span><span class="tl">H</span><span class="tl">A</span><span class="tl">T</span></span><br>
         <span class="word-wrap"><span class="tl">I</span><span class="tl">'</span><span class="tl">M</span></span> <span class="word-wrap"><span class="tl r">I</span><span class="tl r">N</span></span><br>
@@ -2013,12 +2013,12 @@ body.chaos .cursor-star { filter: invert(1); }
 
     </div>
     <p class="hero-sub">Music, film, food, opinions, and whatever else is living rent free in my head this week.</p>
-    <p class="hero-date">Lincoln, NE - Spring 2026</p>
+    <p class="hero-date">Spring 2026</p>
   </div>
   <div class="hero-right">
-    <div class="hero-card music" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 20px;">
-      <span style="font-size:0.48rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:14px;display:block;">★ Song of the Week</span>
-      <div class="hero-vinyl-wrap">
+    <div class="hero-card music" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 14px;">
+      <span style="font-size:0.45rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:8px;display:block;">★ Song of the Week</span>
+      <div class="hero-vinyl-wrap" style="width:100px;height:100px;">
         <div class="hero-vinyl">
           <div class="hero-vinyl-label" id="sotw-label">
             <div class="hero-vinyl-label-fallback" id="sotw-fallback">WYWD</div>
@@ -2032,7 +2032,30 @@ body.chaos .cursor-star { filter: invert(1); }
         Girl Unit ft. Kelela
       </div>
     </div>
-    <div class="hero-card wish" id="news-card" style="padding:0;overflow:hidden;position:relative;">
+    <div class="hero-card" style="background:var(--black);color:var(--white);padding:16px 20px;display:flex;flex-direction:column;justify-content:space-between;" id="hero-horoscope-card">
+      <div>
+        <span style="font-size:0.45rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.4);display:block;margin-bottom:6px;">⭐ Daily Horoscope</span>
+        <select id="hero-sign-select" onchange="loadHeroHoroscope(this.value)" style="width:100%;padding:5px 8px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);color:var(--white);font-family:'Space Mono',monospace;font-size:0.52rem;letter-spacing:0.04em;outline:none;cursor:none;text-transform:uppercase;margin-bottom:8px;">
+          <option value="">Pick your sign...</option>
+          <option value="aries">♈ Aries</option>
+          <option value="taurus">♉ Taurus</option>
+          <option value="gemini">♊ Gemini</option>
+          <option value="cancer">♋ Cancer</option>
+          <option value="leo">♌ Leo</option>
+          <option value="virgo">♍ Virgo</option>
+          <option value="libra">♎ Libra</option>
+          <option value="scorpio">♏ Scorpio</option>
+          <option value="sagittarius">♐ Sagittarius</option>
+          <option value="capricorn">♑ Capricorn</option>
+          <option value="aquarius">♒ Aquarius</option>
+          <option value="pisces">♓ Pisces</option>
+        </select>
+        <p id="hero-horoscope-text" style="font-family:'DM Serif Display',serif;font-style:italic;font-size:0.7rem;line-height:1.6;color:rgba(255,255,255,0.7);">Select your sign above.</p>
+      </div>
+      <p id="hero-horoscope-sign" style="font-family:'Anton',sans-serif;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--yellow);margin-top:6px;"></p>
+    </div>
+
+        <div class="hero-card wish" id="news-card" style="padding:0;overflow:hidden;position:relative;">
       <div id="news-photo" style="position:absolute;inset:0;background-size:cover;background-position:center;transition:opacity 0.4s;opacity:0;"></div>
       <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(255,214,0,0.97) 40%, rgba(255,214,0,0.5) 70%, transparent 100%);"></div>
       <div style="position:relative;z-index:2;padding:32px 28px 20px;display:flex;flex-direction:column;justify-content:flex-end;height:100%;">
@@ -3996,9 +4019,9 @@ window.loadHoroscope = async function(sign) {
   const body = document.getElementById('horoscope-body');
   body.innerHTML = '<div class="horoscope-loading">Reading the stars...</div>';
   try {
-    const res = await fetch('https://horoscope-app-api.vercel.app/api/v1/get-horoscope/daily?sign=' + sign + '&day=today');
+    const res = await fetch('https://freehoroscopeapi.com/api/v1/get-horoscope/daily?sign=' + sign);
     const data = await res.json();
-    const text = data.data?.horoscope_data || 'The stars are quiet today.';
+    const text = data.data?.horoscope || data.data?.horoscope_data || 'The stars are quiet today.';
     const date = data.data?.date || new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
     const names = { aries:'Aries', taurus:'Taurus', gemini:'Gemini', cancer:'Cancer', leo:'Leo', virgo:'Virgo', libra:'Libra', scorpio:'Scorpio', sagittarius:'Sagittarius', capricorn:'Capricorn', aquarius:'Aquarius', pisces:'Pisces' };
     body.innerHTML = `
@@ -4008,6 +4031,25 @@ window.loadHoroscope = async function(sign) {
     `;
   } catch(e) {
     body.innerHTML = '<div class="horoscope-loading">Stars offline. Try again later.</div>';
+  }
+};
+
+
+// ── HERO HOROSCOPE ──
+window.loadHeroHoroscope = async function(sign) {
+  if (!sign) return;
+  const textEl = document.getElementById('hero-horoscope-text');
+  const signEl = document.getElementById('hero-horoscope-sign');
+  if (textEl) textEl.textContent = 'Reading the stars...';
+  try {
+    const res = await fetch('https://freehoroscopeapi.com/api/v1/get-horoscope/daily?sign=' + sign);
+    const data = await res.json();
+    const text = data.data?.horoscope || data.data?.horoscope_data || 'The stars are quiet today.';
+    const names = { aries:'Aries', taurus:'Taurus', gemini:'Gemini', cancer:'Cancer', leo:'Leo', virgo:'Virgo', libra:'Libra', scorpio:'Scorpio', sagittarius:'Sagittarius', capricorn:'Capricorn', aquarius:'Aquarius', pisces:'Pisces' };
+    if (textEl) textEl.textContent = text.length > 120 ? text.substring(0, 120) + '...' : text;
+    if (signEl) signEl.textContent = names[sign] || sign;
+  } catch(e) {
+    if (textEl) textEl.textContent = 'Stars offline. Try the widget below.';
   }
 };
 
