@@ -43,16 +43,14 @@ body::before {
 }
 .cursor-star {
   position: fixed;
-  top: 0; left: 0;
+  top: -100px; left: -100px;
   width: 28px; height: 28px;
   pointer-events: none;
   z-index: 999999 !important;
   transform: translate(-50%, -50%) rotate(0deg);
   transition: transform 0.15s ease, width 0.15s ease, height 0.15s ease;
   filter: drop-shadow(0 0 3px rgba(0,0,0,0.15));
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
+  display: none;
   background: none !important;
   border: none !important;
   box-shadow: none !important;
@@ -2431,7 +2429,7 @@ body.chaos .cursor-star { filter: invert(1); }
       </div>
     </div>
   </div>
-  <div class="screen-log" id="letterboxd-log">
+  <div class="screen-log full-bleed" id="letterboxd-log">
     <!-- Letterboxd feed loads here -->
     <div class="log-card" style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;padding:48px;gap:12px;">
       <span style="font-size:1.2rem;animation:spin 1s linear infinite;display:inline-block;">✦</span>
@@ -2652,7 +2650,7 @@ body.chaos .cursor-star { filter: invert(1); }
 
 
 <!-- COWBOY MINI GAME -->
-<section class="game-section" id="game">
+<section class="game-section full-bleed" id="game">
   <div class="sec-head" style="background:var(--black);border-bottom-color:rgba(255,255,255,0.1);">
     <h2 class="sec-title dance-title" style="color:var(--white);"><span class="dl">Q</span><span class="dl">u</span><span class="dl">i</span><span class="dl">c</span><span class="dl">k</span><span class="dl">&nbsp;</span><span class="dl">D</span><span class="dl">r</span><span class="dl">a</span><span class="dl">w</span></h2>
     <span class="sec-num" style="color:rgba(255,255,255,0.3);">07 / Game</span>
