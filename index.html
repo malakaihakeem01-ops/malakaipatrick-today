@@ -4019,10 +4019,10 @@ window.loadHoroscope = async function(sign) {
   const body = document.getElementById('horoscope-body');
   body.innerHTML = '<div class="horoscope-loading">Reading the stars...</div>';
   try {
-    const res = await fetch('https://aztro.sameerkumar.website/?sign=' + sign + '&day=today', { method: 'POST' });
+    const res = await fetch('/.netlify/functions/horoscope?sign=' + sign);
     const data = await res.json();
-    const text = data.description || 'The stars are quiet today.';
-    const date = data.current_date || new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+    const text = data.horoscope || 'The stars are quiet today.';
+    const date = data.date || new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
     const names = { aries:'Aries', taurus:'Taurus', gemini:'Gemini', cancer:'Cancer', leo:'Leo', virgo:'Virgo', libra:'Libra', scorpio:'Scorpio', sagittarius:'Sagittarius', capricorn:'Capricorn', aquarius:'Aquarius', pisces:'Pisces' };
     body.innerHTML = `
       <div class="horoscope-sign">${names[sign] || sign}</div>
@@ -4042,7 +4042,7 @@ window.loadHeroHoroscope = async function(sign) {
   const signEl = document.getElementById('hero-horoscope-sign');
   if (textEl) textEl.textContent = 'Reading the stars...';
   try {
-    const res = await fetch('https://aztro.sameerkumar.website/?sign=' + sign + '&day=today', { method: 'POST' });
+    const res = await fetch('/.netlify/functions/horoscope?sign=' + sign);
     const data = await res.json();
     const text = data.data?.horoscope || data.data?.horoscope_data || 'The stars are quiet today.';
     const names = { aries:'Aries', taurus:'Taurus', gemini:'Gemini', cancer:'Cancer', leo:'Leo', virgo:'Virgo', libra:'Libra', scorpio:'Scorpio', sagittarius:'Sagittarius', capricorn:'Capricorn', aquarius:'Aquarius', pisces:'Pisces' };
