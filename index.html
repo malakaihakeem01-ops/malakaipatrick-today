@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+l<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -4080,8 +4080,9 @@ window.switchInlineTab = function(tab, btn) {
   const btn = document.getElementById('dark-toggle');
   if (btn) btn.textContent = saved === 'dark' ? '☀️' : '🌙';
 
-  // Clear any stale dark mode on load
-if (!localStorage.getItem('kaispace-theme')) { localStorage.removeItem('kaispace-theme'); document.documentElement.removeAttribute('data-theme'); }
+  // Always start light unless user explicitly toggled
+localStorage.removeItem('kaispace-theme');
+document.documentElement.removeAttribute('data-theme');
 
 window.toggleDark = function() {
     const current = document.documentElement.getAttribute('data-theme');
